@@ -56,6 +56,13 @@ def extract_draft_from_message(text):
     match = re.search(pattern, text, re.DOTALL)
     if match:
         return match.group(1).strip()
+        
+    # Fallback if Telegram strips backticks in plain text callback queries
+    if "Drafted Reply:" in text:
+        parts = text.split("Drafted Reply:")
+        if len(parts) > 1:
+            return parts[1].strip()
+            
     return None
 
 def send_gmail_reply(service, thread_id, draft_body):
