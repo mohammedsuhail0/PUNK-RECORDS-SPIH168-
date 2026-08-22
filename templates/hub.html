@@ -182,8 +182,12 @@
                 <button onclick="toggleCommandPalette()" class="hover:text-white">✕ Close</button>
             </div>
             <div class="grid grid-cols-2 gap-1.5 text-xs">
+                <button onclick="applyCommand('/scan')" class="text-left p-2 rounded-xl bg-[#0a1120] hover:bg-slate-800 border border-slate-800 text-slate-200 flex items-center gap-2">
+                    <span class="text-emerald-400 font-mono font-bold">/scan</span>
+                    <span class="text-[10px] text-slate-400">Rescan Inboxes</span>
+                </button>
                 <button onclick="applyCommand('/check ')" class="text-left p-2 rounded-xl bg-[#0a1120] hover:bg-slate-800 border border-slate-800 text-slate-200 flex items-center gap-2">
-                    <span class="text-emerald-400 font-mono font-bold">/check</span>
+                    <span class="text-teal-400 font-mono font-bold">/check</span>
                     <span class="text-[10px] text-slate-400">Scan link/text</span>
                 </button>
                 <button onclick="applyCommand('/call')" class="text-left p-2 rounded-xl bg-[#0a1120] hover:bg-slate-800 border border-slate-800 text-slate-200 flex items-center gap-2">
@@ -202,9 +206,9 @@
                     <span class="text-emerald-400 font-mono font-bold">/status</span>
                     <span class="text-[10px] text-slate-400">System Health</span>
                 </button>
-                <button onclick="applyCommand('/help')" class="text-left p-2 rounded-xl bg-[#0a1120] hover:bg-slate-800 border border-slate-800 text-slate-200 flex items-center gap-2">
+                <button onclick="applyCommand('/help')" class="text-left p-2 rounded-xl bg-[#0a1120] hover:bg-slate-800 border border-slate-800 text-slate-200 flex items-center gap-2 col-span-2">
                     <span class="text-blue-400 font-mono font-bold">/help</span>
-                    <span class="text-[10px] text-slate-400">Guide & Tips</span>
+                    <span class="text-[10px] text-slate-400">Commands Guide & Security Tips</span>
                 </button>
             </div>
         </div>
