@@ -216,16 +216,85 @@ def run_status_check():
 def perform_direct_scan(
     text: str, sender: str = "", subject: str = "", filename: str = "", groq_api_key: str = ""
 ) -> dict:
-    """Core scanning logic for direct web/telegram user inputs."""
+    """Core scanning logic for direct web/telegram user inputs with full conversational LLM chat and slash command support."""
+    clean_text = text.strip()
+    api_key = groq_api_key or GROQ_API_KEY or os.environ.get("GROQ_API_KEY", "")
+
+    # Handle Slash Commands in Web Chat
+    if clean_text.startswith("/"):
+        parts = clean_text.split(" ", 1)
+        cmd = parts[0].lower()
+        arg = parts[1].strip() if len(parts) > 1 else ""
+
+        if cmd in ["/start", "/help"]:
+            return {
+                "verdict": "conversation",
+                "score": 0,
+                "summary": "ShieldSense Commands Guide",
+                "message": (
+                    "👋 **ShieldSense Cyber Guardian AI Commands:**\n\n"
+                    "• `/check <link/text>` — Scan any link, SMS, or email for threats\n"
+                    "• `/call` — Toggle live phone call scam audio listener\n"
+                    "• `/qr` — Upload and decode a QR code image\n"
+                    "• `/firewall` — Test the inline click protection shield\n"
+                    "• `/status` — Check live API & system health\n"
+                    "• `/clean` — Clean promotional inbox clutter\n\n"
+                    "💡 *You can also chat with me directly in Hinglish or English! Ask me anything about cyber safety.*"
+                ),
+            }
+        elif cmd == "/status":
+            return {
+                "verdict": "conversation",
+                "score": 0,
+                "summary": "System Health Status",
+                "message": run_status_check().replace("*", "**"),
+            }
+        elif cmd == "/check" and arg:
+            clean_text = arg
+
+    # Handle Conversational Chat (greetings, questions, chatting)
+    lower = clean_text.lower()
+    has_threat_cues = bool(
+        "http://" in lower or "https://" in lower or filename or
+        re.search(r"(otp|cbi|police|arrest|kyc|bank|password|cvv|anydesk|teamviewer|urgent|suspended|blocked|9:30|disconnected|\.exe|\.xlsm)", lower)
+    )
+
+    is_greeting_or_chat = (
+        not has_threat_cues and (
+            any(w in lower for w in ["kia hua", "kya hua", "hi", "hello", "hey", "kaise ho", "kya haal", "who are you", "what can you do", "help me", "tell me", "what is"])
+            or len(clean_text.split()) <= 4
+        )
+    )
+
+    if is_greeting_or_chat and api_key:
+        try:
+            sys_prompt = (
+                "You are ShieldSense, a friendly, intelligent AI Cyber Security Sentinel and bodyguard. "
+                "The user is chatting with you in an in-app mobile chat interface. "
+                "Respond conversationally and warmly in natural Hinglish or English matching the user's language. "
+                "Keep responses concise (2-4 sentences), encouraging, and remind them they can paste any link, SMS, QR code, or scam call script anytime."
+            )
+            chat_reply = check_emails.call_groq_api(sys_prompt, clean_text, json_mode=False)
+            if chat_reply:
+                return {
+                    "verdict": "conversation",
+                    "score": 0,
+                    "summary": "Conversational Response",
+                    "message": chat_reply,
+                }
+        except Exception as e:
+            print(f"Chat error: {e}")
+
+    # Standard Security Scan
     attachments = [{"filename": filename}] if filename else None
     result = security_scan.scan_email(
         sender=sender or "Direct Submission <user-input@local>",
-        subject=subject or (text[:50] if text else "Direct Scan Query"),
-        body=text,
+        subject=subject or (clean_text[:50] if clean_text else "Direct Scan Query"),
+        body=clean_text,
         attachments=attachments,
-        groq_key_override=groq_api_key,
+        groq_key_override=api_key,
     )
-    target_desc = f"File: {filename}" if filename else (f"{sender} | {subject}" if sender else text[:80])
+    target_desc = f"File: {filename}" if filename else (f"{sender} | {subject}" if sender else clean_text[:80])
     scan_history.add_scan_record(
         target_type="direct_input",
         target=target_desc,
