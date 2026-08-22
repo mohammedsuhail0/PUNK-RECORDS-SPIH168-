@@ -197,22 +197,24 @@ def call_groq_ai_scan(sender: str, subject: str, body: str, groq_key_override: s
         "}"
     )
     user_prompt = f"Sender: {sender}\nSubject: {subject}\nBody/Text/URL/File/Transcript:\n{body}"
-    payload = {
-        "model": "llama-3.1-8b-instant",
-        "messages": [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt}
-        ],
-        "temperature": 0.1,
-        "response_format": {"type": "json_object"}
-    }
-    try:
-        response = requests.post(url, json=payload, headers=headers, timeout=6)
-        if response.status_code == 200:
-            content = response.json()["choices"][0]["message"]["content"].strip()
-            return json.loads(content)
-    except Exception as e:
-        print(f"Groq AI Scan Warning: {e}")
+    candidate_models = ["groq/compound-mini", "groq/compound", "openai/gpt-oss-20b", "llama-3.1-8b-instant"]
+    for model in candidate_models:
+        payload = {
+            "model": model,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            "temperature": 0.1,
+            "response_format": {"type": "json_object"}
+        }
+        try:
+            response = requests.post(url, json=payload, headers=headers, timeout=6)
+            if response.status_code == 200:
+                content = response.json()["choices"][0]["message"]["content"].strip()
+                return json.loads(content)
+        except Exception as e:
+            print(f"Groq AI Scan Warning for {model}: {e}")
     return None
 
 
@@ -237,12 +239,12 @@ def scan_email(
     groq_forensics = None
 
     if groq_res and isinstance(groq_res, dict):
-        llm_score = int(groq_res.get("llm_score", 0))
         reasoning = groq_res.get("llm_reasoning", "AI intent analysis evaluated potential threat patterns.")
-        findings.append(_finding("llm.groq_ai_intent", llm_score, f"AI Intelligence Model (Groq Llama 3.1): {reasoning}"))
+        findings.append(_finding("llm.groq_ai_intent", 0, f"AI Intelligence Model: {reasoning}"))
+
         for extra_finding in groq_res.get("findings", []):
             if extra_finding:
-                findings.append(_finding("llm.groq_finding", llm_score, f"AI Threat Indicator: {extra_finding}"))
+                findings.append(_finding("llm.groq_finding", 0, f"AI Threat Indicator: {extra_finding}"))
         groq_hinglish = groq_res.get("hinglish")
         groq_forensics = groq_res.get("scammer_forensics")
 

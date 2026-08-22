@@ -198,13 +198,13 @@ def run_status_check():
         url = "https://api.groq.com/openai/v1/chat/completions"
         headers = {"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"}
         payload = {
-            "model": "llama-3.1-8b-instant",
+            "model": "groq/compound-mini",
             "messages": [{"role": "user", "content": "Ping"}],
             "max_tokens": 5,
         }
-        response = requests.post(url, json=payload, headers=headers)
+        response = requests.post(url, json=payload, headers=headers, timeout=5)
         if response.status_code == 200:
-            status_msg += "✅ *Groq API:* Connected\n└ Model: `llama-3.1-8b-instant` (Free Tier)\n\n"
+            status_msg += "✅ *Groq AI Engine:* Connected\n└ Model: `groq/compound-mini` (Llama/Compound Intelligence)\n\n"
         else:
             status_msg += f"❌ *Groq API:* Disconnected\n└ Error Code: {response.status_code}\n\n"
     except Exception as e:
@@ -291,15 +291,22 @@ def perform_direct_scan(
 
     # Handle Conversational Chat (greetings, questions, chatting)
     lower = clean_text.lower()
+    has_url_or_file = bool("http://" in lower or "https://" in lower or filename or ".exe" in lower or ".xlsm" in lower or ".apk" in lower)
+    is_question = bool(
+        lower.startswith("what is") or lower.startswith("what does") or lower.startswith("who is") or 
+        lower.startswith("how do") or lower.startswith("how can") or lower.startswith("tell me") or 
+        lower.startswith("explain") or lower.startswith("kya") or lower.startswith("kaise") or
+        clean_text.endswith("?")
+    )
     has_threat_cues = bool(
-        "http://" in lower or "https://" in lower or filename or
-        re.search(r"(otp|cbi|police|arrest|kyc|bank|password|cvv|anydesk|teamviewer|urgent|suspended|blocked|9:30|disconnected|\.exe|\.xlsm)", lower)
+        has_url_or_file or (not is_question and re.search(r"(otp|cbi|police|arrest|kyc|bank|password|cvv|anydesk|teamviewer|urgent|suspended|blocked|9:30|disconnected)", lower))
     )
 
     is_greeting_or_chat = (
-        not has_threat_cues and (
-            any(w in lower for w in ["kia hua", "kya hua", "hi", "hello", "hey", "kaise ho", "kya haal", "who are you", "what can you do", "help me", "tell me", "what is"])
-            or len(clean_text.split()) <= 4
+        not has_url_or_file and (
+            is_question or
+            any(w in lower for w in ["kia hua", "kya hua", "hi", "hello", "hey", "kaise ho", "kya haal", "who are you", "what can you do", "help me"]) or
+            len(clean_text.split()) <= 4
         )
     )
 
@@ -309,12 +316,10 @@ def perform_direct_scan(
                 sys_prompt = (
                     "You are ShieldSense, an intelligent AI Cyber Security Sentinel & Guardian. "
                     "The user is chatting with you in an in-app mobile chat interface. "
-                    "You MUST ALWAYS reply in a clean BILINGUAL format (English + Hindi/Hinglish in Roman script). "
-                    "Structure your response clearly with:\n"
-                    "🇬🇧 English: Clear explanation and safety guidance.\n"
-                    "🇮🇳 Hinglish: Seedhi aur saral bhasha mein samjhayen (practical advice aur kya karna hai).\n"
-                    "Keep it concise, friendly, and conversational. "
-                    "Remind them they can paste any link, SMS, QR code, or call script anytime for instant protection."
+                    "Speak in a natural, friendly, conversational BILINGUAL MIX (natural fluent Hinglish / Roman Hindi mixed seamlessly with English, just like everyday spoken conversation in India). "
+                    "Do NOT separate into separate language headers or separate language blocks. "
+                    "Blend English and Hinglish words naturally and smoothly into 2-4 friendly sentences. "
+                    "Always remind the user they can paste any link, SMS, QR code image, or scam call script anytime for instant protection."
                 )
                 chat_reply = check_emails.call_groq_api(sys_prompt, clean_text, json_mode=False, groq_key_override=api_key)
                 if chat_reply:
@@ -327,14 +332,15 @@ def perform_direct_scan(
             except Exception as e:
                 print(f"Chat error: {e}")
 
-        # Natural bilingual conversational fallback
+        # Natural blended bilingual conversational fallback
         return {
             "verdict": "conversation",
             "score": 0,
             "summary": "Bilingual AI Response",
             "message": (
-                "🇬🇧 **English:** Hello! I am ShieldSense, your active AI Cyber Guardian. You can chat with me or send any suspicious link, SMS, QR code, or scam call script anytime for instant protection.\n\n"
-                "🇮🇳 **Hinglish:** Namaste! Main active hoon aur aapka device protect kar raha hoon. Koi bhi doubtful link, fake bank SMS ya scam call script yahan paste karein, main turant inspect karke bataunga."
+                "Hello! Main ShieldSense hoon – aapka active AI Cyber Guardian 🛡️. "
+                "Main aapko phishing, scam calls, fake banking KYC SMS, aur suspicious links se protect karta hoon. "
+                "Aap koi bhi link, OTP SMS, QR code image, ya call script yahan paste karein, main turant inspect karke safety guide kar dunga!"
             ),
         }
 

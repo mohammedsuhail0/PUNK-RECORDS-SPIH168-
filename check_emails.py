@@ -166,8 +166,8 @@ def get_upcoming_events(service):
         return "Could not retrieve calendar events."
 
 
-def call_groq_api(system_prompt, user_prompt, json_mode=False, groq_key_override=""):
-    """Calls Groq API chat completions endpoint using requests."""
+def call_groq_api(system_prompt, user_prompt, json_mode=True, groq_key_override=None):
+    """Calls Groq API chat completions endpoint using requests with resilient model fallbacks."""
     api_key = groq_key_override or os.environ.get("GROQ_API_KEY") or GROQ_API_KEY
     if not api_key:
         raise Exception("GROQ_API_KEY not configured")
@@ -177,23 +177,32 @@ def call_groq_api(system_prompt, user_prompt, json_mode=False, groq_key_override
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json"
     }
-    payload = {
-        "model": "llama-3.1-8b-instant",
-        "messages": [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt}
-        ],
-        "temperature": 0.2
-    }
-    if json_mode:
-        payload["response_format"] = {"type": "json_object"}
+    candidate_models = ["groq/compound-mini", "groq/compound", "openai/gpt-oss-20b", "llama-3.1-8b-instant"]
+    last_err = None
 
-    response = requests.post(url, json=payload, headers=headers, timeout=8)
-    if response.status_code != 200:
-        raise Exception(f"Groq API Error: {response.text}")
-        
-    result = response.json()
-    return result["choices"][0]["message"]["content"].strip()
+    for model in candidate_models:
+        payload = {
+            "model": model,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            "temperature": 0.2
+        }
+        if json_mode:
+            payload["response_format"] = {"type": "json_object"}
+
+        try:
+            response = requests.post(url, json=payload, headers=headers, timeout=8)
+            if response.status_code == 200:
+                result = response.json()
+                return result["choices"][0]["message"]["content"].strip()
+            else:
+                last_err = response.text
+        except Exception as e:
+            last_err = str(e)
+
+    raise Exception(f"Groq API Error across models: {last_err}")
 
 
 def classify_email(sender, subject, body, calendar_context):
