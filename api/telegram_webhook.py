@@ -307,28 +307,35 @@ def perform_direct_scan(
         if api_key:
             try:
                 sys_prompt = (
-                    "You are ShieldSense, a friendly, intelligent AI Cyber Security Sentinel and bodyguard. "
+                    "You are ShieldSense, an intelligent AI Cyber Security Sentinel & Guardian. "
                     "The user is chatting with you in an in-app mobile chat interface. "
-                    "Respond conversationally and warmly in natural Hinglish or English matching the user's language. "
-                    "Keep responses concise (2-4 sentences), encouraging, and remind them they can paste any link, SMS, QR code, or scam call script anytime."
+                    "You MUST ALWAYS reply in a clean BILINGUAL format (English + Hindi/Hinglish in Roman script). "
+                    "Structure your response clearly with:\n"
+                    "🇬🇧 English: Clear explanation and safety guidance.\n"
+                    "🇮🇳 Hinglish: Seedhi aur saral bhasha mein samjhayen (practical advice aur kya karna hai).\n"
+                    "Keep it concise, friendly, and conversational. "
+                    "Remind them they can paste any link, SMS, QR code, or call script anytime for instant protection."
                 )
                 chat_reply = check_emails.call_groq_api(sys_prompt, clean_text, json_mode=False, groq_key_override=api_key)
                 if chat_reply:
                     return {
                         "verdict": "conversation",
                         "score": 0,
-                        "summary": "Conversational Response",
+                        "summary": "Bilingual AI Response",
                         "message": chat_reply,
                     }
             except Exception as e:
                 print(f"Chat error: {e}")
 
-        # Natural conversational fallback
+        # Natural bilingual conversational fallback
         return {
             "verdict": "conversation",
             "score": 0,
-            "summary": "Conversational Response",
-            "message": "Hello! Main active hoon aur aapka device actively protect kar raha hoon 🛡️. Aap koi bhi suspicious link, fake SMS, QR code photo, ya call script share karein — main turant check karke explain karunga.",
+            "summary": "Bilingual AI Response",
+            "message": (
+                "🇬🇧 **English:** Hello! I am ShieldSense, your active AI Cyber Guardian. You can chat with me or send any suspicious link, SMS, QR code, or scam call script anytime for instant protection.\n\n"
+                "🇮🇳 **Hinglish:** Namaste! Main active hoon aur aapka device protect kar raha hoon. Koi bhi doubtful link, fake bank SMS ya scam call script yahan paste karein, main turant inspect karke bataunga."
+            ),
         }
 
     # Standard Security Scan
