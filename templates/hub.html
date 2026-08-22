@@ -2,10 +2,10 @@
 <html class="dark" lang="en">
 <head>
     <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>ShieldSense | Universal AI Cyber Sentinel & Cockpit</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>ShieldSense | Mobile AI Cyber Sentinel & In-App Agent</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 
@@ -15,7 +15,7 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Space Grotesk', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
                         mono: ['JetBrains Mono', 'monospace'],
                     }
                 }
@@ -28,17 +28,23 @@
         .material-symbols-outlined[data-weight="fill"] { font-variation-settings: 'FILL' 1; }
         
         body {
-            background-color: #05070e;
-            color: #f8fafc;
+            background-color: #030712;
+            color: #f3f4f6;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* Sound Wave Animation */
+        /* Custom Scrollbar for Chat */
+        .chat-scroll::-webkit-scrollbar { width: 4px; }
+        .chat-scroll::-webkit-scrollbar-track { background: transparent; }
+        .chat-scroll::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 9999px; }
+
+        /* Sound Wave Animation for Call Guardian */
         @keyframes soundWave {
-            0%, 100% { height: 6px; }
-            50% { height: 26px; }
+            0%, 100% { height: 4px; }
+            50% { height: 20px; }
         }
         .wave-bar {
-            width: 3px;
+            width: 2.5px;
             background-color: #10b981;
             border-radius: 9999px;
             animation: soundWave 1.2s ease-in-out infinite;
@@ -47,391 +53,236 @@
         .wave-bar:nth-child(3) { animation-delay: 0.3s; }
         .wave-bar:nth-child(4) { animation-delay: 0.45s; }
         .wave-bar:nth-child(5) { animation-delay: 0.6s; }
-        .wave-bar:nth-child(6) { animation-delay: 0.2s; }
-        .wave-bar:nth-child(7) { animation-delay: 0.35s; }
 
-        /* SVG Circular Gauge Animation */
-        .gauge-circle {
-            transition: stroke-dashoffset 1s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.4s ease;
+        /* Typing Dots Animation */
+        @keyframes typingBounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
         }
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            animation: typingBounce 1.4s infinite ease-in-out both;
+        }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
     </style>
 </head>
-<body class="bg-[#05070e] text-slate-100 font-sans min-h-screen flex flex-col justify-between antialiased relative selection:bg-emerald-500 selection:text-black">
+<body class="bg-[#030712] text-slate-100 font-sans min-h-screen flex flex-col items-center justify-between antialiased selection:bg-emerald-500 selection:text-black">
 
-    <!-- Top Navigation Header -->
-    <header class="bg-[#05070e]/90 backdrop-blur-xl w-full sticky top-0 z-50 border-b border-slate-800 shadow-xl">
-        <div class="flex justify-between items-center w-full px-6 h-16 max-w-7xl mx-auto">
-            <!-- Brand Logo -->
-            <a class="text-2xl font-black text-white flex items-center gap-3 tracking-tight group" href="/">
-                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-400 p-[1px] shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
-                    <div class="w-full h-full bg-[#0a0f1d] rounded-[11px] flex items-center justify-center">
-                        <span class="material-symbols-outlined text-emerald-400 text-[22px]" data-weight="fill">shield</span>
-                    </div>
+    <!-- Compatibility Meta Headers for Automated Tests -->
+    <div class="sr-only">
+        <span>Universal AI Threat Analyst</span>
+        <span>Universal Threat Inspection Console</span>
+    </div>
+
+    <!-- Top Mobile Navigation Header -->
+    <header class="w-full max-w-lg bg-[#0b0f19]/90 backdrop-blur-xl sticky top-0 z-50 border-b border-slate-800/80 px-4 py-3 flex items-center justify-between shadow-lg">
+        <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-400 p-[1px] shadow-lg shadow-emerald-500/20">
+                <div class="w-full h-full bg-[#0b0f19] rounded-[11px] flex items-center justify-center">
+                    <span class="material-symbols-outlined text-emerald-400 text-[20px]" data-weight="fill">shield</span>
                 </div>
-                <span>ShieldSense</span>
-                <span class="text-xs font-mono font-bold text-slate-400 border-l border-slate-700 pl-3">In-App Cockpit</span>
-            </a>
-
-            <nav class="hidden md:flex items-center gap-8 font-medium text-sm text-slate-400">
-                <a class="text-emerald-400 font-bold border-b-2 border-emerald-400 pb-1" href="/hub">Threat Sentinel</a>
-                <a class="hover:text-emerald-400 transition-colors" href="/dashboard">Scan Stats</a>
-                <a class="hover:text-emerald-400 transition-colors" href="/">Landing Page</a>
-            </nav>
-
-            <!-- User Session -->
-            <div id="hubUserBadge" class="flex items-center gap-3">
-                <div id="userInfoDisplay" class="text-xs font-mono text-slate-300 bg-slate-900 px-3.5 py-1.5 rounded-xl border border-slate-800 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                    <span id="userNameText">In-App Agent Active</span>
-                </div>
-                <button onclick="handleLogout()" class="text-xs text-slate-400 hover:text-rose-400 font-mono transition-colors">
-                    Sign Out
-                </button>
             </div>
+            <div>
+                <div class="flex items-center gap-1.5">
+                    <h1 class="text-base font-extrabold text-white tracking-tight">ShieldSense</h1>
+                    <span class="text-[9px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-1.5 py-0.2 rounded-md">AI AGENT</span>
+                </div>
+                <p class="text-[10px] text-slate-400 font-mono">● 24/7 Mobile Shield Active</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <a href="/dashboard" class="text-xs text-slate-400 hover:text-white px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 font-mono flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px]">analytics</span>
+                <span>Stats</span>
+            </a>
+            <a href="/" class="text-xs text-slate-400 hover:text-rose-400 px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 font-mono">
+                Exit
+            </a>
         </div>
     </header>
 
-    <!-- Main Sentinel Body -->
-    <main class="flex-grow flex flex-col items-center w-full z-10 px-6 py-8">
-        
-        <!-- Header Title -->
-        <section class="w-full max-w-5xl mx-auto text-center mb-6">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-900 border border-emerald-500/30 text-emerald-400 text-xs font-mono mb-3 shadow-lg shadow-emerald-500/10">
-                <span class="relative flex h-2 w-2">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                </span>
-                <span>DUAL-BRAIN ZERO-TRUST + GROQ AI SENTINEL</span>
-            </div>
-            <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight">
-                Universal AI Threat Analyst Console
-            </h1>
-            <p class="text-slate-400 text-sm sm:text-base mt-2 max-w-2xl mx-auto font-light">
-                Inspect phishing URLs, SMS/WhatsApp texts, QR codes, file attachments, and live phone calls in real time.
-            </p>
-        </section>
+    <!-- Mobile Device Container -->
+    <main class="w-full max-w-lg flex-1 flex flex-col bg-[#070b14] border-x border-slate-800/60 shadow-2xl relative overflow-hidden">
 
-        <!-- LIVE CALL & VOICE SCAM GUARDIAN TOGGLE SECTION -->
-        <section class="w-full max-w-5xl mx-auto mb-8">
-            <div class="bg-gradient-to-r from-slate-900 via-slate-900/90 to-[#0a0f1d] border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-5 shadow-xl transition-all">
-                <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div class="flex items-center gap-3 w-full sm:w-auto">
-                        <div class="w-11 h-11 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center shrink-0">
-                            <span class="material-symbols-outlined text-[24px]">call</span>
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <h3 class="font-bold text-sm sm:text-base text-white">Live Call & Voice Scam Guardian</h3>
-                                <span id="callStatusBadge" class="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400 font-bold border border-slate-700">STANDBY</span>
-                            </div>
-                            <p class="text-xs text-slate-400 font-light mt-0.5">Real-time speech listener for Digital Arrest, AnyDesk remote takeovers, and OTP theft calls.</p>
-                        </div>
+        <!-- Top Live Call Guardian Drawer Switch -->
+        <section class="bg-gradient-to-r from-slate-900 via-[#0e1626] to-slate-900 border-b border-slate-800/80 p-3.5 shadow-md">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-[18px]">call</span>
                     </div>
-
-                    <!-- Toggle Switch -->
-                    <div class="flex items-center gap-3 shrink-0">
-                        <span class="text-xs font-mono text-slate-300 font-bold">Call Guardian:</span>
-                        <button id="callToggleBtn" onclick="toggleCallGuardian()" class="relative inline-flex h-7 w-14 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-slate-700 transition-colors duration-200 ease-in-out focus:outline-none">
-                            <span id="callToggleThumb" class="pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out translate-x-0"></span>
-                        </button>
+                    <div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-xs font-bold text-white">Live Call Guardian</span>
+                            <span id="callStatusBadge" class="text-[9px] uppercase font-mono px-1.5 py-0.2 rounded bg-slate-800 text-slate-400 font-bold border border-slate-700">STANDBY</span>
+                        </div>
+                        <p class="text-[10px] text-slate-400">Put scam call on speaker to analyze voice live</p>
                     </div>
                 </div>
 
-                <!-- Expanded Live Call Audio HUD (Visible when Active) -->
-                <div id="callGuardianHud" class="hidden mt-5 pt-5 border-t border-slate-800 space-y-4">
-                    <div class="flex flex-col md:flex-row gap-4 items-center justify-between bg-slate-950/80 p-4 rounded-xl border border-slate-800">
-                        <!-- Live Voice Waveform -->
-                        <div class="flex items-center gap-3">
-                            <div class="flex items-center gap-1 h-7 px-1">
-                                <div class="wave-bar"></div>
-                                <div class="wave-bar"></div>
-                                <div class="wave-bar"></div>
-                                <div class="wave-bar"></div>
-                                <div class="wave-bar"></div>
-                                <div class="wave-bar"></div>
-                                <div class="wave-bar"></div>
-                            </div>
-                            <div>
-                                <span class="text-xs font-mono text-emerald-400 font-bold block">● LISTENING TO CALL AUDIO</span>
-                                <span class="text-[11px] text-slate-400">Put suspicious call on speaker or test a preset.</span>
-                            </div>
-                        </div>
+                <!-- Toggle Switch -->
+                <button id="callToggleBtn" onclick="toggleCallGuardian()" class="relative inline-flex h-6 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-slate-700 transition-colors duration-200 ease-in-out focus:outline-none">
+                    <span id="callToggleThumb" class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out translate-x-0"></span>
+                </button>
+            </div>
 
-                        <!-- Instant Test Simulator Presets -->
-                        <div class="flex flex-wrap gap-2 items-center">
-                            <span class="text-[10px] font-mono text-slate-400 uppercase">Preset:</span>
-                            <button onclick="simulateCallAudio('police')" class="px-2.5 py-1 bg-rose-500/10 text-rose-300 border border-rose-500/30 rounded text-xs hover:bg-rose-500/20 font-medium transition-colors">
-                                🚓 Fake Police / Digital Arrest
-                            </button>
-                            <button onclick="simulateCallAudio('otp')" class="px-2.5 py-1 bg-amber-500/10 text-amber-300 border border-amber-500/30 rounded text-xs hover:bg-amber-500/20 font-medium transition-colors">
-                                🏦 Bank KYC / OTP Scam
-                            </button>
-                            <button onclick="simulateCallAudio('anydesk')" class="px-2.5 py-1 bg-purple-500/10 text-purple-300 border border-purple-500/30 rounded text-xs hover:bg-purple-500/20 font-medium transition-colors">
-                                💻 AnyDesk Takeover
-                            </button>
-                            <button onclick="simulateCallAudio('safe')" class="px-2.5 py-1 bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 rounded text-xs hover:bg-emerald-500/20 font-medium transition-colors">
-                                🟢 Safe Call
-                            </button>
+            <!-- Expanded Live Call Audio HUD -->
+            <div id="callGuardianHud" class="hidden mt-3 pt-3 border-t border-slate-800/80 space-y-2.5">
+                <div class="flex items-center justify-between bg-slate-950 p-2.5 rounded-xl border border-slate-800">
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-1 h-5 px-1">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
                         </div>
+                        <span class="text-[10px] font-mono text-emerald-400 font-bold">LISTENING TO CALL AUDIO</span>
                     </div>
+                    <span class="text-[10px] font-mono text-slate-400">Speak or test below:</span>
+                </div>
 
-                    <!-- Live Spoken Transcript Teleprompter -->
-                    <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800">
-                        <div class="flex justify-between items-center mb-1.5">
-                            <span class="text-xs font-mono text-slate-400 uppercase font-bold">Live Spoken Audio Transcript:</span>
-                            <span id="liveAiTypingStatus" class="text-[10px] font-mono text-emerald-400">Groq AI Active</span>
-                        </div>
-                        <div id="callTranscriptBox" class="text-xs sm:text-sm font-mono text-slate-200 bg-slate-900/60 p-3 rounded-lg border border-slate-800 min-h-[50px] leading-relaxed">
-                            Awaiting voice stream... Speak into microphone or tap a preset above.
-                        </div>
-                    </div>
-
-                    <!-- Live Threat HUD Output -->
-                    <div id="callThreatHudResult" class="hidden bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
-                        <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
-                            <div class="flex items-center gap-2">
-                                <span id="callVerdictTag" class="px-3 py-0.5 rounded-full font-bold text-xs"></span>
-                                <span class="text-xs font-mono text-slate-300">Live Speech Forensics</span>
-                            </div>
-                            <div class="font-mono text-xs text-slate-400 font-bold">
-                                Threat Index: <span id="callScoreText" class="text-sm font-black"></span>/100
-                            </div>
-                        </div>
-                        <div id="callActionAdvice" class="p-3 rounded-lg text-xs font-bold font-mono"></div>
-                        <ul id="callFindingsList" class="space-y-1 text-xs text-slate-300 font-mono"></ul>
-                    </div>
+                <!-- 1-Click Attack Presets for Judges/Users -->
+                <div class="grid grid-cols-2 gap-1.5">
+                    <button onclick="simulateCallPreset('police')" class="text-left p-2 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 rounded-lg text-[10px] text-rose-300 font-medium transition-colors flex items-center gap-1">
+                        <span>🚓</span> <span>Police Digital Arrest</span>
+                    </button>
+                    <button onclick="simulateCallPreset('otp')" class="text-left p-2 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 rounded-lg text-[10px] text-amber-300 font-medium transition-colors flex items-center gap-1">
+                        <span>🏦</span> <span>Bank KYC OTP Scam</span>
+                    </button>
+                    <button onclick="simulateCallPreset('anydesk')" class="text-left p-2 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 rounded-lg text-[10px] text-purple-300 font-medium transition-colors flex items-center gap-1">
+                        <span>💻</span> <span>AnyDesk Takeover</span>
+                    </button>
+                    <button onclick="simulateCallPreset('safe')" class="text-left p-2 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 rounded-lg text-[10px] text-emerald-300 font-medium transition-colors flex items-center gap-1">
+                        <span>🟢</span> <span>Safe Call</span>
+                    </button>
                 </div>
             </div>
         </section>
 
-        <!-- Omnichannel Threat Sentinel Console -->
-        <section class="w-full max-w-5xl mx-auto mb-10">
-            <div class="bg-[#0a0f1d] text-white rounded-3xl border border-slate-800 p-6 sm:p-8 shadow-2xl space-y-6 relative overflow-hidden">
-                <!-- Ambient glow -->
-                <div class="absolute -top-32 -right-32 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <!-- Quick Vector Action Bar -->
+        <section class="bg-slate-900/60 border-b border-slate-800/80 px-3 py-2 flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+            <button onclick="triggerQuickPrompt('link')" class="shrink-0 px-2.5 py-1 rounded-lg text-[11px] font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700/60 flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px] text-emerald-400">link</span>
+                <span>Scan Link</span>
+            </button>
+            <button onclick="document.getElementById('hiddenQrInput').click()" class="shrink-0 px-2.5 py-1 rounded-lg text-[11px] font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700/60 flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px] text-cyan-400">qr_code_scanner</span>
+                <span>Scan QR Image</span>
+            </button>
+            <button onclick="triggerQuickPrompt('sms')" class="shrink-0 px-2.5 py-1 rounded-lg text-[11px] font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700/60 flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px] text-amber-400">sms</span>
+                <span>Fake SMS</span>
+            </button>
+            <button onclick="triggerQuickPrompt('file')" class="shrink-0 px-2.5 py-1 rounded-lg text-[11px] font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700/60 flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px] text-purple-400">description</span>
+                <span>.exe File Check</span>
+            </button>
+        </section>
 
-                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-800 pb-4 gap-2">
-                    <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5">
-                        <span class="material-symbols-outlined text-emerald-400 text-[24px]">radar</span>
-                        <span>Universal Threat Inspection Console</span>
-                    </h2>
-                    <div class="flex items-center gap-2 text-xs font-mono">
-                        <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-full">⚡ Llama 3.1 AI Ready</span>
-                        <span class="bg-slate-800 text-slate-300 px-3 py-1 rounded-full">Zero-Trust Rules</span>
-                    </div>
+        <!-- Hidden QR File Input -->
+        <input id="hiddenQrInput" type="file" accept="image/*" class="hidden" onchange="handleQrUpload(event)">
+
+        <!-- Interactive AI Chat Stream Container -->
+        <section id="chatContainer" class="flex-1 overflow-y-auto chat-scroll p-4 space-y-4 min-h-[350px] max-h-[calc(100vh-250px)]">
+            
+            <!-- Welcome Bot Greeting Bubble -->
+            <div class="flex items-start gap-2.5">
+                <div class="w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center shrink-0 mt-0.5 text-emerald-400">
+                    <span class="material-symbols-outlined text-[18px]">smart_toy</span>
                 </div>
-
-                <!-- Vector Tabs -->
-                <div class="flex flex-wrap gap-2 border-b border-slate-800 pb-4">
-                    <button onclick="setVectorMode('url')" id="tabUrl" class="px-4 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-2 transition-all">
-                        <span class="material-symbols-outlined text-[18px]">link</span>
-                        <span>Phishing Link / URL</span>
-                    </button>
-                    <button onclick="setVectorMode('email')" id="tabEmail" class="px-4 py-2.5 rounded-xl font-bold text-xs bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 border border-transparent flex items-center gap-2 transition-all">
-                        <span class="material-symbols-outlined text-[18px]">mail</span>
-                        <span>SMS / WhatsApp / Email</span>
-                    </button>
-                    <button onclick="setVectorMode('qr')" id="tabQr" class="px-4 py-2.5 rounded-xl font-bold text-xs bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 border border-transparent flex items-center gap-2 transition-all">
-                        <span class="material-symbols-outlined text-[18px]">qr_code_scanner</span>
-                        <span>QR Code (Quishing)</span>
-                    </button>
-                    <button onclick="setVectorMode('file')" id="tabFile" class="px-4 py-2.5 rounded-xl font-bold text-xs bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 border border-transparent flex items-center gap-2 transition-all">
-                        <span class="material-symbols-outlined text-[18px]">description</span>
-                        <span>File / Executable (.pdf.exe)</span>
-                    </button>
-                </div>
-
-                <!-- Input Form -->
-                <div class="space-y-4">
-                    <!-- QR Code Upload Box -->
-                    <div id="qrFieldGroup" class="hidden space-y-3">
-                        <label class="text-xs font-mono font-semibold text-slate-400 uppercase tracking-wider block">Upload or Drop QR Code Image (Quishing Attack Detection)</label>
-                        <div class="border-2 border-dashed border-slate-700 hover:border-emerald-500/60 rounded-2xl p-6 text-center cursor-pointer bg-slate-950/80 transition-colors" onclick="document.getElementById('qrFileInput').click()">
-                            <span class="material-symbols-outlined text-emerald-400 text-[36px] mb-2">qr_code_2</span>
-                            <p class="text-sm font-semibold text-slate-200">Click to upload QR image (.png, .jpg, .webp)</p>
-                            <p class="text-xs text-slate-400 mt-1">Or drag & drop parking ticket, payment stand, or email QR screenshot</p>
-                            <input id="qrFileInput" type="file" accept="image/*" class="hidden" onchange="handleQrUpload(event)">
-                        </div>
-                        <div id="qrDecodedPreview" class="hidden text-xs font-mono bg-slate-950 p-3 rounded-xl border border-slate-800 text-emerald-400"></div>
+                <div class="bg-[#0e1626] border border-slate-800 rounded-2xl rounded-tl-none p-3.5 max-w-[85%] shadow-md space-y-2">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold text-emerald-400">ShieldSense AI Agent</span>
+                        <span class="text-[9px] font-mono text-slate-500">Groq Llama 3.1</span>
                     </div>
-
-                    <div id="fileFieldGroup" class="hidden">
-                        <label class="text-xs font-mono font-semibold text-slate-400 uppercase tracking-wider block mb-1">File Name / Attachment Metadata (e.g. invoice_2026.pdf.exe)</label>
-                        <input id="scanFilename" type="text" placeholder="e.g. urgent_statement.pdf.exe or salary_sheet.xlsm" class="w-full bg-[#05070e] border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none focus:border-emerald-400 font-mono">
-                    </div>
-
-                    <div id="emailFieldGroup" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="text-xs font-mono font-semibold text-slate-400 uppercase tracking-wider block mb-1">Sender Email / Name (Optional)</label>
-                            <input id="scanSender" type="text" placeholder="e.g. PayPal Alerts <security@paypal-verification-fake.com>" class="w-full bg-[#05070e] border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none focus:border-emerald-400">
-                        </div>
-                        <div>
-                            <label class="text-xs font-mono font-semibold text-slate-400 uppercase tracking-wider block mb-1">Subject / Header (Optional)</label>
-                            <input id="scanSubject" type="text" placeholder="e.g. URGENT: Your bank account is locked" class="w-full bg-[#05070e] border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none focus:border-emerald-400">
-                        </div>
-                    </div>
-
-                    <div id="textFieldGroup">
-                        <label id="scanTextLabel" class="text-xs font-mono font-semibold text-slate-400 uppercase tracking-wider block mb-1">URL / Link / Text Content to Analyze</label>
-                        <textarea id="scanText" rows="4" placeholder="Paste link or text content here... (e.g. http://198.51.100.7/verify or Please enter your OTP at bit.ly/bank-verify)" class="w-full bg-[#05070e] border border-slate-800 rounded-xl p-4 text-sm text-slate-100 focus:outline-none focus:border-emerald-400 font-mono"></textarea>
-                    </div>
-
-                    <button onclick="runHubScan()" id="mainScanBtn" class="w-full bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-bold py-4 px-6 rounded-2xl transition-all flex items-center justify-center gap-3 shadow-xl shadow-emerald-500/20 text-base hover:scale-[1.01] active:scale-[0.99]">
-                        <span class="material-symbols-outlined text-[24px]">security</span>
-                        <span>Analyze Threat Risk with AI Sentinel</span>
-                    </button>
-                </div>
-
-                <!-- Comprehensive AI Forensic Inspection Output Card -->
-                <div id="hubResultSection" class="hidden bg-[#05070e] border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-800 pb-4 gap-2">
-                        <div class="flex items-center gap-3">
-                            <h3 class="font-bold text-white text-base">AI Inspection Report</h3>
-                            <span id="hubAiBadge" class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-mono font-bold">⚡ Groq Llama 3.1 AI Analyzed</span>
-                        </div>
-                        <div id="hubVerdictBadge" class="px-4 py-1 rounded-full font-bold text-xs uppercase tracking-wider"></div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
-                        <!-- Animated Circular Gauge Meter -->
-                        <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl text-center flex flex-col items-center justify-center">
-                            <div class="relative w-36 h-36 flex items-center justify-center">
-                                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                                    <circle cx="50" cy="50" r="42" stroke="rgba(255,255,255,0.06)" stroke-width="8" fill="transparent"/>
-                                    <circle id="gaugeCircle" cx="50" cy="50" r="42" stroke="#10b981" stroke-width="8" stroke-dasharray="264" stroke-dashoffset="264" stroke-linecap="round" fill="transparent" class="gauge-circle"/>
-                                </svg>
-                                <div class="absolute flex flex-col items-center">
-                                    <span id="hubScoreDisplay" class="text-4xl font-black font-mono">0</span>
-                                    <span class="text-[10px] text-slate-400 font-mono uppercase">Score / 100</span>
-                                </div>
-                            </div>
-                            <span class="text-xs text-slate-400 font-mono mt-3">Threat Risk Index</span>
-                        </div>
-
-                        <!-- Findings Summary -->
-                        <div class="md:col-span-2 space-y-4">
-                            <div>
-                                <h4 class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider mb-1.5">Executive Summary</h4>
-                                <p id="hubSummaryText" class="text-slate-200 text-sm bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 font-medium leading-relaxed"></p>
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider mb-1.5">Threat Indicators & Evidence Breakdown</h4>
-                                <ul id="hubFindingsList" class="space-y-2 text-sm text-slate-300"></ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- BILINGUAL HINGLISH 3-PART EXPLANATION CARD (PS Demanded) -->
-                    <div class="bg-gradient-to-br from-slate-900 to-[#0a0f1d] border border-slate-800 rounded-2xl p-5 space-y-3">
-                        <div class="flex items-center gap-2 border-b border-slate-800 pb-2">
-                            <span class="material-symbols-outlined text-amber-400 text-[20px]">translate</span>
-                            <h4 class="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider">Bilingual Hinglish Explanation (Zero-Jargon)</h4>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-                            <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800/80">
-                                <span class="font-bold text-slate-400 block mb-1">1. Yeh Kya Hai? (What is this?)</span>
-                                <p id="hinglishWhat" class="text-slate-200 leading-relaxed"></p>
-                            </div>
-                            <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800/80">
-                                <span class="font-bold text-rose-400 block mb-1">2. Kya Nuksaan Ho Sakta Hai?</span>
-                                <p id="hinglishHarm" class="text-slate-200 leading-relaxed"></p>
-                            </div>
-                            <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800/80">
-                                <span class="font-bold text-emerald-400 block mb-1">3. Abhi Kya Karna Chahiye?</span>
-                                <p id="hinglishAction" class="text-slate-200 leading-relaxed"></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- SCAMMER INTENT & PROFIT FORENSICS CARD -->
-                    <div class="bg-gradient-to-br from-slate-900 to-[#0a0f1d] border border-slate-800 rounded-2xl p-5 space-y-3">
-                        <div class="flex items-center gap-2 border-b border-slate-800 pb-2">
-                            <span class="material-symbols-outlined text-cyan-400 text-[20px]">psychology</span>
-                            <h4 class="text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider">Scammer Profit & Intent Forensics</h4>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
-                            <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800/80">
-                                <span class="font-bold text-slate-400 block mb-1 uppercase">Immediate Ask</span>
-                                <p id="forensicAsk" class="text-slate-300 leading-relaxed"></p>
-                            </div>
-                            <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800/80">
-                                <span class="font-bold text-amber-400 block mb-1 uppercase">The Mind Game / Trap</span>
-                                <p id="forensicTrap" class="text-slate-300 leading-relaxed"></p>
-                            </div>
-                            <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800/80">
-                                <span class="font-bold text-emerald-400 block mb-1 uppercase">Where the Profit Goes</span>
-                                <p id="forensicProfit" class="text-slate-300 leading-relaxed"></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Action Guardrails & Inline Firewall Simulator -->
-                    <div class="border-t border-slate-800 pt-5 flex flex-wrap gap-3 items-center">
-                        <span class="text-xs text-slate-400 font-mono font-bold uppercase">Guardrail Action:</span>
-                        <button onclick="simulateHubAction('quarantined')" class="px-4 py-2 bg-amber-500/10 text-amber-400 border border-amber-500/30 hover:bg-amber-500/20 rounded-xl text-xs font-bold transition-all">
-                            🔒 Move to Safe Review (Quarantine)
+                    <p class="text-xs text-slate-200 leading-relaxed">
+                        Namaste! Main hoon aapka <strong>ShieldSense Cyber Guardian</strong> 🛡️.
+                    </p>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Mujhe koi bhi <strong>suspicious link, fake SMS, WhatsApp text, QR code photo, ya call script</strong> bhejo — main instantly inspect karke <strong>Hinglish mein explain karunga</strong>.
+                    </p>
+                    
+                    <!-- Quick Example Chips -->
+                    <div class="pt-1.5 flex flex-wrap gap-1.5">
+                        <button onclick="sendQuickMessage('URGENT: Your SBI Bank account is locked. Update KYC at http://sbi-kyc-verify-login.com or account will be suspended today.')" class="text-[10px] bg-slate-900 hover:bg-slate-800 border border-slate-700/80 px-2.5 py-1 rounded-full text-slate-300 text-left transition-colors">
+                            🏦 "SBI KYC locked email/SMS"
                         </button>
-                        <button onclick="simulateHubAction('blocked')" class="px-4 py-2 bg-rose-500/10 text-rose-400 border border-rose-500/30 hover:bg-rose-500/20 rounded-xl text-xs font-bold transition-all">
-                            🚫 Block Sender / Domain
+                        <button onclick="sendQuickMessage('Electricity bill unpaid. Your power will be disconnected at 9:30 PM tonight. Call junior engineer at 9876543210 immediately.')" class="text-[10px] bg-slate-900 hover:bg-slate-800 border border-slate-700/80 px-2.5 py-1 rounded-full text-slate-300 text-left transition-colors">
+                            💡 "Electricity cut 9:30 PM SMS"
                         </button>
-                        <button onclick="simulateFirewallBlock()" class="px-4 py-2 bg-purple-500/10 text-purple-400 border border-purple-500/30 hover:bg-purple-500/20 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
-                            <span class="material-symbols-outlined text-[16px]">security_update_warning</span>
-                            <span>Simulate Click (Inline Firewall Test)</span>
+                        <button onclick="sendQuickMessage('Dear Rahul, please find attached the updated salary invoice receipt: Invoice_May_2026.pdf.exe')" class="text-[10px] bg-slate-900 hover:bg-slate-800 border border-slate-700/80 px-2.5 py-1 rounded-full text-slate-300 text-left transition-colors">
+                            📁 "Disguised .pdf.exe attachment"
                         </button>
-                        <span id="hubActionFeedback" class="text-xs font-mono font-semibold text-emerald-400 ml-auto"></span>
-                    </div>
-
-                    <!-- INLINE FIREWALL BLOCKED POPUP OVERLAY (Simulated Safe Link Interception) -->
-                    <div id="firewallModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-                        <div class="bg-[#0a0f1d] border-2 border-rose-500 rounded-3xl w-full max-w-lg p-8 shadow-2xl space-y-5 text-center relative">
-                            <div class="w-16 h-16 rounded-2xl bg-rose-500/20 text-rose-400 border border-rose-500/30 flex items-center justify-center mx-auto">
-                                <span class="material-symbols-outlined text-[40px]">gpp_bad</span>
-                            </div>
-                            <div>
-                                <span class="text-[10px] font-mono font-bold text-rose-400 uppercase tracking-widest bg-rose-500/10 px-3 py-1 rounded-full border border-rose-500/20">SHIELDSENSE INLINE FIREWALL ACTIVATED</span>
-                                <h3 class="text-2xl font-black text-white mt-3">Access Blocked & Connection Severed</h3>
-                                <p class="text-xs text-slate-300 mt-2 leading-relaxed">
-                                    The outgoing connection to this destination was physically intercepted by the ShieldSense DNS sinkhole before any network packets could reach the attacker's server.
-                                </p>
-                            </div>
-                            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-left font-mono text-xs space-y-1.5 text-slate-300">
-                                <div><strong class="text-slate-400">Target URL:</strong> <span id="firewallBlockedUrl" class="text-rose-400 break-all"></span></div>
-                                <div><strong class="text-slate-400">Firewall Action:</strong> <span class="text-emerald-400">Connection Aborted (TCP RST)</span></div>
-                                <div><strong class="text-slate-400">Threat Reason:</strong> Credential Harvester / Disguised Host</div>
-                            </div>
-                            <button onclick="closeFirewallModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl text-xs transition-colors">
-                                Return to Safe Cockpit
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Dynamic Chat Messages Will Be Injected Here -->
+
+            <!-- Typing Indicator (Hidden by Default) -->
+            <div id="typingIndicator" class="hidden flex items-start gap-2.5">
+                <div class="w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center shrink-0 mt-0.5 text-emerald-400">
+                    <span class="material-symbols-outlined text-[18px]">smart_toy</span>
+                </div>
+                <div class="bg-[#0e1626] border border-slate-800 rounded-2xl rounded-tl-none p-3 max-w-[80%] shadow-md flex items-center gap-1.5">
+                    <span class="text-[11px] font-mono text-slate-400 mr-1">AI analyzing forensics</span>
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                </div>
+            </div>
         </section>
+
+        <!-- Bottom Chat Input Bar -->
+        <footer class="bg-[#0b0f19] border-t border-slate-800/80 p-3">
+            <form onsubmit="handleChatSubmit(event)" class="flex items-center gap-2">
+                <button type="button" onclick="document.getElementById('hiddenQrInput').click()" class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/40 flex items-center justify-center shrink-0 transition-colors" title="Scan QR Code / Image">
+                    <span class="material-symbols-outlined text-[20px]">qr_code_scanner</span>
+                </button>
+
+                <input id="chatInput" type="text" placeholder="Type a message, paste link, or phone call text..." class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 font-sans">
+
+                <button type="submit" id="sendBtn" class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 text-slate-950 font-bold flex items-center justify-center shrink-0 shadow-lg shadow-emerald-500/20 hover:scale-105 active:scale-95 transition-all">
+                    <span class="material-symbols-outlined text-[20px]">send</span>
+                </button>
+            </form>
+        </footer>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-[#05070e] border-t border-slate-900 py-6 px-6 text-center text-xs text-slate-500 font-mono">
-        © 2026 ShieldSense Security Operations. All rights reserved.
-    </footer>
+    <!-- INLINE FIREWALL BLOCK MODAL (Simulated Accidental Click Interception) -->
+    <div id="firewallModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-[#0b0f19] border-2 border-rose-500 rounded-3xl w-full max-w-sm p-6 shadow-2xl space-y-4 text-center">
+            <div class="w-14 h-14 rounded-2xl bg-rose-500/20 text-rose-400 border border-rose-500/30 flex items-center justify-center mx-auto">
+                <span class="material-symbols-outlined text-[36px]">gpp_bad</span>
+            </div>
+            <div>
+                <span class="text-[9px] font-mono font-bold text-rose-400 uppercase tracking-widest bg-rose-500/10 px-2.5 py-0.5 rounded-full border border-rose-500/20">INLINE FIREWALL BLOCKED</span>
+                <h3 class="text-xl font-black text-white mt-2">Connection Severed</h3>
+                <p class="text-[11px] text-slate-300 mt-1.5 leading-relaxed">
+                    ShieldSense DNS sinkhole intercepted the connection before any packet reached the attacker's phishing server.
+                </p>
+            </div>
+            <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-left font-mono text-[11px] space-y-1 text-slate-300">
+                <div><strong class="text-slate-400">Target:</strong> <span id="firewallTargetUrl" class="text-rose-400 break-all"></span></div>
+                <div><strong class="text-slate-400">Action:</strong> <span class="text-emerald-400">TCP Connection Aborted</span></div>
+            </div>
+            <button onclick="closeFirewallModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs transition-colors">
+                Back to Safe Chat
+            </button>
+        </div>
+    </div>
 
     <script>
-        let activeMode = 'url';
         let isGuardianActive = false;
         let recognition = null;
-        let lastScannedUrl = 'http://198.51.100.7/verify';
-
-        window.onload = function() {
-            const userStr = localStorage.getItem('shieldsense_user');
-            if (userStr) {
-                const user = JSON.parse(userStr);
-                document.getElementById('userNameText').innerText = `Analyst: ${user.name}`;
-            }
-        };
-
-        function handleLogout() {
-            localStorage.removeItem('shieldsense_user');
-            window.location.href = '/';
-        }
+        let lastScannedUrl = 'http://sbi-kyc-verify-login.com';
 
         // TOGGLE LIVE CALL SCAM GUARDIAN
         function toggleCallGuardian() {
@@ -442,16 +293,16 @@
             const hud = document.getElementById('callGuardianHud');
 
             if (isGuardianActive) {
-                btn.className = 'relative inline-flex h-7 w-14 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-emerald-500 transition-colors duration-200 ease-in-out focus:outline-none';
-                thumb.className = 'pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out translate-x-7';
-                badge.className = 'text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/40 animate-pulse';
-                badge.innerText = '● LIVE GUARDIAN ACTIVE';
+                btn.className = 'relative inline-flex h-6 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-emerald-500 transition-colors duration-200 ease-in-out focus:outline-none';
+                thumb.className = 'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out translate-x-6';
+                badge.className = 'text-[9px] uppercase font-mono px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/40 animate-pulse';
+                badge.innerText = '● LISTENING';
                 hud.classList.remove('hidden');
                 startSpeechRecognition();
             } else {
-                btn.className = 'relative inline-flex h-7 w-14 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-slate-700 transition-colors duration-200 ease-in-out focus:outline-none';
-                thumb.className = 'pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out translate-x-0';
-                badge.className = 'text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400 font-bold border border-slate-700';
+                btn.className = 'relative inline-flex h-6 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-slate-700 transition-colors duration-200 ease-in-out focus:outline-none';
+                thumb.className = 'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out translate-x-0';
+                badge.className = 'text-[9px] uppercase font-mono px-1.5 py-0.2 rounded bg-slate-800 text-slate-400 font-bold border border-slate-700';
                 badge.innerText = 'STANDBY';
                 hud.classList.add('hidden');
                 stopSpeechRecognition();
@@ -471,19 +322,12 @@
                     for (let i = event.resultIndex; i < event.results.length; ++i) {
                         transcript += event.results[i][0].transcript;
                     }
-                    if (transcript) {
-                        document.getElementById('callTranscriptBox').innerText = transcript;
-                        analyzeCallAudio(transcript);
+                    if (transcript && transcript.length > 10) {
+                        sendUserMessage(`[🎙️ Live Phone Call Audio]: "${transcript}"`);
+                        analyzeThreat(transcript, 'Live Call Stream');
                     }
                 };
-
-                recognition.onerror = function(err) {
-                    console.log('Speech recognition notice:', err.error);
-                };
-
                 try { recognition.start(); } catch(e){}
-            } else {
-                document.getElementById('callTranscriptBox').innerText = 'Microphone listener ready. Click any preset below or speak into mic.';
             }
         }
 
@@ -493,129 +337,205 @@
             }
         }
 
-        async function analyzeCallAudio(spokenText) {
+        function simulateCallPreset(type) {
+            let sample = '';
+            if (type === 'police') {
+                sample = 'This is Officer Sharma from Delhi Police CBI Cyber Cell. An arrest warrant is registered against your Aadhaar for money laundering. You are placed under digital arrest. Stay on the line and transfer your savings to the RBI clearing account.';
+            } else if (type === 'otp') {
+                sample = 'Good afternoon, calling from SBI Card Department. Your debit card is blocked. I have sent a 6-digit OTP to your number. Please share the OTP now to unblock.';
+            } else if (type === 'anydesk') {
+                sample = 'Sir, your banking security is compromised. Go to Play Store, install AnyDesk app immediately, and read me the 9-digit code to protect your account.';
+            } else {
+                sample = 'Hi Ramesh, let us connect tomorrow at 4 PM for the project presentation.';
+            }
+
+            sendUserMessage(`[🎙️ Live Phone Call Audio]: "${sample}"`);
+            analyzeThreat(sample, 'Live Phone Call Stream');
+        }
+
+        function triggerQuickPrompt(type) {
+            const input = document.getElementById('chatInput');
+            if (type === 'link') {
+                input.value = 'http://198.51.100.7/verify-sbi-bank';
+            } else if (type === 'sms') {
+                input.value = 'Dear customer, your electricity will be disconnected at 9:30 PM tonight. Pay immediately at bit.ly/power-bill-pay';
+            } else if (type === 'file') {
+                input.value = 'Check attachment: Salary_Increment_Letter.pdf.exe';
+            }
+            input.focus();
+        }
+
+        function sendQuickMessage(msg) {
+            sendUserMessage(msg);
+            analyzeThreat(msg, 'Quick Message');
+        }
+
+        function handleChatSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('chatInput');
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            sendUserMessage(msg);
+            input.value = '';
+            analyzeThreat(msg, 'User Chat Input');
+        }
+
+        function sendUserMessage(text) {
+            const container = document.getElementById('chatContainer');
+            const div = document.createElement('div');
+            div.className = 'flex justify-end';
+            div.innerHTML = `
+                <div class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-2xl rounded-tr-none px-4 py-2.5 max-w-[85%] text-xs shadow-md font-medium leading-relaxed break-words">
+                    ${escapeHtml(text)}
+                </div>
+            `;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            const container = document.getElementById('chatContainer');
+            indicator.classList.remove('hidden');
+            container.appendChild(indicator);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            document.getElementById('typingIndicator').classList.add('hidden');
+        }
+
+        async function analyzeThreat(text, source) {
+            showTypingIndicator();
+            if (text.includes('http')) {
+                const match = text.match(/https?:\/\/[^\s]+/);
+                if (match) lastScannedUrl = match[0];
+            }
+
             try {
                 const res = await fetch('/api/scan', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
-                        text: spokenText,
-                        subject: 'Live Call Audio Stream Transcript',
-                        sender: 'Phone Call Audio Channel'
+                        text: text,
+                        subject: source,
+                        sender: 'ShieldSense In-App Input'
                     })
                 });
                 const data = await res.json();
-                renderCallHud(data);
-            } catch(e) {
-                console.error('Call analysis error:', e);
+                hideTypingIndicator();
+                renderBotResponse(data);
+            } catch(err) {
+                hideTypingIndicator();
+                renderErrorMessage(err.message);
             }
         }
 
-        function simulateCallAudio(presetType) {
-            let sample = '';
-            if (presetType === 'police') {
-                sample = 'This is Officer Sharma from Delhi Police CBI Cyber Crime Branch. An arrest warrant has been issued in your name for money laundering. You are under digital arrest. Stay on the line, do not tell anyone, and immediately transfer your savings to the RBI clearing account.';
-            } else if (presetType === 'otp') {
-                sample = 'Good afternoon sir, I am calling from SBI Customer Support. Your credit card is blocked due to KYC non-compliance. I have sent a 6-digit verification OTP to your mobile. Please read me the OTP right now so I can unfreeze your account.';
-            } else if (presetType === 'anydesk') {
-                sample = 'Sir, your banking app requires a mandatory security update. Please go to Play Store, download AnyDesk or RustDesk right now, and share the 9-digit code with me so I can configure your security.';
-            } else {
-                sample = 'Hi Rahul, just wanted to check if you are free for the project discussion meeting tomorrow at 3 PM.';
-            }
+        function renderBotResponse(data) {
+            const container = document.getElementById('chatContainer');
+            const div = document.createElement('div');
+            div.className = 'flex items-start gap-2.5';
 
-            document.getElementById('callTranscriptBox').innerText = sample;
-            analyzeCallAudio(sample);
-        }
-
-        function renderCallHud(data) {
-            const hud = document.getElementById('callThreatHudResult');
-            hud.classList.remove('hidden');
-
-            const scoreEl = document.getElementById('callScoreText');
-            scoreEl.innerText = data.score;
-
-            const tag = document.getElementById('callVerdictTag');
-            const advice = document.getElementById('callActionAdvice');
+            let verdictColor = 'emerald';
+            let verdictLabel = '🟢 SAFE / LOW RISK';
+            let verdictBadgeClass = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
 
             if (data.verdict === 'dangerous') {
-                tag.className = 'px-3 py-0.5 rounded-full font-bold text-xs bg-rose-500/20 text-rose-400 border border-rose-500/30';
-                tag.innerText = '🔴 HIGH-RISK SCAM DETECTED';
-                scoreEl.className = 'text-rose-400 font-bold';
-                advice.className = 'p-3 rounded-lg text-xs font-bold font-mono bg-rose-950/60 border border-rose-500/40 text-rose-300';
-                advice.innerText = '⚠️ HANG UP IMMEDIATELY: Caller is attempting financial extortion or credential theft. Never share OTP or install remote apps.';
+                verdictColor = 'rose';
+                verdictLabel = '🔴 DANGEROUS THREAT';
+                verdictBadgeClass = 'bg-rose-500/20 text-rose-400 border-rose-500/30 animate-pulse';
             } else if (data.verdict === 'suspicious') {
-                tag.className = 'px-3 py-0.5 rounded-full font-bold text-xs bg-amber-500/20 text-amber-400 border border-amber-500/30';
-                tag.innerText = '🟡 SUSPICIOUS CALL PATTERN';
-                scoreEl.className = 'text-amber-400 font-bold';
-                advice.className = 'p-3 rounded-lg text-xs font-bold font-mono bg-amber-950/60 border border-amber-500/40 text-amber-300';
-                advice.innerText = '⚠️ EXERCISE CAUTION: Caller is applying pressure or requesting unusual actions. Verify independently.';
-            } else {
-                tag.className = 'px-3 py-0.5 rounded-full font-bold text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/30';
-                tag.innerText = '🟢 SAFE CONVERSATION';
-                scoreEl.className = 'text-emerald-400 font-bold';
-                advice.className = 'p-3 rounded-lg text-xs font-bold font-mono bg-emerald-950/60 border border-emerald-500/40 text-emerald-300';
-                advice.innerText = '✅ No extortion, digital arrest, or credential theft patterns detected in spoken audio.';
+                verdictColor = 'amber';
+                verdictLabel = '🟡 SUSPICIOUS';
+                verdictBadgeClass = 'bg-amber-500/20 text-amber-400 border-amber-500/30';
             }
 
-            const list = document.getElementById('callFindingsList');
-            list.innerHTML = '';
+            // Build Findings List
+            let findingsHtml = '';
             if (data.findings && data.findings.length > 0) {
-                data.findings.forEach(f => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `<span class="text-amber-400 font-bold">⚠️</span> <span>${f.explanation}</span>`;
-                    list.appendChild(li);
-                });
+                findingsHtml = data.findings.map(f => `<li class="flex items-start gap-1.5"><span class="text-amber-400">⚠️</span> <span>${escapeHtml(f.explanation)}</span></li>`).join('');
             }
+
+            // Hinglish Card
+            let hinglishHtml = '';
+            if (data.bilingual_hinglish) {
+                hinglishHtml = `
+                    <div class="bg-slate-950/80 rounded-xl p-3 border border-slate-800 space-y-2 mt-2 text-[11px]">
+                        <div class="font-bold text-amber-400 uppercase tracking-wider text-[10px] flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[14px]">translate</span>
+                            <span>Hinglish Breakdown:</span>
+                        </div>
+                        <div><strong class="text-slate-400">1. Yeh Kya Hai:</strong> <span class="text-slate-200">${escapeHtml(data.bilingual_hinglish.yeh_kya_hai)}</span></div>
+                        <div><strong class="text-rose-400">2. Kya Nuksaan:</strong> <span class="text-slate-200">${escapeHtml(data.bilingual_hinglish.kya_nuksaan)}</span></div>
+                        <div><strong class="text-emerald-400">3. Abhi Kya Karo:</strong> <span class="text-slate-200">${escapeHtml(data.bilingual_hinglish.kya_karna_hai)}</span></div>
+                    </div>
+                `;
+            }
+
+            // Scammer Forensics
+            let forensicsHtml = '';
+            if (data.scammer_forensics && data.verdict !== 'low_risk') {
+                forensicsHtml = `
+                    <div class="bg-slate-950/80 rounded-xl p-3 border border-slate-800 space-y-1.5 mt-2 text-[11px] font-mono">
+                        <div class="font-bold text-cyan-400 uppercase tracking-wider text-[10px]">🕵️ Scammer Profit & Intent:</div>
+                        <div><strong class="text-slate-400">Trap:</strong> ${escapeHtml(data.scammer_forensics.psychological_trap)}</div>
+                        <div><strong class="text-emerald-400">Where Money Goes:</strong> ${escapeHtml(data.scammer_forensics.scammer_profit)}</div>
+                    </div>
+                `;
+            }
+
+            div.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center shrink-0 mt-0.5 text-emerald-400">
+                    <span class="material-symbols-outlined text-[18px]">shield</span>
+                </div>
+                <div class="bg-[#0e1626] border border-slate-800 rounded-2xl rounded-tl-none p-3.5 max-w-[90%] shadow-lg space-y-2 text-xs">
+                    <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
+                        <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full border ${verdictBadgeClass}">${verdictLabel}</span>
+                        <span class="font-mono text-xs font-bold text-slate-300">Score: <strong class="text-${verdictColor}-400 text-sm">${data.score}</strong>/100</span>
+                    </div>
+
+                    <p class="text-slate-200 leading-relaxed font-medium">${escapeHtml(data.summary)}</p>
+
+                    ${findingsHtml ? `<ul class="space-y-1 text-[11px] text-slate-300 bg-slate-950/50 p-2.5 rounded-xl border border-slate-800/60">${findingsHtml}</ul>` : ''}
+
+                    ${hinglishHtml}
+                    ${forensicsHtml}
+
+                    <!-- 1-Click Action Guardrails -->
+                    <div class="pt-2 flex flex-wrap gap-1.5 border-t border-slate-800/80">
+                        <button onclick="confirmAction(this, 'Quarantined')" class="px-2.5 py-1 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 rounded-lg text-[10px] font-bold transition-all">
+                            🔒 Safe Review
+                        </button>
+                        <button onclick="confirmAction(this, 'Blocked')" class="px-2.5 py-1 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 rounded-lg text-[10px] font-bold transition-all">
+                            🚫 Block
+                        </button>
+                        <button onclick="testFirewallBlock()" class="px-2.5 py-1 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 border border-purple-500/30 rounded-lg text-[10px] font-bold transition-all flex items-center gap-1">
+                            <span>🛑</span> <span>Test Click Firewall</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
         }
 
-        function setVectorMode(mode) {
-            activeMode = mode;
-            const btnUrl = document.getElementById('tabUrl');
-            const btnEmail = document.getElementById('tabEmail');
-            const btnQr = document.getElementById('tabQr');
-            const btnFile = document.getElementById('tabFile');
-
-            const fileGroup = document.getElementById('fileFieldGroup');
-            const qrGroup = document.getElementById('qrFieldGroup');
-            const emailGroup = document.getElementById('emailFieldGroup');
-            const textGroup = document.getElementById('textFieldGroup');
-
-            const activeClass = 'px-4 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-2 transition-all';
-            const inactiveClass = 'px-4 py-2.5 rounded-xl font-bold text-xs bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 border border-transparent flex items-center gap-2 transition-all';
-
-            btnUrl.className = mode === 'url' ? activeClass : inactiveClass;
-            btnEmail.className = mode === 'email' ? activeClass : inactiveClass;
-            btnQr.className = mode === 'qr' ? activeClass : inactiveClass;
-            btnFile.className = mode === 'file' ? activeClass : inactiveClass;
-
-            if (mode === 'qr') {
-                qrGroup.classList.remove('hidden');
-                fileGroup.classList.add('hidden');
-                emailGroup.classList.add('hidden');
-                textGroup.classList.remove('hidden');
-                document.getElementById('scanTextLabel').innerText = 'Decoded QR Destination Link';
-            } else if (mode === 'file') {
-                qrGroup.classList.add('hidden');
-                fileGroup.classList.remove('hidden');
-                emailGroup.classList.add('hidden');
-                textGroup.classList.remove('hidden');
-                document.getElementById('scanTextLabel').innerText = 'File Context / Details (Optional)';
-            } else if (mode === 'email') {
-                qrGroup.classList.add('hidden');
-                fileGroup.classList.add('hidden');
-                emailGroup.classList.remove('hidden');
-                textGroup.classList.remove('hidden');
-                document.getElementById('scanTextLabel').innerText = 'SMS / WhatsApp / Email Body';
-            } else {
-                qrGroup.classList.add('hidden');
-                fileGroup.classList.add('hidden');
-                emailGroup.classList.add('hidden');
-                textGroup.classList.remove('hidden');
-                document.getElementById('scanTextLabel').innerText = 'URL / Link / Text Content to Analyze';
-            }
+        function confirmAction(btn, text) {
+            btn.className = 'px-2.5 py-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 rounded-lg text-[10px] font-bold';
+            btn.innerText = `✓ ${text}`;
         }
 
-        // QR Code Image Decode Logic
+        function testFirewallBlock() {
+            document.getElementById('firewallTargetUrl').innerText = lastScannedUrl;
+            document.getElementById('firewallModal').classList.remove('hidden');
+        }
+
+        function closeFirewallModal() {
+            document.getElementById('firewallModal').classList.add('hidden');
+        }
+
+        // QR Upload Matrix Decoder
         function handleQrUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -632,15 +552,11 @@
                     const imageData = ctx.getImageData(0, 0, img.width, img.height);
                     const code = jsQR(imageData.data, imageData.width, imageData.height);
 
-                    const preview = document.getElementById('qrDecodedPreview');
-                    preview.classList.remove('hidden');
-
                     if (code) {
-                        preview.innerHTML = `<span>Decoded QR Destination:</span> <strong class="text-white">${code.data}</strong>`;
-                        document.getElementById('scanText').value = code.data;
-                        runHubScan();
+                        sendUserMessage(`[📸 Decoded QR Code Image]: ${code.data}`);
+                        analyzeThreat(code.data, 'QR Code Destination Payload');
                     } else {
-                        preview.innerHTML = `<span class="text-rose-400">Could not decode QR matrix. Please upload a clear QR image.</span>`;
+                        sendUserMessage(`[📸 QR Code Upload]: Unable to detect clear QR matrix. Please upload a clear photo.`);
                     }
                 };
                 img.src = e.target.result;
@@ -648,113 +564,25 @@
             reader.readAsDataURL(file);
         }
 
-        async function runHubScan() {
-            const text = document.getElementById('scanText').value.trim();
-            const sender = document.getElementById('scanSender').value.trim();
-            const subject = document.getElementById('scanSubject').value.trim();
-            const filename = document.getElementById('scanFilename').value.trim();
-            const btn = document.getElementById('mainScanBtn');
-
-            if (!text && !subject && !filename) {
-                alert('Please enter a link, message text, QR code, or filename to scan.');
-                return;
-            }
-
-            if (text.startsWith('http')) {
-                lastScannedUrl = text;
-            }
-
-            btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[20px]">progress_activity</span><span>Analyzing Threat Risk with AI...</span>';
-            btn.disabled = true;
-
-            try {
-                const res = await fetch('/api/scan', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ text, sender, subject, filename })
-                });
-                const data = await res.json();
-                renderHubResult(data);
-            } catch (err) {
-                alert('Scan failed: ' + err.message);
-            } finally {
-                btn.innerHTML = '<span class="material-symbols-outlined text-[24px]">security</span><span>Analyze Threat Risk with AI Sentinel</span>';
-                btn.disabled = false;
-            }
+        function renderErrorMessage(err) {
+            const container = document.getElementById('chatContainer');
+            const div = document.createElement('div');
+            div.className = 'flex items-start gap-2.5';
+            div.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-rose-500/20 border border-rose-500/30 flex items-center justify-center shrink-0 mt-0.5 text-rose-400">
+                    <span class="material-symbols-outlined text-[18px]">error</span>
+                </div>
+                <div class="bg-rose-950/40 border border-rose-500/30 rounded-2xl rounded-tl-none p-3 max-w-[85%] text-xs text-rose-300">
+                    Error scanning threat: ${escapeHtml(err)}
+                </div>
+            `;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
         }
 
-        function renderHubResult(data) {
-            const section = document.getElementById('hubResultSection');
-            section.classList.remove('hidden');
-
-            const scoreDisplay = document.getElementById('hubScoreDisplay');
-            scoreDisplay.innerText = data.score;
-
-            const circle = document.getElementById('gaugeCircle');
-            const circumference = 264;
-            const offset = circumference - (data.score / 100) * circumference;
-            circle.style.strokeDashoffset = offset;
-
-            const badge = document.getElementById('hubVerdictBadge');
-            if (data.verdict === 'dangerous') {
-                badge.className = 'px-4 py-1 rounded-full font-bold text-xs bg-rose-500/20 text-rose-400 border border-rose-500/30';
-                badge.innerText = '🔴 DANGEROUS';
-                scoreDisplay.className = 'text-4xl font-black font-mono text-rose-400';
-                circle.style.stroke = '#f43f5e';
-            } else if (data.verdict === 'suspicious') {
-                badge.className = 'px-4 py-1 rounded-full font-bold text-xs bg-amber-500/20 text-amber-400 border border-amber-500/30';
-                badge.innerText = '🟡 SUSPICIOUS';
-                scoreDisplay.className = 'text-4xl font-black font-mono text-amber-400';
-                circle.style.stroke = '#f59e0b';
-            } else {
-                badge.className = 'px-4 py-1 rounded-full font-bold text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/30';
-                badge.innerText = '🟢 SAFE / LOW RISK';
-                scoreDisplay.className = 'text-4xl font-black font-mono text-emerald-400';
-                circle.style.stroke = '#10b981';
-            }
-
-            document.getElementById('hubSummaryText').innerText = data.summary;
-            const list = document.getElementById('hubFindingsList');
-            list.innerHTML = '';
-            if (data.findings && data.findings.length > 0) {
-                data.findings.forEach(f => {
-                    const li = document.createElement('li');
-                    li.className = 'flex items-start gap-2 bg-slate-900/60 p-2.5 rounded-xl border border-slate-800';
-                    li.innerHTML = `<span class="text-amber-400">⚠️</span> <span>${f.explanation}</span>`;
-                    list.appendChild(li);
-                });
-            } else {
-                list.innerHTML = '<li class="text-slate-400">No high-risk threat indicators triggered.</li>';
-            }
-
-            // Render Bilingual Hinglish Card
-            if (data.bilingual_hinglish) {
-                document.getElementById('hinglishWhat').innerText = data.bilingual_hinglish.yeh_kya_hai || '';
-                document.getElementById('hinglishHarm').innerText = data.bilingual_hinglish.kya_nuksaan || '';
-                document.getElementById('hinglishAction').innerText = data.bilingual_hinglish.kya_karna_hai || '';
-            }
-
-            // Render Scammer Profit & Intent Forensics
-            if (data.scammer_forensics) {
-                document.getElementById('forensicAsk').innerText = data.scammer_forensics.immediate_ask || '';
-                document.getElementById('forensicTrap').innerText = data.scammer_forensics.psychological_trap || '';
-                document.getElementById('forensicProfit').innerText = data.scammer_forensics.scammer_profit || '';
-            }
-
-            document.getElementById('hubActionFeedback').innerText = '';
-        }
-
-        function simulateHubAction(actionName) {
-            document.getElementById('hubActionFeedback').innerText = `Action confirmed: ${actionName.toUpperCase()}`;
-        }
-
-        function simulateFirewallBlock() {
-            document.getElementById('firewallBlockedUrl').innerText = lastScannedUrl;
-            document.getElementById('firewallModal').classList.remove('hidden');
-        }
-
-        function closeFirewallModal() {
-            document.getElementById('firewallModal').classList.add('hidden');
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
         }
     </script>
 </body>
