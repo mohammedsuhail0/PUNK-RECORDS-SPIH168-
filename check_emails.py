@@ -126,6 +126,7 @@ def extract_attachment_metadata(payload):
         attachments.extend(extract_attachment_metadata(part))
     return attachments
 
+
 def get_upcoming_events(service):
     """Fetches calendar events for the next 3 days to check availability."""
     try:
@@ -148,7 +149,6 @@ def get_upcoming_events(service):
             end = event['end'].get('dateTime', event['end'].get('date'))
             summary = event.get('summary', 'Busy')
             
-            # Format datetime nicely
             try:
                 start_dt = datetime.fromisoformat(start.replace('Z', '+00:00'))
                 end_dt = datetime.fromisoformat(end.replace('Z', '+00:00'))
@@ -165,11 +165,16 @@ def get_upcoming_events(service):
         print(f"Error fetching calendar events: {e}")
         return "Could not retrieve calendar events."
 
-def call_groq_api(system_prompt, user_prompt, json_mode=False):
+
+def call_groq_api(system_prompt, user_prompt, json_mode=False, groq_key_override=""):
     """Calls Groq API chat completions endpoint using requests."""
+    api_key = groq_key_override or os.environ.get("GROQ_API_KEY") or GROQ_API_KEY
+    if not api_key:
+        raise Exception("GROQ_API_KEY not configured")
+
     url = "https://api.groq.com/openai/v1/chat/completions"
     headers = {
-        "Authorization": f"Bearer {GROQ_API_KEY}",
+        "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json"
     }
     payload = {
@@ -178,17 +183,18 @@ def call_groq_api(system_prompt, user_prompt, json_mode=False):
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt}
         ],
-        "temperature": 0.1
+        "temperature": 0.2
     }
     if json_mode:
         payload["response_format"] = {"type": "json_object"}
 
-    response = requests.post(url, json=payload, headers=headers)
+    response = requests.post(url, json=payload, headers=headers, timeout=8)
     if response.status_code != 200:
         raise Exception(f"Groq API Error: {response.text}")
         
     result = response.json()
     return result["choices"][0]["message"]["content"].strip()
+
 
 def classify_email(sender, subject, body, calendar_context):
     """Uses Groq (Llama 3.1) to categorize the email, check calendar, and draft a reply."""
@@ -250,9 +256,6 @@ def send_telegram_alert(sender, subject, summary, draft, thread_id):
         f"📝 *Drafted Reply:*\n"
         f"```text\n{draft}\n```"
     )
-    
-    # Inline buttons callback data. Maximum 64 bytes total!
-    # Format: app:[thread_id]
     keyboard = {
         "inline_keyboard": [
             [
@@ -261,7 +264,6 @@ def send_telegram_alert(sender, subject, summary, draft, thread_id):
             ]
         ]
     }
-    
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     payload = {
         "chat_id": TELEGRAM_CHAT_ID,
@@ -269,7 +271,6 @@ def send_telegram_alert(sender, subject, summary, draft, thread_id):
         "parse_mode": "Markdown",
         "reply_markup": json.dumps(keyboard)
     }
-    
     response = requests.post(url, json=payload)
     if response.status_code != 200:
         print(f"Telegram Notification Error: {response.text}")

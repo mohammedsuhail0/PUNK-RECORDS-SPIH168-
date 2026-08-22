@@ -303,24 +303,33 @@ def perform_direct_scan(
         )
     )
 
-    if is_greeting_or_chat and api_key:
-        try:
-            sys_prompt = (
-                "You are ShieldSense, a friendly, intelligent AI Cyber Security Sentinel and bodyguard. "
-                "The user is chatting with you in an in-app mobile chat interface. "
-                "Respond conversationally and warmly in natural Hinglish or English matching the user's language. "
-                "Keep responses concise (2-4 sentences), encouraging, and remind them they can paste any link, SMS, QR code, or scam call script anytime."
-            )
-            chat_reply = check_emails.call_groq_api(sys_prompt, clean_text, json_mode=False)
-            if chat_reply:
-                return {
-                    "verdict": "conversation",
-                    "score": 0,
-                    "summary": "Conversational Response",
-                    "message": chat_reply,
-                }
-        except Exception as e:
-            print(f"Chat error: {e}")
+    if is_greeting_or_chat:
+        if api_key:
+            try:
+                sys_prompt = (
+                    "You are ShieldSense, a friendly, intelligent AI Cyber Security Sentinel and bodyguard. "
+                    "The user is chatting with you in an in-app mobile chat interface. "
+                    "Respond conversationally and warmly in natural Hinglish or English matching the user's language. "
+                    "Keep responses concise (2-4 sentences), encouraging, and remind them they can paste any link, SMS, QR code, or scam call script anytime."
+                )
+                chat_reply = check_emails.call_groq_api(sys_prompt, clean_text, json_mode=False, groq_key_override=api_key)
+                if chat_reply:
+                    return {
+                        "verdict": "conversation",
+                        "score": 0,
+                        "summary": "Conversational Response",
+                        "message": chat_reply,
+                    }
+            except Exception as e:
+                print(f"Chat error: {e}")
+
+        # Natural conversational fallback
+        return {
+            "verdict": "conversation",
+            "score": 0,
+            "summary": "Conversational Response",
+            "message": "Hello! Main active hoon aur aapka device actively protect kar raha hoon 🛡️. Aap koi bhi suspicious link, fake SMS, QR code photo, ya call script share karein — main turant check karke explain karunga.",
+        }
 
     # Standard Security Scan
     attachments = [{"filename": filename}] if filename else None
