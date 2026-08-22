@@ -134,6 +134,36 @@ def scan_attachments(attachments: Iterable[dict] | None) -> list[Finding]:
     return findings
 
 
+def scan_call_transcript(transcript: str) -> list[Finding]:
+    """Analyzes real-time live phone call transcripts for high-risk vishing, digital arrest, and extortion."""
+    text = (transcript or "").lower()
+    findings: list[Finding] = []
+    if not text:
+        return findings
+
+    # Digital Arrest / Law Enforcement Extortion
+    if re.search(r"(cbi|police|narcotics|customs|cyber crime cell|arrest warrant|money laundering|fir lodged|supreme court|court order)", text):
+        findings.append(_finding("call.digital_arrest", 45, "Caller claims to represent Police/CBI/Law Enforcement alleging criminal charges. Real police never conduct interrogations or demand settlements over phone calls."))
+
+    # Remote Screen Share Traps
+    if re.search(r"(anydesk|teamviewer|rustdesk|quicksupport|screen share|share screen|download app from play store to verify)", text):
+        findings.append(_finding("call.screen_share_trap", 40, "Caller is instructing you to install screen-sharing software (AnyDesk/TeamViewer). This allows attackers to view your screen and steal banking OTPs."))
+
+    # OTP / PIN / Banking Credential Interception
+    if re.search(r"(read (the )?otp|tell (me )?(the )?otp|share (the )?6.digit code|enter pin|atm pin|cvv number|verify debit card)", text):
+        findings.append(_finding("call.otp_pin_extraction", 35, "Caller is demanding an OTP, PIN, or CVV. Legitimate banks and support agents NEVER ask for your OTP or PIN."))
+
+    # Utility Disconnection Threats
+    if re.search(r"(electricity (will be )?disconnect|power (will be )?cut|bill unpaid|call this electricity officer|pay 10 rupees to verify)", text):
+        findings.append(_finding("call.electricity_scam", 30, "Caller is using electricity disconnection threats to force immediate payments."))
+
+    # Secrecy & Isolation Coercion
+    if re.search(r"(do not disconnect|do not tell (anyone|family|bank)|stay on line|lock your room|confidential investigation)", text):
+        findings.append(_finding("call.secrecy_coercion", 25, "Caller is demanding secrecy or isolation to prevent you from consulting family or your bank."))
+
+    return findings
+
+
 def call_groq_ai_scan(sender: str, subject: str, body: str, groq_key_override: str = "") -> dict | None:
     """Uses Groq Llama 3.1 AI model to perform deep multi-vector AI threat reasoning."""
     api_key = groq_key_override or os.environ.get("GROQ_API_KEY")
@@ -146,17 +176,27 @@ def call_groq_ai_scan(sender: str, subject: str, body: str, groq_key_override: s
         "Content-Type": "application/json"
     }
     system_prompt = (
-        "You are an expert AI Cyber Threat Analyst inspecting suspicious emails, links, file metadata, and messages. "
-        "Analyze the input across all vector possibilities: phishing, brand impersonation, urgency pressure, fake login URLs, credential harvesting, dangerous file extensions, or scams. "
+        "You are an expert AI Cyber Threat Analyst inspecting suspicious emails, links, file metadata, messages, and phone call transcripts for ShieldSense. "
+        "Analyze the input across all vector possibilities: phishing, brand impersonation, urgency pressure, fake login URLs, credential harvesting, dangerous file extensions, digital arrest, AnyDesk screen takeover, or scams.\n"
         "Return a raw JSON object with this exact schema:\n"
         "{\n"
         '  "llm_score": 0-100,\n'
         '  "llm_verdict": "dangerous" | "suspicious" | "low_risk",\n'
         '  "llm_reasoning": "A concise 1-2 sentence explanation of why this content is suspicious or safe.",\n'
-        '  "findings": ["finding 1 explanation"]\n'
+        '  "findings": ["finding 1 explanation"],\n'
+        '  "hinglish": {\n'
+        '    "yeh_kya_hai": "Simple conversational Hinglish breakdown of what this threat is.",\n'
+        '    "kya_nuksaan": "What damage can happen in Hinglish (e.g. Bank OTP theft, AnyDesk takeover).",\n'
+        '    "kya_karna_hai": "Exact immediate advice in Hinglish (e.g. Link mat kholo, Phone cut karo)."\n'
+        '  },\n'
+        '  "scammer_forensics": {\n'
+        '    "immediate_ask": "What the scammer wants right now (e.g. OTP, ₹20000 transfer, AnyDesk code)",\n'
+        '    "psychological_trap": "Why they use this mind game (e.g. Police fear shutdown, evening deadline panic)",\n'
+        '    "scammer_profit": "Where money/data goes (e.g. Rented mule account to Crypto laundering in 6 mins)"\n'
+        '  }\n'
         "}"
     )
-    user_prompt = f"Sender: {sender}\nSubject: {subject}\nBody/Text/URL/File:\n{body}"
+    user_prompt = f"Sender: {sender}\nSubject: {subject}\nBody/Text/URL/File/Transcript:\n{body}"
     payload = {
         "model": "llama-3.1-8b-instant",
         "messages": [
@@ -184,7 +224,7 @@ def scan_email(
     attachments: Iterable[dict] | None = None,
     groq_key_override: str = "",
 ) -> dict:
-    findings = scan_sender(sender, reply_to) + scan_message(subject, body) + scan_attachments(attachments)
+    findings = scan_sender(sender, reply_to) + scan_message(subject, body) + scan_attachments(attachments) + scan_call_transcript(f"{subject}\n{body}")
     for url in extract_urls(f"{subject}\n{body}"):
         findings.extend(scan_url(url))
 
@@ -193,6 +233,9 @@ def scan_email(
         findings.extend(scan_attachments([{"filename": body.strip()}]))
 
     groq_res = call_groq_ai_scan(sender, subject, body, groq_key_override=groq_key_override)
+    groq_hinglish = None
+    groq_forensics = None
+
     if groq_res and isinstance(groq_res, dict):
         llm_score = int(groq_res.get("llm_score", 0))
         reasoning = groq_res.get("llm_reasoning", "AI intent analysis evaluated potential threat patterns.")
@@ -200,6 +243,8 @@ def scan_email(
         for extra_finding in groq_res.get("findings", []):
             if extra_finding:
                 findings.append(_finding("llm.groq_finding", llm_score, f"AI Threat Indicator: {extra_finding}"))
+        groq_hinglish = groq_res.get("hinglish")
+        groq_forensics = groq_res.get("scammer_forensics")
 
     deduplicated: list[Finding] = []
     seen: set[tuple[str, str]] = set()
@@ -223,6 +268,8 @@ def scan_email(
         "recommendation": recommendation,
         "findings": [asdict(finding) for finding in deduplicated],
         "summary": _summary(verdict, deduplicated),
+        "bilingual_hinglish": _generate_hinglish_summary(verdict, deduplicated, groq_hinglish),
+        "scammer_forensics": _generate_scammer_forensics(verdict, deduplicated, groq_forensics),
         "ai_powered": bool(groq_res),
     }
 
@@ -233,3 +280,47 @@ def _summary(verdict: str, findings: list[Finding]) -> str:
     strongest = max(findings, key=lambda finding: finding.score)
     prefix = "Dangerous" if verdict == "dangerous" else "Suspicious"
     return f"{prefix}: {strongest.explanation}"
+
+
+def _generate_hinglish_summary(verdict: str, findings: list[Finding], groq_hinglish: dict | None) -> dict:
+    if groq_hinglish and isinstance(groq_hinglish, dict) and groq_hinglish.get("yeh_kya_hai"):
+        return groq_hinglish
+    if verdict == "low_risk":
+        return {
+            "yeh_kya_hai": "Yeh message authentic lag raha hai. Koi direct scam ya fake link indicators nahi mile.",
+            "kya_nuksaan": "Filhaal koi immediate threat nahi hai, par personal info verify karke hi share karein.",
+            "kya_karna_hai": "Safe to proceed, par kisi unknown person ko OTP ya password share na karein."
+        }
+    if verdict == "dangerous":
+        return {
+            "yeh_kya_hai": "Yeh message official brand ya police ban kar fake link aur dar ka pressure use kar raha hai.",
+            "kya_nuksaan": "Aapka bank password, OTP, ya device access chori ho sakta hai.",
+            "kya_karna_hai": "Link par click mat karo aur call disconnect karo. Safe Review mein move karo."
+        }
+    return {
+        "yeh_kya_hai": "Is message mein kuch suspicious signals aur urgency elements mile hain.",
+        "kya_nuksaan": "Unknown link se fake portal par redirect hone ka risk ho sakta hai.",
+        "kya_karna_hai": "Sender ki identity official channel se verify karein aur savdhani bartein."
+    }
+
+
+def _generate_scammer_forensics(verdict: str, findings: list[Finding], groq_forensics: dict | None) -> dict:
+    if groq_forensics and isinstance(groq_forensics, dict) and groq_forensics.get("immediate_ask"):
+        return groq_forensics
+    if verdict == "dangerous":
+        return {
+            "immediate_ask": "Immediate OTP, fake KYC verification, or urgent money transfer to a fake clearing account.",
+            "psychological_trap": "Using fear of legal arrest or urgent service cutoff to disable rational verification.",
+            "scammer_profit": "Funds are rapidly siphoned through rented mule bank accounts and laundered to untraceable crypto within minutes."
+        }
+    elif verdict == "suspicious":
+        return {
+            "immediate_ask": "Clicking an unverified link or replying to confirm active contact details.",
+            "psychological_trap": "Curiosity and artificial urgency to trigger an impulsive click before checking.",
+            "scammer_profit": "Harvesting validated phone/email lists for targeted follow-up fraud."
+        }
+    return {
+        "immediate_ask": "Standard informational communication or genuine inquiry.",
+        "psychological_trap": "None observed; normal business or personal dialogue.",
+        "scammer_profit": "No malicious financial exploitation vectors detected."
+    }
