@@ -3,65 +3,68 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>ShieldSense | AI Security Agent</title>
+    <title>ShieldSense | Autonomous AI Security Agent</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=JetBrains+Mono:wght@450&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <style>
         .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
         .material-symbols-outlined[data-weight="fill"] { font-variation-settings: 'FILL' 1; }
     </style>
 </head>
-<body class="bg-[#f8f9ff] text-[#0b1c30] font-sans min-h-screen flex flex-col justify-between antialiased">
+<body class="bg-[#f8fafc] text-[#0f172a] font-sans min-h-screen flex flex-col justify-between antialiased selection:bg-emerald-500 selection:text-white">
 
     <!-- Minimal Header: Clean Logo Format -->
-    <header class="bg-white w-full sticky top-0 z-50 border-b border-slate-200 shadow-sm">
+    <header class="bg-white/95 backdrop-blur-md w-full sticky top-0 z-50 border-b border-slate-200 shadow-2xs">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <!-- Brand Logo -->
-            <a href="/" class="flex items-center gap-2 text-2xl font-black text-slate-900 tracking-tight">
-                <span class="material-symbols-outlined text-slate-900 text-[28px]" data-weight="fill">shield</span>
-                ShieldSense
+            <a href="/" class="flex items-center gap-2.5 text-xl font-extrabold text-slate-900 tracking-tight">
+                <div class="w-8 h-8 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 shadow-2xs">
+                    <span class="material-symbols-outlined text-[20px]" data-weight="fill">shield</span>
+                </div>
+                <span>ShieldSense</span>
+                <span class="text-[9px] font-mono font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full">AI SENTINEL</span>
             </a>
 
             <!-- Right Auth Actions -->
             <div id="headerAuthArea" class="flex items-center gap-3">
-                <button onclick="openAuthModal()" class="px-5 py-2.5 bg-slate-900 text-white rounded-lg font-bold text-sm hover:bg-slate-800 transition-colors flex items-center gap-2 shadow-sm">
-                    <span class="material-symbols-outlined text-[18px]">login</span>
-                    <span>Sign In</span>
-                </button>
+                <a href="/hub" class="px-5 py-2.5 bg-emerald-600 text-white rounded-xl font-bold text-sm hover:bg-emerald-500 transition-all flex items-center gap-2 shadow-sm shadow-emerald-600/20">
+                    <span class="material-symbols-outlined text-[18px]">smart_toy</span>
+                    <span>Launch In-App Sentinel</span>
+                </a>
             </div>
         </div>
     </header>
 
     <!-- Main Hero Landing Section -->
     <main class="flex-grow flex flex-col items-center w-full">
-        <section class="w-full max-w-7xl mx-auto px-6 pt-16 pb-12 text-center">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-200/70 border border-slate-300 text-slate-800 text-xs font-semibold mb-6">
+        <section class="w-full max-w-7xl mx-auto px-6 pt-16 pb-14 text-center">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold mb-6">
                 <span class="relative flex h-2 w-2">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                 </span>
-                24/7 AUTOMATED INBOX GUARDIAN & SECURITY AGENT
+                24/7 AUTONOMOUS IN-APP AI SECURITY SENTINEL & CYBER GUARDIAN
             </div>
 
-            <h1 class="text-4xl md:text-6xl font-black text-slate-900 tracking-tight leading-tight max-w-4xl mx-auto">
-                The Autonomous AI Security Agent for <span class="text-slate-900 border-b-4 border-emerald-400">Modern Teams</span>
+            <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight max-w-4xl mx-auto">
+                The Autonomous AI Security Guardian for <span class="text-emerald-700 underline decoration-emerald-400 decoration-4 underline-offset-4">Digital Citizens & Teams</span>
             </h1>
 
             <p class="text-slate-600 text-lg md:text-xl mt-6 max-w-2xl mx-auto leading-relaxed">
-                ShieldSense continuously monitors digital signals, checks email bodies & URLs against zero-trust heuristics, and alerts your team directly on Telegram with automated safe review guardrails.
+                ShieldSense continuously protects against digital arrest vishing, fake bank KYC SMS, malicious links, and screen takeover scams — powered by dual-brain zero-trust heuristics & Groq Llama 3.1 bilingual intelligence.
             </p>
 
-            <!-- Prominent Direct CTA Buttons -->
+            <!-- Prominent Direct CTA Buttons Redirecting to Live MVP -->
             <div class="flex flex-col sm:flex-row gap-4 items-center justify-center mt-10">
-                <button onclick="openAuthModal()" class="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white font-bold text-base px-8 py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-3">
-                    <span class="material-symbols-outlined text-[24px]">login</span>
-                    Sign In to Access Console
-                </button>
-                <a href="/hub" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-base px-8 py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-3">
-                    <span class="material-symbols-outlined text-[24px]">radar</span>
-                    Open Analyst Hub Scanner
+                <a href="/hub" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-base px-8 py-4 rounded-2xl transition-all shadow-lg shadow-emerald-600/25 flex items-center justify-center gap-3 hover:scale-105 active:scale-95">
+                    <span class="material-symbols-outlined text-[24px]">smart_toy</span>
+                    Open In-App AI Security Chatbot
                 </a>
+                <button onclick="openAuthModal()" class="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white font-bold text-base px-8 py-4 rounded-2xl transition-all shadow-md flex items-center justify-center gap-3">
+                    <span class="material-symbols-outlined text-[24px]">login</span>
+                    Sign In to Console
+                </button>
             </div>
         </section>
 
@@ -69,74 +72,74 @@
         <section class="w-full bg-white py-16 border-y border-slate-200">
             <div class="max-w-7xl mx-auto px-6">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-slate-900 mb-3">What Can Our AI Security Agent Do?</h2>
-                    <p class="text-slate-600 text-base max-w-2xl mx-auto">Complete 24/7 inbox defense, real-time threat evaluation, and instant Telegram alert notifications.</p>
+                    <h2 class="text-3xl font-bold text-slate-900 mb-3">What Can Our In-App AI Security Agent Do?</h2>
+                    <p class="text-slate-600 text-base max-w-2xl mx-auto">Instant threat evaluation, bilingual scam forensics, real-time call interception, and interactive guardrails.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <!-- Feature 1 -->
-                    <div class="bg-[#f8f9ff] rounded-2xl border border-slate-200 p-8 hover:shadow-md transition-shadow">
-                        <div class="w-14 h-14 rounded-xl bg-slate-900 text-white flex items-center justify-center mb-6">
-                            <span class="material-symbols-outlined text-[32px]">mark_email_unread</span>
+                    <div class="bg-slate-50 rounded-2xl border border-slate-200 p-8 hover:shadow-md transition-shadow">
+                        <div class="w-14 h-14 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-[32px]">chat</span>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-3">24/7 Gmail Inbox Monitoring</h3>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Bilingual Conversational Chatbot</h3>
                         <p class="text-slate-600 text-sm leading-relaxed">
-                            Automatically scans unread incoming emails, headers, senders, and attachments without downloading malicious files.
+                            Chat directly with Groq Llama 3.1 in natural English and Hinglish to understand any cyber threat without technical jargon.
                         </p>
                     </div>
 
                     <!-- Feature 2 -->
-                    <div class="bg-[#f8f9ff] rounded-2xl border border-slate-200 p-8 hover:shadow-md transition-shadow">
-                        <div class="w-14 h-14 rounded-xl bg-slate-900 text-white flex items-center justify-center mb-6">
-                            <span class="material-symbols-outlined text-[32px]">radar</span>
+                    <div class="bg-slate-50 rounded-2xl border border-slate-200 p-8 hover:shadow-md transition-shadow">
+                        <div class="w-14 h-14 rounded-xl bg-cyan-100 text-cyan-700 flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-[32px]">call</span>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-3">Zero-Trust Risk Scoring</h3>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Live Call Scam Guardian</h3>
                         <p class="text-slate-600 text-sm leading-relaxed">
-                            Calculates a deterministic 0–100 risk score based on punycode URLs, IP hostnames, credential pressure, and LLM reasoning.
+                            Analyzes live speaker voice audio in real-time to detect Police Digital Arrest, Bank OTP panic traps, and AnyDesk takeovers.
                         </p>
                     </div>
 
                     <!-- Feature 3 -->
-                    <div class="bg-[#f8f9ff] rounded-2xl border border-slate-200 p-8 hover:shadow-md transition-shadow">
-                        <div class="w-14 h-14 rounded-xl bg-slate-900 text-white flex items-center justify-center mb-6">
-                            <span class="material-symbols-outlined text-[32px]">notifications_active</span>
+                    <div class="bg-slate-50 rounded-2xl border border-slate-200 p-8 hover:shadow-md transition-shadow">
+                        <div class="w-14 h-14 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-[32px]">qr_code_scanner</span>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-3">Instant Telegram Alerts</h3>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Quishing QR Matrix Inspector</h3>
                         <p class="text-slate-600 text-sm leading-relaxed">
-                            Delivers clear alerts to Telegram with interactive action buttons (`[ Move to Safe Review ]`, `[ Approve Reply ]`).
+                            Upload or scan suspicious QR code parking or payment photos to decode hidden destination payloads before scanning.
                         </p>
                     </div>
 
                     <!-- Feature 4 -->
-                    <div class="bg-[#f8f9ff] rounded-2xl border border-slate-200 p-8 hover:shadow-md transition-shadow">
-                        <div class="w-14 h-14 rounded-xl bg-slate-900 text-white flex items-center justify-center mb-6">
-                            <span class="material-symbols-outlined text-[32px]">shield_person</span>
+                    <div class="bg-slate-50 rounded-2xl border border-slate-200 p-8 hover:shadow-md transition-shadow">
+                        <div class="w-14 h-14 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-[32px]">gpp_bad</span>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-3">Quarantine Guardrails</h3>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Inline Click Firewall</h3>
                         <p class="text-slate-600 text-sm leading-relaxed">
-                            High-risk emails are safely archived to `ShieldSense-Review` labels. Emails are never deleted automatically.
+                            DNS sinkhole and TCP socket interceptor that halts accidental clicks on malicious phishing links before data leaks.
                         </p>
                     </div>
 
                     <!-- Feature 5 -->
-                    <div class="bg-[#f8f9ff] rounded-2xl border border-slate-200 p-8 hover:shadow-md transition-shadow">
-                        <div class="w-14 h-14 rounded-xl bg-slate-900 text-white flex items-center justify-center mb-6">
-                            <span class="material-symbols-outlined text-[32px]">history_edu</span>
+                    <div class="bg-slate-50 rounded-2xl border border-slate-200 p-8 hover:shadow-md transition-shadow">
+                        <div class="w-14 h-14 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-[32px]">psychology</span>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-3">Audit Logs & History</h3>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Scammer Profit Forensics</h3>
                         <p class="text-slate-600 text-sm leading-relaxed">
-                            Maintains a file-backed scan log of all evaluated links, emails, scores, and analyst actions for complete compliance.
+                            Unmasks the psychological manipulation trap, the immediate ask, and where laundered money travels through mule accounts.
                         </p>
                     </div>
 
                     <!-- Feature 6 -->
-                    <div class="bg-[#f8f9ff] rounded-2xl border border-slate-200 p-8 hover:shadow-md transition-shadow">
-                        <div class="w-14 h-14 rounded-xl bg-slate-900 text-white flex items-center justify-center mb-6">
-                            <span class="material-symbols-outlined text-[32px]">chat</span>
+                    <div class="bg-slate-50 rounded-2xl border border-slate-200 p-8 hover:shadow-md transition-shadow">
+                        <div class="w-14 h-14 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-[32px]">terminal</span>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-3">Conversational AI Security Agent</h3>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">In-App Short Commands</h3>
                         <p class="text-slate-600 text-sm leading-relaxed">
-                            Ask security questions directly to your Telegram Agent or paste raw email snippets for instant security evaluation.
+                            Execute fast actions with short commands (<code class="font-mono text-emerald-700 font-bold">/scan</code>, <code class="font-mono text-emerald-700 font-bold">/check</code>, <code class="font-mono text-emerald-700 font-bold">/call</code>, <code class="font-mono text-emerald-700 font-bold">/qr</code>, <code class="font-mono text-emerald-700 font-bold">/status</code>).
                         </p>
                     </div>
                 </div>
@@ -148,67 +151,67 @@
             <div class="max-w-7xl mx-auto px-6">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl font-bold text-slate-900 mb-3">How It Works in 3 Steps</h2>
-                    <p class="text-slate-600 text-base">Simple, seamless setup for continuous protection.</p>
+                    <p class="text-slate-600 text-base">Simple, seamless in-app security verification.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                     <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
                         <div class="w-12 h-12 rounded-full bg-slate-900 text-white font-bold text-xl flex items-center justify-center mx-auto mb-4">1</div>
-                        <h4 class="text-lg font-bold text-slate-900 mb-2">Sign In & Register</h4>
-                        <p class="text-slate-600 text-sm">Create your analyst account and authorize your security parameters.</p>
+                        <h4 class="text-lg font-bold text-slate-900 mb-2">Launch the In-App Sentinel</h4>
+                        <p class="text-slate-600 text-sm">Open the web app on your phone or desktop with no complicated setup required.</p>
                     </div>
                     <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
-                        <div class="w-12 h-12 rounded-full bg-slate-900 text-white font-bold text-xl flex items-center justify-center mx-auto mb-4">2</div>
-                        <h4 class="text-lg font-bold text-slate-900 mb-2">Connect Telegram Agent</h4>
-                        <p class="text-slate-600 text-sm">Launch your Telegram Agent or let the agent monitor your Gmail inbox.</p>
+                        <div class="w-12 h-12 rounded-full bg-emerald-600 text-white font-bold text-xl flex items-center justify-center mx-auto mb-4">2</div>
+                        <h4 class="text-lg font-bold text-slate-900 mb-2">Paste, Upload, or Listen</h4>
+                        <p class="text-slate-600 text-sm">Paste any link, message, QR photo, or put a suspicious call on speaker.</p>
                     </div>
                     <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
-                        <div class="w-12 h-12 rounded-full bg-emerald-600 text-white font-bold text-xl flex items-center justify-center mx-auto mb-4">3</div>
-                        <h4 class="text-lg font-bold text-slate-900 mb-2">Review & Take Action</h4>
-                        <p class="text-slate-600 text-sm">Receive instant alerts with plain-language reasons and one-click quarantine buttons.</p>
+                        <div class="w-12 h-12 rounded-full bg-slate-900 text-white font-bold text-xl flex items-center justify-center mx-auto mb-4">3</div>
+                        <h4 class="text-lg font-bold text-slate-900 mb-2">Bilingual AI Protection</h4>
+                        <p class="text-slate-600 text-sm">Receive immediate plain-language explanations in English & Hinglish with 1-click protective actions.</p>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Sign In Modal -->
-    <div id="authModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <!-- Sign In Modal (Redirects to Live MVP Hub) -->
+    <div id="authModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-2xl border border-slate-200 w-full max-w-md p-8 shadow-2xl relative">
             <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-900">
                 <span class="material-symbols-outlined">close</span>
             </button>
             <div class="text-center mb-6">
-                <div class="w-12 h-12 rounded-full bg-slate-900 text-white flex items-center justify-center mx-auto mb-3">
+                <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-3 border border-emerald-200">
                     <span class="material-symbols-outlined text-[28px]">security</span>
                 </div>
                 <h3 class="text-xl font-bold text-slate-900">Sign In to ShieldSense</h3>
-                <p class="text-xs text-slate-500 mt-1">Access your Analyst Operations Hub & Scanner</p>
+                <p class="text-xs text-slate-500 mt-1">Access your In-App AI Cyber Guardian Console</p>
             </div>
 
             <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Work Email</label>
-                    <input id="authEmail" type="email" placeholder="analyst@company.com" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:border-slate-900">
+                    <input id="authEmail" type="email" placeholder="analyst@company.com" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-emerald-600 bg-slate-50">
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Password</label>
-                    <input id="authPassword" type="password" placeholder="••••••••" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:border-slate-900">
+                    <input id="authPassword" type="password" placeholder="••••••••" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-emerald-600 bg-slate-50">
                 </div>
-                <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-lg text-sm transition-colors flex items-center justify-center gap-2 shadow-sm">
-                    <span>Sign In & Open Console</span>
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl text-sm transition-colors flex items-center justify-center gap-2 shadow-sm">
+                    <span>Open In-App Sentinel</span>
                     <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
                 </button>
             </form>
 
             <div class="mt-6 pt-4 border-t border-slate-200 text-center text-xs text-slate-500">
-                AI Agent Security Guard: <span class="text-emerald-600 font-bold">Active & Connected</span>
+                In-App AI Cyber Guardian: <span class="text-emerald-700 font-bold">Active & Ready</span>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
     <footer class="w-full bg-white border-t border-slate-200 py-6 px-6 text-center text-xs text-slate-500">
-        © 2026 ShieldSense AI Security Agent Platform. All rights reserved.
+        © 2026 ShieldSense Autonomous AI Security Agent Platform. All rights reserved.
     </footer>
 
     <script>
@@ -223,44 +226,10 @@
             const workEmail = document.getElementById('authEmail').value;
             const name = workEmail.split('@')[0];
             
-            // Store session locally
             localStorage.setItem('shieldsense_user', JSON.stringify({ email: workEmail, name: name }));
             
-            try {
-                await fetch('/api/login', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ workEmail })
-                });
-            } catch (err) {}
-
-            // Navigate seamlessly to Analyst Hub Console
+            // Redirect straight to the live MVP app
             window.location.href = '/hub';
-        }
-
-        // Check if user is already logged in
-        window.onload = function() {
-            const userStr = localStorage.getItem('shieldsense_user');
-            if (userStr) {
-                const user = JSON.parse(userStr);
-                const area = document.getElementById('headerAuthArea');
-                area.innerHTML = `
-                    <div class="flex items-center gap-3">
-                        <span class="text-xs font-semibold text-slate-600">👤 ${user.name}</span>
-                        <a href="/hub" class="px-4 py-2 bg-slate-900 text-white rounded-lg font-bold text-xs hover:bg-slate-800 transition-colors">
-                            Console
-                        </a>
-                        <button onclick="handleLogout()" class="text-xs text-slate-500 hover:text-slate-900 font-bold">
-                            Logout
-                        </button>
-                    </div>
-                `;
-            }
-        };
-
-        function handleLogout() {
-            localStorage.removeItem('shieldsense_user');
-            window.location.reload();
         }
     </script>
 </body>
