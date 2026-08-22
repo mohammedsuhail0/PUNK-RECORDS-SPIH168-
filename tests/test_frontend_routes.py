@@ -14,7 +14,7 @@ class FrontendRoutesTests(unittest.TestCase):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
         self.assertIn("ShieldSense", response.text)
-        self.assertIn("Sign In to Get Started", response.text)
+        self.assertIn("Sign In to Access Console", response.text)
 
     def test_hub_page_route(self):
         response = self.client.get("/hub")

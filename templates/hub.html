@@ -15,25 +15,30 @@
 </head>
 <body class="bg-[#f8f9ff] text-[#0b1c30] font-sans min-h-screen flex flex-col antialiased">
 
-<!-- Top Navigation Header -->
+<!-- Clean Top Navigation Header -->
 <header class="bg-white w-full sticky top-0 z-50 border-b border-slate-200 shadow-sm">
     <div class="flex justify-between items-center w-full px-6 h-16 max-w-7xl mx-auto">
-        <div class="flex items-center gap-6">
-            <a class="text-xl font-bold text-slate-900 flex items-center gap-2" href="/">
-                <span class="material-symbols-outlined text-slate-900" data-weight="fill">shield</span>
-                ShieldSense Analyst Hub
-            </a>
-        </div>
+        <!-- Brand Logo Format -->
+        <a class="text-2xl font-black text-slate-900 flex items-center gap-2 tracking-tight" href="/">
+            <span class="material-symbols-outlined text-slate-900 text-[28px]" data-weight="fill">shield</span>
+            ShieldSense <span class="text-sm font-semibold text-slate-500 font-mono">| Analyst Hub</span>
+        </a>
+
         <nav class="hidden md:flex items-center gap-8 font-medium text-sm text-slate-600">
-            <a class="text-slate-900 font-bold border-b-2 border-slate-900 pb-1" href="/hub">Analyst Hub</a>
+            <a class="text-slate-900 font-bold border-b-2 border-slate-900 pb-1" href="/hub">Scanner Console</a>
             <a class="hover:text-slate-900 transition-colors" href="/dashboard">Scan Stats</a>
             <a class="hover:text-slate-900 transition-colors" href="/">Landing Page</a>
         </nav>
-        <div class="flex items-center gap-3">
-            <a href="https://t.me/{{ bot_username }}" target="_blank" class="bg-slate-900 text-white font-semibold text-sm px-4 py-2 rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2">
-                <span>Go to Bot</span>
-                <span class="material-symbols-outlined text-[18px]">open_in_new</span>
-            </a>
+
+        <!-- User Profile Session Badge -->
+        <div id="hubUserBadge" class="flex items-center gap-3">
+            <div id="userInfoDisplay" class="text-xs font-semibold text-slate-700 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span id="userNameText">Analyst Console</span>
+            </div>
+            <button onclick="handleLogout()" class="text-xs text-slate-500 hover:text-slate-900 font-bold underline">
+                Sign Out
+            </button>
         </div>
     </div>
 </header>
@@ -41,29 +46,48 @@
 <!-- Main Operations Canvas -->
 <main class="flex-grow flex flex-col items-center w-full">
     <!-- Hero Header -->
-    <section class="w-full max-w-7xl mx-auto px-6 pt-10 pb-6 text-center">
+    <section class="w-full max-w-7xl mx-auto px-6 pt-10 pb-4 text-center">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-800 text-xs font-semibold mb-4">
             <span class="relative flex h-2 w-2">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            SYSTEMS ONLINE & MONITORING (PS 02)
+            SECURITY OPERATIONS CONSOLE ACTIVE
         </div>
         <h1 class="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
-            The AI Security Analyst for <span class="text-slate-900 border-b-4 border-emerald-400">Modern Teams</span>
+            Security Analyst <span class="text-slate-900 border-b-4 border-emerald-400">Threat Operations Hub</span>
         </h1>
         <p class="text-slate-600 text-base mt-2 max-w-2xl mx-auto">
-            Continuously scan email text, URLs, or file metadata with rule heuristics & LLM intent analysis.
+            Directly test links, email text, or headers against zero-trust heuristics & LLM reasoning.
         </p>
     </section>
 
-    <!-- Interactive Security Operations Center & Live Scanner (PS 02 Must-Have #1, #2, #3, #4) -->
+    <!-- Telegram Bot Connection Banner -->
+    <section class="w-full max-w-5xl mx-auto px-6 mb-6">
+        <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 border border-slate-700 shadow-md">
+            <div class="flex items-center gap-3 text-center sm:text-left">
+                <div class="w-10 h-10 rounded-lg bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+                    <span class="material-symbols-outlined text-[24px]">smart_toy</span>
+                </div>
+                <div>
+                    <h3 class="font-bold text-sm text-slate-100">Telegram Bot Notifications Connected (@punk_rec_bot)</h3>
+                    <p class="text-xs text-slate-400">Receive 24/7 unread inbox alerts with one-click quarantine action buttons directly in Telegram.</p>
+                </div>
+            </div>
+            <a href="https://t.me/punk_rec_bot" target="_blank" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-lg text-xs transition-colors flex items-center gap-1.5 shrink-0 shadow-sm">
+                <span>Open Bot on Telegram</span>
+                <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Interactive Security Operations Center & Live Scanner -->
     <section class="w-full max-w-5xl mx-auto px-6 mb-12">
         <div class="bg-slate-900 text-white rounded-2xl border border-slate-800 p-6 md:p-8 shadow-2xl space-y-6">
             <div class="flex items-center justify-between border-b border-slate-800 pb-4">
                 <h2 class="text-xl font-bold text-emerald-400 flex items-center gap-2">
                     <span class="material-symbols-outlined">radar</span>
-                    Live Security Scanner & Analyst Console
+                    Live Security Scanner & Inspection Console
                 </h2>
                 <span class="text-xs bg-slate-800 text-slate-300 px-3 py-1 rounded-full font-mono">Zero-Trust Heuristics</span>
             </div>
@@ -133,39 +157,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Core Intelligence Capabilities Bento Grid -->
-    <section class="w-full bg-slate-100 py-16 border-y border-slate-200">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-12">
-                <h2 class="text-2xl font-bold text-slate-900 mb-2">Core Intelligence Capabilities</h2>
-                <p class="text-slate-600 text-sm max-w-2xl mx-auto">Clinical precision for identifying and neutralizing digital threats.</p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-                    <div class="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center text-slate-900 mb-4">
-                        <span class="material-symbols-outlined text-[28px]">radar</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">AI-Powered Scans</h3>
-                    <p class="text-sm text-slate-600">Deep inspection of URLs, IP hostnames, punycode domains, and double-extension files.</p>
-                </div>
-                <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-                    <div class="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center text-slate-900 mb-4">
-                        <span class="material-symbols-outlined text-[28px]">bolt</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">Real-time Signal Analysis</h3>
-                    <p class="text-sm text-slate-600">Sub-second latency heuristic rule evaluation paired with Groq LLM reasoning.</p>
-                </div>
-                <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-                    <div class="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center text-slate-900 mb-4">
-                        <span class="material-symbols-outlined text-[28px]">security</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">Guarded Response</h3>
-                    <p class="text-sm text-slate-600">Safe quarantine simulations ensuring no data destruction occurs without user review.</p>
-                </div>
-            </div>
-        </div>
-    </section>
 </main>
 
 <footer class="bg-white border-t border-slate-200 py-6 px-6 text-center text-xs text-slate-500">
@@ -173,6 +164,21 @@
 </footer>
 
 <script>
+    window.onload = function() {
+        const userStr = localStorage.getItem('shieldsense_user');
+        if (userStr) {
+            const user = JSON.parse(userStr);
+            document.getElementById('userNameText').innerText = `Analyst: ${user.name} (${user.email})`;
+        } else {
+            document.getElementById('userNameText').innerText = 'Analyst (Guest Mode)';
+        }
+    };
+
+    function handleLogout() {
+        localStorage.removeItem('shieldsense_user');
+        window.location.href = '/';
+    }
+
     async function runHubScan() {
         const text = document.getElementById('scanText').value.trim();
         const sender = document.getElementById('scanSender').value.trim();
