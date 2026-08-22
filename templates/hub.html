@@ -2,10 +2,10 @@
 <html class="light" lang="en">
 <head>
     <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
-    <title>ShieldSense | AI Sentinel Workspace</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+    <title>ShieldSense | Autonomous Cyber Guardian</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 
@@ -15,22 +15,16 @@
             theme: {
                 extend: {
                     colors: {
-                        "on-secondary": "#ffffff",
-                        "surface": "#f8fafc",
-                        "on-surface-variant": "#475569",
-                        "error": "#e11d48",
-                        "error-container": "#ffe4e6",
-                        "on-surface": "#0f172a",
-                        "primary": "#059669",
-                        "primary-container": "#ecfdf5",
-                        "on-primary-container": "#065f46",
-                        "outline-variant": "#e2e8f0",
-                        "tertiary": "#4f46e5",
-                        "tertiary-container": "#e0e7ff",
-                        "background": "#f8fafc"
+                        brand: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                        }
                     },
                     fontFamily: {
-                        sans: ["Inter", "sans-serif"],
+                        sans: ["Plus Jakarta Sans", "Inter", "sans-serif"],
                         mono: ["JetBrains Mono", "monospace"]
                     }
                 }
@@ -47,17 +41,17 @@
         }
         @keyframes pulse-green-ring {
             0% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.7); }
-            70% { box-shadow: 0 0 0 8px rgba(5, 150, 105, 0); }
+            70% { box-shadow: 0 0 0 6px rgba(5, 150, 105, 0); }
             100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0); }
         }
 
         /* Sound Wave Animation */
         @keyframes soundWave {
-            0%, 100% { height: 4px; }
-            50% { height: 18px; }
+            0%, 100% { height: 3px; }
+            50% { height: 14px; }
         }
         .wave-bar {
-            width: 2.5px;
+            width: 2px;
             background-color: #059669;
             border-radius: 9999px;
             animation: soundWave 1.2s ease-in-out infinite;
@@ -85,12 +79,12 @@
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        .chat-scroll::-webkit-scrollbar { width: 5px; }
+        .chat-scroll::-webkit-scrollbar { width: 4px; }
         .chat-scroll::-webkit-scrollbar-track { background: transparent; }
         .chat-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
     </style>
 </head>
-<body class="bg-slate-50 font-sans text-slate-900 antialiased min-h-screen flex flex-col items-center justify-between selection:bg-emerald-500 selection:text-white">
+<body class="bg-[#f8fafc] text-slate-900 font-sans h-screen h-[100dvh] w-full overflow-hidden flex flex-col items-center justify-between selection:bg-emerald-500 selection:text-white">
 
     <!-- Compatibility Meta Headers for Automated Tests -->
     <div class="sr-only">
@@ -99,272 +93,231 @@
         <span>Universal Threat Inspection Console</span>
     </div>
 
-    <!-- Stitch TopAppBar (Fixed Header) -->
-    <header class="flex justify-between items-center px-4 sm:px-6 h-16 w-full z-50 fixed top-0 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-2xs">
-        <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 shadow-2xs">
-                <span class="material-symbols-outlined text-[22px]" data-weight="fill">shield</span>
+    <!-- Top Minimalist Bar (Ultra-clean single line) -->
+    <header class="w-full max-w-4xl bg-white border-b border-slate-200 px-4 sm:px-6 h-14 flex items-center justify-between shrink-0 shadow-2xs z-30">
+        <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white shadow-xs">
+                <span class="material-symbols-outlined text-[18px]" data-weight="fill">shield</span>
             </div>
             <div>
-                <div class="flex items-center gap-2">
-                    <h1 class="text-base font-extrabold text-slate-900 tracking-tight">ShieldSense AI</h1>
-                    <span class="text-[9px] font-mono font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 px-1.5 py-0.5 rounded-full">SENTINEL</span>
+                <div class="flex items-center gap-1.5">
+                    <h1 class="text-sm sm:text-base font-extrabold text-slate-900 tracking-tight">ShieldSense</h1>
+                    <span class="text-[9px] font-mono font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 px-1.5 py-0.2 rounded-full">SENTINEL</span>
                 </div>
-                <div class="flex items-center gap-1.5 mt-0.5">
-                    <span class="w-2 h-2 rounded-full bg-[#059669] pulse-green"></span>
-                    <span class="text-[10px] font-mono text-slate-500 uppercase font-semibold">Always Vigilant • Groq Llama 3.1</span>
+                <div class="flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#059669] pulse-green"></span>
+                    <span class="text-[9px] font-mono text-slate-500 uppercase font-semibold">Protected & Active</span>
                 </div>
             </div>
         </div>
 
-        <div class="flex items-center gap-2.5 sm:gap-3">
-            <!-- Command Helper Pill -->
-            <button onclick="toggleCommandPalette()" class="hidden md:flex bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-full px-3.5 py-1.5 items-center gap-2 transition-colors cursor-pointer" title="Quick Commands">
-                <span class="material-symbols-outlined text-slate-500 text-[16px]">terminal</span>
-                <span class="text-xs font-mono text-slate-600 font-medium">Press <strong class="text-emerald-700 font-bold">/</strong> for commands</span>
-            </button>
+        <!-- Right Quick Action Controls -->
+        <div class="flex items-center gap-1.5 sm:gap-2">
+            <!-- Immunity Badge -->
+            <div class="hidden sm:flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-mono font-bold">
+                <span class="material-symbols-outlined text-[14px]">verified</span>
+                <span>94% Immune</span>
+            </div>
 
             <!-- Emergency SOS 1930 -->
-            <a href="tel:1930" class="text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-colors" title="National Cyber Crime Helpline">
-                <span class="material-symbols-outlined text-[16px]">support_agent</span>
+            <a href="tel:1930" class="text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 px-2.5 py-1.5 rounded-xl flex items-center gap-1 transition-colors" title="National Cyber Crime Helpline">
+                <span class="material-symbols-outlined text-[15px]">support_agent</span>
                 <span class="hidden sm:inline">SOS 1930</span>
             </a>
 
-            <!-- Stats Dashboard Link -->
-            <a href="/dashboard" class="text-xs text-slate-700 hover:text-slate-900 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 font-semibold flex items-center gap-1.5 transition-colors">
-                <span class="material-symbols-outlined text-[16px] text-slate-600">analytics</span>
+            <!-- Stats Link -->
+            <a href="/dashboard" class="text-xs text-slate-700 hover:text-slate-900 px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 font-semibold flex items-center gap-1 transition-colors" title="Security Stats">
+                <span class="material-symbols-outlined text-[15px] text-slate-600">analytics</span>
                 <span class="hidden sm:inline">Stats</span>
             </a>
 
             <!-- Sign Out -->
-            <a href="/" class="text-xs text-slate-500 hover:text-rose-600 p-2 rounded-xl bg-slate-100 hover:bg-rose-50 border border-slate-200 transition-colors" title="Exit to Landing">
+            <a href="/" class="text-slate-400 hover:text-rose-600 p-1.5 rounded-xl hover:bg-rose-50 transition-colors" title="Sign Out">
                 <span class="material-symbols-outlined text-[18px]">logout</span>
             </a>
         </div>
     </header>
 
-    <!-- Floating Sentinel Status Banner -->
-    <div class="fixed top-18 left-1/2 -translate-x-1/2 z-40">
-        <div class="bg-emerald-50 text-emerald-900 px-3.5 py-1 rounded-full shadow-xs flex items-center gap-2 border border-emerald-200/80">
-            <span class="w-2 h-2 rounded-full bg-emerald-600 pulse-green"></span>
-            <span class="text-[10px] font-mono font-bold uppercase tracking-wider">In-App AI Sentinel Active: Watching for scams</span>
+    <!-- Compact Quick Control Strip -->
+    <div class="w-full max-w-4xl bg-slate-100/80 border-b border-slate-200 px-3 sm:px-4 py-1.5 flex items-center justify-between shrink-0 text-xs gap-2">
+        <div class="flex items-center gap-2 overflow-x-auto hide-scrollbar">
+            <!-- Call Guardian Pill Toggle -->
+            <button id="callToggleBtn" onclick="toggleCallGuardian()" class="px-2.5 py-1 rounded-lg bg-white border border-slate-200 hover:border-emerald-300 font-medium text-slate-700 flex items-center gap-1.5 shrink-0 transition-colors cursor-pointer shadow-2xs">
+                <span class="material-symbols-outlined text-[15px] text-emerald-600">mic</span>
+                <span>Call Guardian:</span>
+                <span id="callStatusBadge" class="text-[9px] font-mono uppercase font-bold text-slate-500">STANDBY</span>
+            </button>
+
+            <!-- Quishing QR Scan -->
+            <button onclick="document.getElementById('hiddenQrInput').click()" class="px-2.5 py-1 rounded-lg bg-white border border-slate-200 hover:border-emerald-300 font-medium text-slate-700 flex items-center gap-1.5 shrink-0 transition-colors cursor-pointer shadow-2xs">
+                <span class="material-symbols-outlined text-[15px] text-amber-600">qr_code_scanner</span>
+                <span>Scan QR</span>
+            </button>
+
+            <!-- Test Firewall -->
+            <button onclick="testFirewallBlock()" class="px-2.5 py-1 rounded-lg bg-white border border-slate-200 hover:border-emerald-300 font-medium text-slate-700 flex items-center gap-1.5 shrink-0 transition-colors cursor-pointer shadow-2xs">
+                <span class="material-symbols-outlined text-[15px] text-purple-600">gpp_bad</span>
+                <span>Click Firewall</span>
+            </button>
+        </div>
+
+        <!-- Quick Help Trigger -->
+        <button onclick="toggleCommandPalette()" class="text-[11px] font-mono text-slate-500 hover:text-emerald-700 shrink-0 flex items-center gap-1 cursor-pointer">
+            <span class="font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.2 rounded">/</span>
+            <span class="hidden sm:inline">Commands</span>
+        </button>
+    </div>
+
+    <!-- Hidden QR File Input -->
+    <input id="hiddenQrInput" type="file" accept="image/*" class="hidden" onchange="handleQrUpload(event)">
+
+    <!-- Live Call Audio Drawer HUD (Collapsible) -->
+    <div id="callGuardianHud" class="hidden w-full max-w-4xl bg-emerald-50/90 border-b border-emerald-200 px-4 py-2.5 space-y-2 shrink-0">
+        <div class="flex items-center justify-between text-xs">
+            <div class="flex items-center gap-2">
+                <div class="flex items-center gap-0.5 h-3 px-1">
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                </div>
+                <span class="font-mono text-[11px] text-emerald-800 font-bold">LISTENING TO SPEAKER AUDIO</span>
+            </div>
+            <span class="text-[10px] text-slate-500">Test preset scams:</span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-xs">
+            <button onclick="simulateCallPreset('police')" class="p-1.5 bg-white hover:bg-rose-50 border border-rose-200 rounded-lg text-rose-900 font-medium text-[11px] transition-colors flex items-center gap-1">
+                <span>🚓</span> <span>Police Arrest</span>
+            </button>
+            <button onclick="simulateCallPreset('otp')" class="p-1.5 bg-white hover:bg-amber-50 border border-amber-200 rounded-lg text-amber-900 font-medium text-[11px] transition-colors flex items-center gap-1">
+                <span>🏦</span> <span>Bank KYC OTP</span>
+            </button>
+            <button onclick="simulateCallPreset('anydesk')" class="p-1.5 bg-white hover:bg-purple-50 border border-purple-200 rounded-lg text-purple-900 font-medium text-[11px] transition-colors flex items-center gap-1">
+                <span>💻</span> <span>AnyDesk Trap</span>
+            </button>
+            <button onclick="simulateCallPreset('safe')" class="p-1.5 bg-white hover:bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-900 font-medium text-[11px] transition-colors flex items-center gap-1">
+                <span>🟢</span> <span>Safe Call</span>
+            </button>
         </div>
     </div>
 
-    <!-- Main Stitch Workspace Container -->
-    <main class="w-full max-w-3xl flex-1 flex flex-col pt-26 pb-36 px-4 space-y-4">
+    <!-- Quick Slash Command Palette Dropdown -->
+    <div id="commandPalette" class="hidden w-full max-w-4xl bg-white border-b border-slate-200 p-3 space-y-2 shrink-0 shadow-md">
+        <div class="flex items-center justify-between text-xs font-mono text-slate-500 uppercase font-bold border-b border-slate-100 pb-1">
+            <span>Slash Commands</span>
+            <button onclick="toggleCommandPalette()" class="hover:text-slate-900 font-bold cursor-pointer">✕ Close</button>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-xs">
+            <button onclick="applyCommand('/scan')" class="text-left p-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 flex items-center gap-2">
+                <span class="text-emerald-700 font-mono font-bold">/scan</span>
+                <span class="text-[10px] text-slate-500">Rescan inboxes</span>
+            </button>
+            <button onclick="applyCommand('/check ')" class="text-left p-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 flex items-center gap-2">
+                <span class="text-teal-700 font-mono font-bold">/check</span>
+                <span class="text-[10px] text-slate-500">Inspect text/link</span>
+            </button>
+            <button onclick="applyCommand('/call')" class="text-left p-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 flex items-center gap-2">
+                <span class="text-cyan-700 font-mono font-bold">/call</span>
+                <span class="text-[10px] text-slate-500">Live Call Guardian</span>
+            </button>
+            <button onclick="applyCommand('/qr')" class="text-left p-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 flex items-center gap-2">
+                <span class="text-amber-700 font-mono font-bold">/qr</span>
+                <span class="text-[10px] text-slate-500">Quishing QR matrix</span>
+            </button>
+            <button onclick="applyCommand('/firewall')" class="text-left p-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 flex items-center gap-2">
+                <span class="text-purple-700 font-mono font-bold">/firewall</span>
+                <span class="text-[10px] text-slate-500">Click Interceptor</span>
+            </button>
+            <button onclick="applyCommand('/status')" class="text-left p-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 flex items-center gap-2">
+                <span class="text-emerald-700 font-mono font-bold">/status</span>
+                <span class="text-[10px] text-slate-500">Immunity health</span>
+            </button>
+        </div>
+    </div>
 
-        <!-- Telemetry & Threat Immunity Summary Card -->
-        <section class="bg-white border border-slate-200 rounded-2xl p-4 shadow-xs space-y-3">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center gap-2">
-                    <span class="material-symbols-outlined text-emerald-600 text-[20px]">verified_user</span>
-                    <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Threat Immunity Score</h3>
-                </div>
-                <span class="text-xs font-mono font-extrabold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">94 / 100 (Safe)</span>
+    <!-- Main Full-Height Chat Stream (The only internal scroll container) -->
+    <main id="chatContainer" class="w-full max-w-4xl flex-1 min-h-0 overflow-y-auto chat-scroll p-3 sm:p-4 space-y-3">
+        
+        <!-- Welcome Guardian Bubble -->
+        <div class="flex items-start gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white shrink-0 mt-0.5 shadow-xs">
+                <span class="material-symbols-outlined text-[18px]" data-weight="fill">shield</span>
             </div>
-
-            <!-- Progress Bar -->
-            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                <div class="h-full bg-emerald-600 w-[94%] rounded-full transition-all duration-500"></div>
-            </div>
-
-            <!-- Recent Intercepts Chips Carousel -->
-            <div>
-                <h4 class="text-[10px] font-mono uppercase text-slate-400 font-bold mb-1.5">Recent Intercepts & Guardrails</h4>
-                <div class="flex gap-2 overflow-x-auto pb-1 hide-scrollbar text-[11px] font-mono">
-                    <div class="shrink-0 flex items-center gap-1.5 bg-rose-50 px-2.5 py-1 rounded-lg border border-rose-200 text-rose-800">
-                        <span class="material-symbols-outlined text-[14px]">warning</span>
-                        <span>Fake_FedEx.apk (Blocked)</span>
-                    </div>
-                    <div class="shrink-0 flex items-center gap-1.5 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200 text-amber-800">
-                        <span class="material-symbols-outlined text-[14px]">phishing</span>
-                        <span>FASTag_Spoof.in (Sinkholed)</span>
-                    </div>
-                    <div class="shrink-0 flex items-center gap-1.5 bg-purple-50 px-2.5 py-1 rounded-lg border border-purple-200 text-purple-800">
-                        <span class="material-symbols-outlined text-[14px]">qr_code</span>
-                        <span>Parking_Meter_QR (Neutralized)</span>
-                    </div>
+            <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-none p-3.5 sm:p-4 max-w-[90%] sm:max-w-[80%] shadow-xs space-y-2 text-xs text-slate-800">
+                <div class="flex items-center gap-2 border-b border-slate-100 pb-1.5">
+                    <span class="font-bold text-emerald-800 text-xs">ShieldSense Cyber Sentinel</span>
+                    <span class="text-[10px] font-mono text-emerald-600 font-bold bg-emerald-50 px-1.5 py-0.2 rounded">ONLINE</span>
                 </div>
-            </div>
-        </section>
-
-        <!-- Live Call Scam Guardian Drawer Card -->
-        <section class="bg-white border border-slate-200 rounded-2xl p-4 shadow-xs space-y-3">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-[18px]">mic_external_on</span>
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-1.5">
-                            <h3 class="text-xs font-bold text-slate-900">Live Call Scam Guardian</h3>
-                            <span id="callStatusBadge" class="text-[9px] uppercase font-mono px-1.5 py-0.2 rounded bg-slate-100 text-slate-600 font-bold border border-slate-200">STANDBY</span>
-                        </div>
-                        <p class="text-[11px] text-slate-500">Put suspicious calls on speaker to analyze voice live</p>
-                    </div>
-                </div>
-
-                <!-- Toggle Switch -->
-                <button id="callToggleBtn" onclick="toggleCallGuardian()" class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-slate-300 transition-colors duration-200 ease-in-out focus:outline-none">
-                    <span id="callToggleThumb" class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out translate-x-0"></span>
-                </button>
-            </div>
-
-            <!-- Expanded Live Call Audio HUD -->
-            <div id="callGuardianHud" class="hidden pt-2 space-y-2.5">
-                <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200">
-                    <div class="flex items-center gap-2">
-                        <div class="flex items-center gap-1 h-4 px-1">
-                            <div class="wave-bar"></div>
-                            <div class="wave-bar"></div>
-                            <div class="wave-bar"></div>
-                            <div class="wave-bar"></div>
-                        </div>
-                        <span class="text-[11px] font-mono text-emerald-700 font-bold">LISTENING TO CALL AUDIO</span>
-                    </div>
-                    <span class="text-[10px] text-slate-500">Speak or test simulated scam:</span>
-                </div>
-
-                <div class="grid grid-cols-2 gap-2 text-xs">
-                    <button onclick="simulateCallPreset('police')" class="text-left p-2.5 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-xl text-rose-900 font-medium transition-colors flex items-center gap-2">
-                        <span>🚓</span> <span>Police Digital Arrest</span>
+                <p class="leading-relaxed font-medium">
+                    Hello & Welcome! Main hoon aapka <strong>ShieldSense Cyber Guardian</strong> 🛡️.
+                </p>
+                <p class="text-slate-600 leading-relaxed">
+                    Aap mujhse natural conversational baatein kar sakte hain, ya koi bhi <strong>suspicious link, fake SMS, WhatsApp text, QR photo, ya call script</strong> paste karke puch sakte hain — main turant inspect karke <strong>natural Hinglish mix mein explain karunga</strong>.
+                </p>
+                
+                <!-- Quick Preset Action Chips -->
+                <div class="pt-1 flex flex-col gap-1.5">
+                    <button onclick="sendQuickMessage('URGENT: Your SBI Bank account is locked. Update KYC at http://sbi-kyc-verify-login.com or account will be suspended today.')" class="text-[11px] bg-slate-50 hover:bg-slate-100 border border-slate-200 p-2 rounded-xl text-slate-700 text-left transition-colors flex items-center gap-2 font-medium">
+                        <span>🏦</span> <span>Check: "SBI KYC locked SMS link"</span>
                     </button>
-                    <button onclick="simulateCallPreset('otp')" class="text-left p-2.5 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-xl text-amber-900 font-medium transition-colors flex items-center gap-2">
-                        <span>🏦</span> <span>Bank KYC OTP Scam</span>
+                    <button onclick="sendQuickMessage('Electricity bill unpaid. Your power will be disconnected at 9:30 PM tonight. Call junior engineer at 9876543210 immediately.')" class="text-[11px] bg-slate-50 hover:bg-slate-100 border border-slate-200 p-2 rounded-xl text-slate-700 text-left transition-colors flex items-center gap-2 font-medium">
+                        <span>💡</span> <span>Check: "Electricity power cut 9:30 PM SMS"</span>
                     </button>
-                    <button onclick="simulateCallPreset('anydesk')" class="text-left p-2.5 bg-purple-50 hover:bg-purple-100 border border-purple-200 rounded-xl text-purple-900 font-medium transition-colors flex items-center gap-2">
-                        <span>💻</span> <span>AnyDesk Takeover</span>
-                    </button>
-                    <button onclick="simulateCallPreset('safe')" class="text-left p-2.5 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-xl text-emerald-900 font-medium transition-colors flex items-center gap-2">
-                        <span>🟢</span> <span>Safe Call</span>
+                    <button onclick="sendQuickMessage('What is a digital arrest scam and how do fraudsters execute it?')" class="text-[11px] bg-slate-50 hover:bg-slate-100 border border-slate-200 p-2 rounded-xl text-slate-700 text-left transition-colors flex items-center gap-2 font-medium">
+                        <span>❓</span> <span>Ask: "What is a digital arrest scam?"</span>
                     </button>
                 </div>
-            </div>
-        </section>
-
-        <!-- Hidden QR File Input -->
-        <input id="hiddenQrInput" type="file" accept="image/*" class="hidden" onchange="handleQrUpload(event)">
-
-        <!-- Quick Slash Command Palette Modal -->
-        <div id="commandPalette" class="hidden bg-white border border-slate-200 rounded-2xl p-3.5 space-y-2 shadow-md">
-            <div class="flex items-center justify-between text-xs font-mono text-slate-500 uppercase font-bold border-b border-slate-100 pb-1.5">
-                <span>Available Slash Commands</span>
-                <button onclick="toggleCommandPalette()" class="hover:text-slate-900 font-bold cursor-pointer">✕ Close</button>
-            </div>
-            <div class="grid grid-cols-2 gap-2 text-xs">
-                <button onclick="applyCommand('/scan')" class="text-left p-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 flex items-center gap-2">
-                    <span class="text-emerald-700 font-mono font-bold">/scan</span>
-                    <span class="text-[11px] text-slate-500">Rescan Inboxes</span>
-                </button>
-                <button onclick="applyCommand('/check ')" class="text-left p-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 flex items-center gap-2">
-                    <span class="text-teal-700 font-mono font-bold">/check</span>
-                    <span class="text-[11px] text-slate-500">Scan Link or Text</span>
-                </button>
-                <button onclick="applyCommand('/call')" class="text-left p-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 flex items-center gap-2">
-                    <span class="text-cyan-700 font-mono font-bold">/call</span>
-                    <span class="text-[11px] text-slate-500">Call Guardian</span>
-                </button>
-                <button onclick="applyCommand('/qr')" class="text-left p-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 flex items-center gap-2">
-                    <span class="text-amber-700 font-mono font-bold">/qr</span>
-                    <span class="text-[11px] text-slate-500">Quishing QR Scan</span>
-                </button>
-                <button onclick="applyCommand('/firewall')" class="text-left p-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 flex items-center gap-2">
-                    <span class="text-purple-700 font-mono font-bold">/firewall</span>
-                    <span class="text-[11px] text-slate-500">Click Interceptor</span>
-                </button>
-                <button onclick="applyCommand('/status')" class="text-left p-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-800 flex items-center gap-2">
-                    <span class="text-emerald-700 font-mono font-bold">/status</span>
-                    <span class="text-[11px] text-slate-500">System Health</span>
-                </button>
             </div>
         </div>
 
-        <!-- Conversational Stream & Forensics Container -->
-        <section id="chatContainer" class="flex-1 overflow-y-auto chat-scroll space-y-4 min-h-[360px]">
-            
-            <!-- Welcome Bot Greeting Bubble -->
-            <div class="flex items-start gap-3">
-                <div class="w-8 h-8 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center shrink-0 mt-0.5 text-emerald-600">
-                    <span class="material-symbols-outlined text-[18px]">smart_toy</span>
-                </div>
-                <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-none p-4 max-w-[85%] shadow-xs space-y-2.5">
-                    <div class="flex items-center gap-2">
-                        <span class="text-xs font-bold text-emerald-700">ShieldSense AI Assistant</span>
-                        <span class="text-[10px] font-mono text-slate-400">Groq Llama 3.1</span>
-                    </div>
-                    <p class="text-xs text-slate-800 leading-relaxed font-semibold">
-                        Hello & Welcome! Main hoon aapka <strong>ShieldSense Cyber Guardian</strong> 🛡️.
-                    </p>
-                    <p class="text-xs text-slate-600 leading-relaxed">
-                        Aap mujhse normal conversational baatein kar sakte hain, ya koi bhi <strong>suspicious link, fake SMS, WhatsApp text, QR code photo, ya call script</strong> paste karke puch sakte hain — main turant inspect karke <strong>natural Hinglish mix mein explain karunga</strong>.
-                    </p>
-                    
-                    <!-- Quick Preset Buttons -->
-                    <div class="pt-1.5 flex flex-col gap-1.5">
-                        <button onclick="sendQuickMessage('URGENT: Your SBI Bank account is locked. Update KYC at http://sbi-kyc-verify-login.com or account will be suspended today.')" class="text-xs bg-slate-50 hover:bg-slate-100 border border-slate-200 p-2.5 rounded-xl text-slate-700 text-left transition-colors flex items-center gap-2 font-medium">
-                            <span>🏦</span> <span>Check: "SBI KYC locked email/SMS link"</span>
-                        </button>
-                        <button onclick="sendQuickMessage('Electricity bill unpaid. Your power will be disconnected at 9:30 PM tonight. Call junior engineer at 9876543210 immediately.')" class="text-xs bg-slate-50 hover:bg-slate-100 border border-slate-200 p-2.5 rounded-xl text-slate-700 text-left transition-colors flex items-center gap-2 font-medium">
-                            <span>💡</span> <span>Check: "Electricity power cut 9:30 PM SMS"</span>
-                        </button>
-                        <button onclick="sendQuickMessage('What is a digital arrest scam and how do fraudsters execute it?')" class="text-xs bg-slate-50 hover:bg-slate-100 border border-slate-200 p-2.5 rounded-xl text-slate-700 text-left transition-colors flex items-center gap-2 font-medium">
-                            <span>❓</span> <span>Ask: "What is a digital arrest scam?"</span>
-                        </button>
-                    </div>
-                </div>
+        <!-- Typing Indicator -->
+        <div id="typingIndicator" class="hidden flex items-start gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white shrink-0 mt-0.5 shadow-xs">
+                <span class="material-symbols-outlined text-[18px]" data-weight="fill">shield</span>
             </div>
-
-            <!-- Typing Indicator -->
-            <div id="typingIndicator" class="hidden flex items-start gap-3">
-                <div class="w-8 h-8 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center shrink-0 mt-0.5 text-emerald-600">
-                    <span class="material-symbols-outlined text-[18px]">smart_toy</span>
-                </div>
-                <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-none p-3 max-w-[80%] shadow-xs flex items-center gap-1.5">
-                    <span class="text-xs font-mono text-slate-500 mr-1">AI analyzing</span>
-                    <span class="typing-dot"></span>
-                    <span class="typing-dot"></span>
-                    <span class="typing-dot"></span>
-                </div>
+            <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-none p-3 max-w-[80%] shadow-xs flex items-center gap-1.5">
+                <span class="text-[11px] font-mono text-slate-500 mr-1">Analyzing threat</span>
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
             </div>
-        </section>
+        </div>
     </main>
 
-    <!-- Stitch Floating Multimodal Input Dock -->
-    <div class="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-slate-200 z-40 p-3 shadow-lg">
-        <div class="max-w-3xl mx-auto space-y-2">
-            <!-- Slash Command Chips -->
-            <div class="flex gap-2 overflow-x-auto hide-scrollbar text-xs font-mono">
-                <button onclick="applyCommand('/scan')" class="bg-slate-100 hover:bg-slate-200 border border-slate-200 px-3 py-1 rounded-full text-slate-700 whitespace-nowrap transition-colors">/scan</button>
-                <button onclick="applyCommand('/check ')" class="bg-slate-100 hover:bg-slate-200 border border-slate-200 px-3 py-1 rounded-full text-slate-700 whitespace-nowrap transition-colors">/check</button>
-                <button onclick="applyCommand('/call')" class="bg-slate-100 hover:bg-slate-200 border border-slate-200 px-3 py-1 rounded-full text-slate-700 whitespace-nowrap transition-colors">/call</button>
-                <button onclick="applyCommand('/qr')" class="bg-slate-100 hover:bg-slate-200 border border-slate-200 px-3 py-1 rounded-full text-slate-700 whitespace-nowrap transition-colors">/qr</button>
-                <button onclick="applyCommand('/firewall')" class="bg-slate-100 hover:bg-slate-200 border border-slate-200 px-3 py-1 rounded-full text-slate-700 whitespace-nowrap transition-colors">/firewall</button>
-                <button onclick="applyCommand('/status')" class="bg-slate-100 hover:bg-slate-200 border border-slate-200 px-3 py-1 rounded-full text-slate-700 whitespace-nowrap transition-colors">/status</button>
-            </div>
-
-            <!-- Input Bar Form -->
-            <form onsubmit="handleChatSubmit(event)" class="flex items-center gap-2 bg-slate-50 border border-slate-300 rounded-2xl p-1.5 focus-within:border-emerald-600 focus-within:ring-2 focus-within:ring-emerald-500/20 bg-white transition-all shadow-2xs">
-                <!-- QR Image Trigger -->
-                <button type="button" onclick="document.getElementById('hiddenQrInput').click()" class="p-2 text-slate-500 hover:text-emerald-700 rounded-xl hover:bg-slate-100 transition-colors" title="Upload QR Code Photo">
-                    <span class="material-symbols-outlined text-[20px]">qr_code_scanner</span>
-                </button>
-
-                <!-- Message Input -->
-                <input id="chatInput" type="text" placeholder="Message Sentinel, paste link, or use /command..." class="flex-1 bg-transparent border-none focus:outline-none focus:ring-0 text-xs sm:text-sm text-slate-900 placeholder-slate-400 font-sans p-1">
-
-                <!-- Mic Button for Live Call Stream -->
-                <button type="button" onclick="toggleCallGuardian()" class="p-2 text-slate-500 hover:text-emerald-700 rounded-xl hover:bg-slate-100 transition-colors" title="Toggle Live Call Listener">
-                    <span class="material-symbols-outlined text-[20px]">mic</span>
-                </button>
-
-                <!-- Send Button -->
-                <button type="submit" id="sendBtn" class="p-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl shadow-sm flex items-center justify-center hover:scale-105 active:scale-95 transition-all">
-                    <span class="material-symbols-outlined text-[18px]">send</span>
-                </button>
-            </form>
+    <!-- Bottom Fixed Input Dock (Always in view, no scroll) -->
+    <footer class="w-full max-w-4xl bg-white border-t border-slate-200 p-2.5 sm:p-3 shrink-0 z-30 shadow-md">
+        <!-- Quick Command Chips -->
+        <div class="flex gap-1.5 mb-2 overflow-x-auto hide-scrollbar text-[11px] font-mono">
+            <button onclick="applyCommand('/scan')" class="bg-slate-100 hover:bg-slate-200 border border-slate-200 px-2.5 py-0.5 rounded-full text-slate-700 whitespace-nowrap transition-colors">/scan</button>
+            <button onclick="applyCommand('/check ')" class="bg-slate-100 hover:bg-slate-200 border border-slate-200 px-2.5 py-0.5 rounded-full text-slate-700 whitespace-nowrap transition-colors">/check</button>
+            <button onclick="applyCommand('/call')" class="bg-slate-100 hover:bg-slate-200 border border-slate-200 px-2.5 py-0.5 rounded-full text-slate-700 whitespace-nowrap transition-colors">/call</button>
+            <button onclick="applyCommand('/qr')" class="bg-slate-100 hover:bg-slate-200 border border-slate-200 px-2.5 py-0.5 rounded-full text-slate-700 whitespace-nowrap transition-colors">/qr</button>
+            <button onclick="applyCommand('/firewall')" class="bg-slate-100 hover:bg-slate-200 border border-slate-200 px-2.5 py-0.5 rounded-full text-slate-700 whitespace-nowrap transition-colors">/firewall</button>
+            <button onclick="applyCommand('/status')" class="bg-slate-100 hover:bg-slate-200 border border-slate-200 px-2.5 py-0.5 rounded-full text-slate-700 whitespace-nowrap transition-colors">/status</button>
         </div>
-    </div>
+
+        <!-- Pill Input Box -->
+        <form onsubmit="handleChatSubmit(event)" class="flex items-center gap-1.5 bg-slate-50 border border-slate-300 rounded-2xl p-1 focus-within:border-emerald-600 focus-within:ring-2 focus-within:ring-emerald-500/20 bg-white transition-all shadow-2xs">
+            <!-- QR Photo Upload -->
+            <button type="button" onclick="document.getElementById('hiddenQrInput').click()" class="p-2 text-slate-500 hover:text-emerald-700 rounded-xl hover:bg-slate-100 transition-colors" title="Upload QR Code Photo">
+                <span class="material-symbols-outlined text-[19px]">qr_code_scanner</span>
+            </button>
+
+            <!-- Message Field -->
+            <input id="chatInput" type="text" placeholder="Message Sentinel or paste suspicious link/SMS..." class="flex-1 bg-transparent border-none focus:outline-none focus:ring-0 text-xs sm:text-sm text-slate-900 placeholder-slate-400 font-sans p-1">
+
+            <!-- Mic Trigger for Speaker Call -->
+            <button type="button" onclick="toggleCallGuardian()" class="p-2 text-slate-500 hover:text-emerald-700 rounded-xl hover:bg-slate-100 transition-colors" title="Toggle Live Call Speaker Listener">
+                <span class="material-symbols-outlined text-[19px]">mic</span>
+            </button>
+
+            <!-- Send Button -->
+            <button type="submit" id="sendBtn" class="p-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl shadow-xs flex items-center justify-center hover:scale-105 active:scale-95 transition-all">
+                <span class="material-symbols-outlined text-[18px]">send</span>
+            </button>
+        </form>
+    </footer>
 
     <!-- INLINE FIREWALL BLOCK MODAL -->
     <div id="firewallModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
@@ -423,21 +376,18 @@
         function toggleCallGuardian() {
             isGuardianActive = !isGuardianActive;
             const btn = document.getElementById('callToggleBtn');
-            const thumb = document.getElementById('callToggleThumb');
             const badge = document.getElementById('callStatusBadge');
             const hud = document.getElementById('callGuardianHud');
 
             if (isGuardianActive) {
-                btn.className = 'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-emerald-600 transition-colors duration-200 ease-in-out focus:outline-none';
-                thumb.className = 'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out translate-x-5';
-                badge.className = 'text-[9px] uppercase font-mono px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800 font-bold border border-emerald-300 animate-pulse';
-                badge.innerText = '● LISTENING';
+                btn.className = 'px-2.5 py-1 rounded-lg bg-emerald-600 text-white border border-emerald-600 font-medium flex items-center gap-1.5 shrink-0 transition-colors cursor-pointer shadow-xs animate-pulse';
+                badge.className = 'text-[9px] font-mono uppercase font-bold text-white';
+                badge.innerText = 'LISTENING';
                 hud.classList.remove('hidden');
                 startSpeechRecognition();
             } else {
-                btn.className = 'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-slate-300 transition-colors duration-200 ease-in-out focus:outline-none';
-                thumb.className = 'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out translate-x-0';
-                badge.className = 'text-[9px] uppercase font-mono px-1.5 py-0.2 rounded bg-slate-100 text-slate-600 font-bold border border-slate-200';
+                btn.className = 'px-2.5 py-1 rounded-lg bg-white border border-slate-200 hover:border-emerald-300 font-medium text-slate-700 flex items-center gap-1.5 shrink-0 transition-colors cursor-pointer shadow-2xs';
+                badge.className = 'text-[9px] font-mono uppercase font-bold text-slate-500';
                 badge.innerText = 'STANDBY';
                 hud.classList.add('hidden');
                 stopSpeechRecognition();
@@ -509,7 +459,7 @@
             const div = document.createElement('div');
             div.className = 'flex justify-end';
             div.innerHTML = `
-                <div class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-2xl rounded-tr-none px-4 py-2.5 max-w-[85%] text-xs shadow-xs font-medium leading-relaxed break-words">
+                <div class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-2xl rounded-tr-none px-3.5 py-2 max-w-[85%] text-xs shadow-xs font-medium leading-relaxed break-words">
                     ${escapeHtml(text)}
                 </div>
             `;
@@ -558,14 +508,14 @@
         function renderBotResponse(data) {
             const container = document.getElementById('chatContainer');
             const div = document.createElement('div');
-            div.className = 'flex items-start gap-3';
+            div.className = 'flex items-start gap-2.5';
 
             if (data.verdict === 'conversation' && data.message) {
                 div.innerHTML = `
-                    <div class="w-8 h-8 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center shrink-0 mt-0.5 text-emerald-600">
-                        <span class="material-symbols-outlined text-[18px]">smart_toy</span>
+                    <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white shrink-0 mt-0.5 shadow-xs">
+                        <span class="material-symbols-outlined text-[18px]" data-weight="fill">shield</span>
                     </div>
-                    <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-none p-4 max-w-[85%] shadow-xs space-y-2 text-xs leading-relaxed text-slate-800">
+                    <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-none p-3.5 max-w-[85%] shadow-xs space-y-2 text-xs leading-relaxed text-slate-800">
                         ${escapeHtml(data.message).replace(/\n/g, '<br/>')}
                     </div>
                 `;
@@ -577,18 +527,18 @@
             let verdictColor = 'emerald';
             let verdictLabel = '🟢 SAFE / LOW RISK';
             let verdictBadgeClass = 'bg-emerald-100 text-emerald-800 border-emerald-200';
-            let borderAccent = 'border-t-4 border-t-emerald-600';
+            let borderAccent = 'border-t-3 border-t-emerald-600';
 
             if (data.verdict === 'dangerous') {
                 verdictColor = 'rose';
                 verdictLabel = '🔴 DANGEROUS THREAT';
                 verdictBadgeClass = 'bg-rose-100 text-rose-800 border-rose-200 animate-pulse';
-                borderAccent = 'border-t-4 border-t-rose-600';
+                borderAccent = 'border-t-3 border-t-rose-600';
             } else if (data.verdict === 'suspicious') {
                 verdictColor = 'amber';
                 verdictLabel = '🟡 SUSPICIOUS';
                 verdictBadgeClass = 'bg-amber-100 text-amber-800 border-amber-200';
-                borderAccent = 'border-t-4 border-t-amber-500';
+                borderAccent = 'border-t-3 border-t-amber-500';
             }
 
             let findingsHtml = '';
@@ -599,10 +549,10 @@
             let hinglishHtml = '';
             if (data.bilingual_hinglish) {
                 hinglishHtml = `
-                    <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 space-y-2 text-xs">
+                    <div class="bg-slate-50 rounded-xl p-2.5 border border-slate-200 space-y-1.5 text-xs">
                         <div class="font-bold text-amber-700 uppercase tracking-wider text-[10px] flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[14px]">translate</span>
-                            <span>Bilingual Forensic Breakdown:</span>
+                            <span class="material-symbols-outlined text-[13px]">translate</span>
+                            <span>Forensic Breakdown:</span>
                         </div>
                         <div><strong class="text-slate-500">1. Yeh Kya Hai:</strong> <span class="text-slate-800">${escapeHtml(data.bilingual_hinglish.yeh_kya_hai)}</span></div>
                         <div><strong class="text-rose-700">2. Kya Nuksaan:</strong> <span class="text-slate-800">${escapeHtml(data.bilingual_hinglish.kya_nuksaan)}</span></div>
@@ -614,13 +564,13 @@
             let forensicsHtml = '';
             if (data.scammer_forensics && data.verdict !== 'low_risk') {
                 forensicsHtml = `
-                    <div class="space-y-2">
-                        <div class="border border-slate-200 rounded-xl p-3 bg-slate-50">
-                            <h4 class="text-[10px] font-mono font-bold text-slate-500 uppercase mb-1">🧠 Scammer Psychology Trap</h4>
+                    <div class="space-y-1.5">
+                        <div class="border border-slate-200 rounded-xl p-2.5 bg-slate-50">
+                            <h4 class="text-[10px] font-mono font-bold text-slate-500 uppercase mb-0.5">🧠 Scammer Psychology</h4>
                             <div class="text-xs text-slate-800 font-mono"><span class="text-amber-700 font-bold">${escapeHtml(data.scammer_forensics.psychological_trap)}</span></div>
                         </div>
-                        <div class="border border-slate-200 rounded-xl p-3 bg-slate-50">
-                            <h4 class="text-[10px] font-mono font-bold text-slate-500 uppercase mb-1">🎯 Immediate Ask & Mule Trail</h4>
+                        <div class="border border-slate-200 rounded-xl p-2.5 bg-slate-50">
+                            <h4 class="text-[10px] font-mono font-bold text-slate-500 uppercase mb-0.5">🎯 Money Trail & Demand</h4>
                             <div class="text-xs text-slate-800 font-mono"><span class="text-emerald-700 font-bold">${escapeHtml(data.scammer_forensics.scammer_profit)}</span></div>
                         </div>
                     </div>
@@ -628,35 +578,35 @@
             }
 
             div.innerHTML = `
-                <div class="w-8 h-8 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center shrink-0 mt-0.5 text-emerald-600">
-                    <span class="material-symbols-outlined text-[18px]">shield</span>
+                <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white shrink-0 mt-0.5 shadow-xs">
+                    <span class="material-symbols-outlined text-[18px]" data-weight="fill">shield</span>
                 </div>
-                <div class="bg-white border border-slate-200 ${borderAccent} rounded-2xl rounded-tl-none p-4 max-w-[90%] shadow-sm space-y-3 text-xs">
-                    <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
-                        <span class="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full border ${verdictBadgeClass}">${verdictLabel}</span>
-                        <span class="font-mono text-xs font-bold text-slate-500">Score: <strong class="text-${verdictColor}-600 text-sm">${data.score}</strong>/100</span>
+                <div class="bg-white border border-slate-200 ${borderAccent} rounded-2xl rounded-tl-none p-3.5 max-w-[90%] shadow-xs space-y-2.5 text-xs">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                        <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full border ${verdictBadgeClass}">${verdictLabel}</span>
+                        <span class="font-mono text-xs font-bold text-slate-500">Risk Score: <strong class="text-${verdictColor}-600 text-sm">${data.score}</strong>/100</span>
                     </div>
 
                     <p class="text-slate-800 leading-relaxed font-medium">${escapeHtml(data.summary)}</p>
 
-                    ${findingsHtml ? `<ul class="space-y-1.5 text-xs text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-200">${findingsHtml}</ul>` : ''}
+                    ${findingsHtml ? `<ul class="space-y-1 text-xs text-slate-700 bg-slate-50 p-2.5 rounded-xl border border-slate-200">${findingsHtml}</ul>` : ''}
 
                     ${hinglishHtml}
                     ${forensicsHtml}
 
-                    <!-- 1-Click Action Guardrails -->
-                    <div class="pt-2 flex flex-wrap gap-2 border-t border-slate-100">
-                        <button onclick="confirmAction(this, 'Call Blocked & Hung Up')" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs flex items-center gap-1.5 shadow-xs transition-all">
-                            <span class="material-symbols-outlined text-[16px]">phone_disabled</span>
+                    <!-- 1-Click Action Buttons -->
+                    <div class="pt-1.5 flex flex-wrap gap-1.5 border-t border-slate-100">
+                        <button onclick="confirmAction(this, 'Call Blocked')" class="px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-[11px] flex items-center gap-1 shadow-2xs transition-all cursor-pointer">
+                            <span class="material-symbols-outlined text-[14px]">phone_disabled</span>
                             <span>Auto-Hangup & Block</span>
                         </button>
-                        <button onclick="testFirewallBlock()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-800 font-bold rounded-xl text-xs flex items-center gap-1.5 transition-all">
-                            <span class="material-symbols-outlined text-[16px]">gpp_bad</span>
+                        <button onclick="testFirewallBlock()" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-800 font-bold rounded-xl text-[11px] flex items-center gap-1 transition-all cursor-pointer">
+                            <span class="material-symbols-outlined text-[14px]">gpp_bad</span>
                             <span>Sinkhole Domain</span>
                         </button>
-                        <a href="tel:1930" class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200 font-bold rounded-xl text-xs flex items-center gap-1.5 transition-all">
-                            <span class="material-symbols-outlined text-[16px]">support_agent</span>
-                            <span>Draft 1930 Report</span>
+                        <a href="tel:1930" class="px-2.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200 font-bold rounded-xl text-[11px] flex items-center gap-1 transition-all">
+                            <span class="material-symbols-outlined text-[14px]">support_agent</span>
+                            <span>Report 1930</span>
                         </a>
                     </div>
                 </div>
@@ -667,7 +617,7 @@
         }
 
         function confirmAction(btn, text) {
-            btn.className = 'px-3 py-1.5 bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-xl text-xs font-bold flex items-center gap-1.5';
+            btn.className = 'px-2.5 py-1.5 bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-xl text-[11px] font-bold flex items-center gap-1';
             btn.innerHTML = `✓ <span>${text}</span>`;
         }
 
@@ -711,12 +661,12 @@
         function renderErrorMessage(err) {
             const container = document.getElementById('chatContainer');
             const div = document.createElement('div');
-            div.className = 'flex items-start gap-3';
+            div.className = 'flex items-start gap-2.5';
             div.innerHTML = `
-                <div class="w-8 h-8 rounded-full bg-rose-100 border border-rose-200 flex items-center justify-center shrink-0 mt-0.5 text-rose-600">
+                <div class="w-8 h-8 rounded-xl bg-rose-100 border border-rose-200 flex items-center justify-center shrink-0 mt-0.5 text-rose-600">
                     <span class="material-symbols-outlined text-[18px]">error</span>
                 </div>
-                <div class="bg-rose-50 border border-rose-200 rounded-2xl rounded-tl-none p-3.5 max-w-[85%] text-xs text-rose-800 font-medium">
+                <div class="bg-rose-50 border border-rose-200 rounded-2xl rounded-tl-none p-3 max-w-[85%] text-xs text-rose-800 font-medium">
                     Error scanning threat: ${escapeHtml(err)}
                 </div>
             `;
