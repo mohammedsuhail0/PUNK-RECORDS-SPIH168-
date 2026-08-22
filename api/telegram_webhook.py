@@ -45,6 +45,8 @@ class ScanRequest(BaseModel):
     text: str
     sender: str = ""
     subject: str = ""
+    filename: str = ""
+    groq_api_key: str = ""
 
 
 class SignUpRequest(BaseModel):
@@ -211,14 +213,19 @@ def run_status_check():
     return status_msg
 
 
-def perform_direct_scan(text: str, sender: str = "", subject: str = "") -> dict:
+def perform_direct_scan(
+    text: str, sender: str = "", subject: str = "", filename: str = "", groq_api_key: str = ""
+) -> dict:
     """Core scanning logic for direct web/telegram user inputs."""
+    attachments = [{"filename": filename}] if filename else None
     result = security_scan.scan_email(
         sender=sender or "Direct Submission <user-input@local>",
         subject=subject or (text[:50] if text else "Direct Scan Query"),
         body=text,
+        attachments=attachments,
+        groq_key_override=groq_api_key,
     )
-    target_desc = f"{sender} | {subject}" if sender else text[:80]
+    target_desc = f"File: {filename}" if filename else (f"{sender} | {subject}" if sender else text[:80])
     scan_history.add_scan_record(
         target_type="direct_input",
         target=target_desc,
@@ -375,7 +382,9 @@ async def api_login():
 @app.post("/api/scan")
 async def api_scan(request: ScanRequest):
     """REST API endpoint for scanning direct content."""
-    result = perform_direct_scan(request.text, request.sender, request.subject)
+    result = perform_direct_scan(
+        request.text, request.sender, request.subject, request.filename, request.groq_api_key
+    )
     return JSONResponse(content=result)
 
 

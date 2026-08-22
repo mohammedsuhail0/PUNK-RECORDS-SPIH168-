@@ -25,7 +25,7 @@ class AgentFeaturesTests(unittest.TestCase):
         self.assertIn("ShieldSense", response.text)
         hub_response = self.client.get("/hub")
         self.assertEqual(hub_response.status_code, 200)
-        self.assertIn("Analyst Hub Operations Center", hub_response.text)
+        self.assertIn("Universal AI Threat Analyst", hub_response.text)
 
     def test_api_scan_endpoint(self):
         payload = {

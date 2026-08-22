@@ -19,8 +19,8 @@ class FrontendRoutesTests(unittest.TestCase):
     def test_hub_page_route(self):
         response = self.client.get("/hub")
         self.assertEqual(response.status_code, 200)
-        self.assertIn("Analyst Hub Operations Center", response.text)
-        self.assertIn("Live Security Scanner", response.text)
+        self.assertIn("Universal AI Threat Analyst", response.text)
+        self.assertIn("Universal Threat Inspection Console", response.text)
 
     def test_dashboard_page_route(self):
         response = self.client.get("/dashboard")

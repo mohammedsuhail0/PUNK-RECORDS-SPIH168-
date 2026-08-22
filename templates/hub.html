@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>ShieldSense | Analyst Hub Operations Center</title>
+<title>ShieldSense | Universal AI Multi-Vector Threat Scanner</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=JetBrains+Mono:wght@450&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -25,7 +25,7 @@
         </a>
 
         <nav class="hidden md:flex items-center gap-8 font-medium text-sm text-slate-600">
-            <a class="text-slate-900 font-bold border-b-2 border-slate-900 pb-1" href="/hub">Scanner Console</a>
+            <a class="text-slate-900 font-bold border-b-2 border-slate-900 pb-1" href="/hub">Universal AI Scanner</a>
             <a class="hover:text-slate-900 transition-colors" href="/dashboard">Scan Stats</a>
             <a class="hover:text-slate-900 transition-colors" href="/">Landing Page</a>
         </nav>
@@ -52,89 +52,118 @@
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            SECURITY OPERATIONS CONSOLE ACTIVE
+            UNIVERSAL MULTI-VECTOR AI THREAT SCANNER ACTIVE
         </div>
         <h1 class="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
-            Security Analyst <span class="text-slate-900 border-b-4 border-emerald-400">Threat Operations Hub</span>
+            Universal AI Threat Analyst Console
         </h1>
         <p class="text-slate-600 text-base mt-2 max-w-2xl mx-auto">
-            Directly test links, email text, or headers against zero-trust heuristics & LLM reasoning.
+            Scan suspicious URLs, phishing emails, SMS messages, and executable file metadata with Groq Llama 3.1 AI reasoning.
         </p>
     </section>
 
-    <!-- Telegram Bot Connection Banner -->
+    <!-- Groq AI Key Settings Section -->
     <section class="w-full max-w-5xl mx-auto px-6 mb-6">
-        <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 border border-slate-700 shadow-md">
-            <div class="flex items-center gap-3 text-center sm:text-left">
-                <div class="w-10 h-10 rounded-lg bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
-                    <span class="material-symbols-outlined text-[24px]">smart_toy</span>
-                </div>
+        <div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm">
+            <div class="flex items-center gap-3 w-full md:w-auto">
+                <div class="w-10 h-10 rounded-lg bg-slate-900 text-white flex items-center justify-center font-bold text-sm shrink-0">⚡</div>
                 <div>
-                    <h3 class="font-bold text-sm text-slate-100">Telegram Bot Notifications Connected (@punk_rec_bot)</h3>
-                    <p class="text-xs text-slate-400">Receive 24/7 unread inbox alerts with one-click quarantine action buttons directly in Telegram.</p>
+                    <h3 class="font-bold text-sm text-slate-900">Groq Llama 3.1 AI Threat Reasoning Engine</h3>
+                    <p class="text-xs text-slate-500">Enter your Groq API Key (`gsk_...`) below to enable live real-time LLM intent analysis.</p>
                 </div>
             </div>
-            <a href="https://t.me/punk_rec_bot" target="_blank" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-lg text-xs transition-colors flex items-center gap-1.5 shrink-0 shadow-sm">
-                <span>Open Bot on Telegram</span>
-                <span class="material-symbols-outlined text-[16px]">open_in_new</span>
-            </a>
+            <div class="flex items-center gap-2 w-full md:w-auto">
+                <input id="groqApiKeyInput" type="password" placeholder="gsk_..." class="px-3 py-2 text-xs border border-slate-300 rounded-lg w-full md:w-64 font-mono focus:outline-none focus:border-slate-900">
+                <button onclick="saveGroqKey()" class="px-4 py-2 bg-slate-900 text-white text-xs font-bold rounded-lg hover:bg-slate-800 transition-colors shrink-0">
+                    Save Key
+                </button>
+            </div>
         </div>
     </section>
 
-    <!-- Interactive Security Operations Center & Live Scanner -->
+    <!-- Universal Scanner Card -->
     <section class="w-full max-w-5xl mx-auto px-6 mb-12">
         <div class="bg-slate-900 text-white rounded-2xl border border-slate-800 p-6 md:p-8 shadow-2xl space-y-6">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-800 pb-4 gap-2">
                 <h2 class="text-xl font-bold text-emerald-400 flex items-center gap-2">
                     <span class="material-symbols-outlined">radar</span>
-                    Live Security Scanner & Inspection Console
+                    Universal Threat Inspection Console
                 </h2>
-                <span class="text-xs bg-slate-800 text-slate-300 px-3 py-1 rounded-full font-mono">Zero-Trust Heuristics</span>
+                <div class="flex items-center gap-2 text-xs font-mono">
+                    <span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-full">⚡ Llama 3.1 AI Ready</span>
+                    <span class="bg-slate-800 text-slate-300 px-3 py-1 rounded-full">Zero-Trust Rules</span>
+                </div>
+            </div>
+
+            <!-- Threat Vector Mode Selector Tabs -->
+            <div class="flex flex-wrap gap-2 border-b border-slate-800 pb-4">
+                <button onclick="setVectorMode('url')" id="tabUrl" class="px-4 py-2 rounded-lg font-bold text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[16px]">link</span>
+                    Phishing Link / URL Scan
+                </button>
+                <button onclick="setVectorMode('email')" id="tabEmail" class="px-4 py-2 rounded-lg font-bold text-xs bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[16px]">mail</span>
+                    Email / Message / SMS Scan
+                </button>
+                <button onclick="setVectorMode('file')" id="tabFile" class="px-4 py-2 rounded-lg font-bold text-xs bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[16px]">description</span>
+                    File & Attachment Risk Scan
+                </button>
             </div>
 
             <!-- Input Form -->
             <div class="space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div id="fileFieldGroup" class="hidden">
+                    <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">File Name / Attachment Metadata (e.g. invoice_2026.pdf.exe)</label>
+                    <input id="scanFilename" type="text" placeholder="e.g. urgent_doc.pdf.exe or salary_details.xlsm" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-emerald-400 font-mono">
+                </div>
+
+                <div id="emailFieldGroup" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Sender Email / Name (Optional)</label>
-                        <input id="scanSender" type="text" placeholder="e.g. PayPal Security <alerts@paypal-verify-fake.com>" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-emerald-400">
+                        <input id="scanSender" type="text" placeholder="e.g. PayPal Alerts <security@paypal-verification-fake.com>" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-emerald-400">
                     </div>
                     <div>
                         <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Email Subject (Optional)</label>
                         <input id="scanSubject" type="text" placeholder="e.g. URGENT: Account Suspended within 24 Hours" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-emerald-400">
                     </div>
                 </div>
+
                 <div>
-                    <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">URL / Email Body / Message Text to Analyze</label>
-                    <textarea id="scanText" rows="4" placeholder="Paste link or email body here... (e.g. Please verify your OTP at http://198.51.100.7/verify)" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-4 text-sm text-slate-100 focus:outline-none focus:border-emerald-400 font-mono"></textarea>
+                    <label id="scanTextLabel" class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">URL / Link / Text Content to Analyze</label>
+                    <textarea id="scanText" rows="4" placeholder="Paste link or text content here... (e.g. http://198.51.100.7/verify or Please enter your OTP at bit.ly/bank-verify)" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-4 text-sm text-slate-100 focus:outline-none focus:border-emerald-400 font-mono"></textarea>
                 </div>
-                <button onclick="runHubScan()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3.5 px-6 rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg">
+
+                <button onclick="runHubScan()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg text-base">
                     <span class="material-symbols-outlined">security</span>
-                    Analyze Content Risk
+                    Analyze Threat Risk with AI
                 </button>
             </div>
 
             <!-- Scan Output Card -->
             <div id="hubResultSection" class="hidden bg-slate-950 border border-slate-800 rounded-xl p-6 space-y-4">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-800 pb-3 gap-2">
-                    <h3 class="font-bold text-slate-200 text-base">Security Inspection Results</h3>
+                    <div class="flex items-center gap-2">
+                        <h3 class="font-bold text-slate-200 text-base">AI Inspection Report</h3>
+                        <span id="hubAiBadge" class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-mono font-bold">⚡ Groq Llama 3.1 AI Analyzed</span>
+                    </div>
                     <div id="hubVerdictBadge" class="px-4 py-1 rounded-full font-bold text-xs uppercase tracking-wider"></div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="bg-slate-900 border border-slate-800 p-6 rounded-lg text-center flex flex-col items-center justify-center">
-                        <span class="text-xs uppercase text-slate-400 font-semibold mb-1">Risk Score</span>
+                        <span class="text-xs uppercase text-slate-400 font-semibold mb-1">Threat Score</span>
                         <span id="hubScoreDisplay" class="text-5xl font-black">0</span>
                         <span class="text-xs text-slate-500 mt-1">/ 100 Risk Index</span>
                     </div>
 
                     <div class="md:col-span-2 space-y-3">
                         <div>
-                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Plain-Language Explanation</h4>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Plain-Language Summary</h4>
                             <p id="hubSummaryText" class="text-slate-200 text-sm bg-slate-900 p-3 rounded border border-slate-800 font-medium"></p>
                         </div>
                         <div>
-                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Evidence Breakdown</h4>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Threat Indicators & Evidence</h4>
                             <ul id="hubFindingsList" class="space-y-1 text-sm text-slate-300"></ul>
                         </div>
                     </div>
@@ -147,7 +176,7 @@
                         🔒 Move to Safe Review (Quarantine)
                     </button>
                     <button onclick="simulateHubAction('blocked')" class="px-4 py-2 bg-rose-500/10 text-rose-400 border border-rose-500/30 hover:bg-rose-500/20 rounded-lg text-xs font-bold transition-colors">
-                        🚫 Block Sender
+                        🚫 Block Sender / Domain
                     </button>
                     <button onclick="simulateHubAction('dismissed')" class="px-4 py-2 bg-slate-800 text-slate-300 hover:bg-slate-700 rounded-lg text-xs font-bold transition-colors">
                         ✅ Dismiss Alert
@@ -164,28 +193,71 @@
 </footer>
 
 <script>
+    let activeMode = 'url';
+
     window.onload = function() {
         const userStr = localStorage.getItem('shieldsense_user');
         if (userStr) {
             const user = JSON.parse(userStr);
-            document.getElementById('userNameText').innerText = `Analyst: ${user.name} (${user.email})`;
-        } else {
-            document.getElementById('userNameText').innerText = 'Analyst (Guest Mode)';
+            document.getElementById('userNameText').innerText = `Analyst: ${user.name}`;
+        }
+
+        const savedKey = localStorage.getItem('shieldsense_groq_key');
+        if (savedKey) {
+            document.getElementById('groqApiKeyInput').value = savedKey;
         }
     };
+
+    function saveGroqKey() {
+        const key = document.getElementById('groqApiKeyInput').value.trim();
+        if (key) {
+            localStorage.setItem('shieldsense_groq_key', key);
+            alert('Groq API Key saved for live AI scanning!');
+        }
+    }
 
     function handleLogout() {
         localStorage.removeItem('shieldsense_user');
         window.location.href = '/';
     }
 
+    function setVectorMode(mode) {
+        activeMode = mode;
+        const btnUrl = document.getElementById('tabUrl');
+        const btnEmail = document.getElementById('tabEmail');
+        const btnFile = document.getElementById('tabFile');
+        const fileGroup = document.getElementById('fileFieldGroup');
+
+        btnUrl.className = mode === 'url' 
+            ? 'px-4 py-2 rounded-lg font-bold text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-2'
+            : 'px-4 py-2 rounded-lg font-bold text-xs bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center gap-2';
+
+        btnEmail.className = mode === 'email' 
+            ? 'px-4 py-2 rounded-lg font-bold text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-2'
+            : 'px-4 py-2 rounded-lg font-bold text-xs bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center gap-2';
+
+        btnFile.className = mode === 'file' 
+            ? 'px-4 py-2 rounded-lg font-bold text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-2'
+            : 'px-4 py-2 rounded-lg font-bold text-xs bg-slate-800 text-slate-300 hover:bg-slate-700 flex items-center gap-2';
+
+        if (mode === 'file') {
+            fileGroup.classList.remove('hidden');
+            document.getElementById('scanTextLabel').innerText = 'File Context / Details (Optional)';
+        } else {
+            fileGroup.classList.add('hidden');
+            document.getElementById('scanTextLabel').innerText = mode === 'url' ? 'URL / Link to Analyze' : 'Email Body / SMS / Message Text';
+        }
+    }
+
     async function runHubScan() {
         const text = document.getElementById('scanText').value.trim();
         const sender = document.getElementById('scanSender').value.trim();
         const subject = document.getElementById('scanSubject').value.trim();
+        const filename = document.getElementById('scanFilename').value.trim();
+        const groqKey = localStorage.getItem('shieldsense_groq_key') || document.getElementById('groqApiKeyInput').value.trim();
 
-        if (!text && !subject) {
-            alert('Please enter a link, email body, or subject to scan.');
+        if (!text && !subject && !filename) {
+            alert('Please enter a link, message text, or filename to scan.');
             return;
         }
 
@@ -193,7 +265,7 @@
             const res = await fetch('/api/scan', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ text, sender, subject })
+                body: JSON.stringify({ text, sender, subject, filename, groq_api_key: groqKey })
             });
             const data = await res.json();
             renderHubResult(data);
