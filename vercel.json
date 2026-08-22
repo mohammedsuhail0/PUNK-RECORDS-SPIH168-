@@ -1,16 +1,15 @@
 {
-  "name": "punk-records-shieldsense",
   "version": 2,
   "builds": [
     {
-      "src": "api/telegram_webhook.py",
+      "src": "api/index.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "api/telegram_webhook.py"
+      "dest": "api/index.py"
     }
   ]
 }

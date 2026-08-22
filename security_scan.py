@@ -1,18 +1,20 @@
-"""Deterministic, non-invasive email security checks for ShieldSense.
+"""Deterministic + Groq LLM AI security checks for ShieldSense.
 
-This module only inspects supplied text and metadata. It never opens attachments,
-fetches links, or performs any mailbox mutation.
+This module inspects supplied text, URLs, and metadata.
+It integrates Groq (Llama 3.1) AI intent analysis whenever GROQ_API_KEY is available.
 """
 
 from __future__ import annotations
 
 import ipaddress
+import json
+import os
 import re
 from dataclasses import asdict, dataclass
 from email.utils import parseaddr
 from typing import Iterable
 from urllib.parse import parse_qs, urlparse
-
+import requests
 
 URL_PATTERN = re.compile(r"https?://[^\s<>()\[\]{}]+", re.IGNORECASE)
 SHORTENERS = {"bit.ly", "tinyurl.com", "t.co", "goo.gl", "is.gd", "cutt.ly"}
@@ -132,10 +134,58 @@ def scan_attachments(attachments: Iterable[dict] | None) -> list[Finding]:
     return findings
 
 
+def call_groq_ai_scan(sender: str, subject: str, body: str) -> dict | None:
+    """Uses Groq Llama 3.1 AI model to perform deep LLM threat intent reasoning."""
+    api_key = os.environ.get("GROQ_API_KEY")
+    if not api_key:
+        return None
+
+    url = "https://api.groq.com/openai/v1/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
+    system_prompt = (
+        "You are an expert AI Cyber Threat Analyst inspecting suspicious emails, links, and messages. "
+        "Analyze the input for phishing, brand impersonation, urgency pressure, fake login domains, credential harvesting, or scams. "
+        "Return a raw JSON object with this exact schema:\n"
+        "{\n"
+        '  "llm_score": 0-100,\n'
+        '  "llm_verdict": "dangerous" | "suspicious" | "low_risk",\n'
+        '  "llm_reasoning": "A concise 1-2 sentence explanation of why this content is suspicious or safe.",\n'
+        '  "findings": ["finding 1 explanation"]\n'
+        "}"
+    )
+    user_prompt = f"Sender: {sender}\nSubject: {subject}\nBody/Text:\n{body}"
+    payload = {
+        "model": "llama-3.1-8b-instant",
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
+        ],
+        "temperature": 0.1,
+        "response_format": {"type": "json_object"}
+    }
+    try:
+        response = requests.post(url, json=payload, headers=headers, timeout=5)
+        if response.status_code == 200:
+            content = response.json()["choices"][0]["message"]["content"].strip()
+            return json.loads(content)
+    except Exception as e:
+        print(f"Groq AI Scan Warning: {e}")
+    return None
+
+
 def scan_email(sender: str, subject: str, body: str, reply_to: str = "", attachments: Iterable[dict] | None = None) -> dict:
     findings = scan_sender(sender, reply_to) + scan_message(subject, body) + scan_attachments(attachments)
     for url in extract_urls(f"{subject}\n{body}"):
         findings.extend(scan_url(url))
+
+    groq_res = call_groq_ai_scan(sender, subject, body)
+    if groq_res and isinstance(groq_res, dict):
+        llm_score = int(groq_res.get("llm_score", 0))
+        reasoning = groq_res.get("llm_reasoning", "AI intent analysis evaluated potential phishing patterns.")
+        findings.append(_finding("llm.groq_ai_intent", llm_score, f"AI Intelligence Model (Groq Llama 3.1): {reasoning}"))
 
     deduplicated: list[Finding] = []
     seen: set[tuple[str, str]] = set()
@@ -152,6 +202,7 @@ def scan_email(sender: str, subject: str, body: str, reply_to: str = "", attachm
         verdict, recommendation = "suspicious", "warn_verify"
     else:
         verdict, recommendation = "low_risk", "allow_with_caution"
+
     return {
         "score": score,
         "verdict": verdict,
