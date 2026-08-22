@@ -62,24 +62,7 @@
         </p>
     </section>
 
-    <!-- Groq AI Key Settings Section -->
-    <section class="w-full max-w-5xl mx-auto px-6 mb-6">
-        <div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm">
-            <div class="flex items-center gap-3 w-full md:w-auto">
-                <div class="w-10 h-10 rounded-lg bg-slate-900 text-white flex items-center justify-center font-bold text-sm shrink-0">⚡</div>
-                <div>
-                    <h3 class="font-bold text-sm text-slate-900">Groq Llama 3.1 AI Threat Reasoning Engine</h3>
-                    <p class="text-xs text-slate-500">Enter your Groq API Key (`gsk_...`) below to enable live real-time LLM intent analysis.</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-2 w-full md:w-auto">
-                <input id="groqApiKeyInput" type="password" placeholder="gsk_..." class="px-3 py-2 text-xs border border-slate-300 rounded-lg w-full md:w-64 font-mono focus:outline-none focus:border-slate-900">
-                <button onclick="saveGroqKey()" class="px-4 py-2 bg-slate-900 text-white text-xs font-bold rounded-lg hover:bg-slate-800 transition-colors shrink-0">
-                    Save Key
-                </button>
-            </div>
-        </div>
-    </section>
+
 
     <!-- Universal Scanner Card -->
     <section class="w-full max-w-5xl mx-auto px-6 mb-12">
@@ -201,20 +184,7 @@
             const user = JSON.parse(userStr);
             document.getElementById('userNameText').innerText = `Analyst: ${user.name}`;
         }
-
-        const savedKey = localStorage.getItem('shieldsense_groq_key');
-        if (savedKey) {
-            document.getElementById('groqApiKeyInput').value = savedKey;
-        }
     };
-
-    function saveGroqKey() {
-        const key = document.getElementById('groqApiKeyInput').value.trim();
-        if (key) {
-            localStorage.setItem('shieldsense_groq_key', key);
-            alert('Groq API Key saved for live AI scanning!');
-        }
-    }
 
     function handleLogout() {
         localStorage.removeItem('shieldsense_user');
@@ -254,7 +224,6 @@
         const sender = document.getElementById('scanSender').value.trim();
         const subject = document.getElementById('scanSubject').value.trim();
         const filename = document.getElementById('scanFilename').value.trim();
-        const groqKey = localStorage.getItem('shieldsense_groq_key') || document.getElementById('groqApiKeyInput').value.trim();
 
         if (!text && !subject && !filename) {
             alert('Please enter a link, message text, or filename to scan.');
@@ -265,7 +234,7 @@
             const res = await fetch('/api/scan', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ text, sender, subject, filename, groq_api_key: groqKey })
+                body: JSON.stringify({ text, sender, subject, filename })
             });
             const data = await res.json();
             renderHubResult(data);
