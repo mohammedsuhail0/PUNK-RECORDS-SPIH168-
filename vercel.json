@@ -1,5 +1,5 @@
 {
-  "name": "personal-email-agent",
+  "name": "punk-records-shieldsense",
   "version": 2,
   "builds": [
     {
@@ -9,7 +9,7 @@
   ],
   "routes": [
     {
-      "src": "/api/telegram_webhook",
+      "src": "/(.*)",
       "dest": "api/telegram_webhook.py"
     }
   ]

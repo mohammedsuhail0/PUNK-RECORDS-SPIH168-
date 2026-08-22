@@ -4,6 +4,7 @@ import time
 import json
 import base64
 import requests
+from security_scan import scan_email
 from datetime import datetime, timedelta, timezone
 from googleapiclient.discovery import build
 from google.oauth2.credentials import Credentials
@@ -36,6 +37,7 @@ STUDENT_PROFILE = os.environ.get("STUDENT_PROFILE", "I am a college student in I
 
 LABEL_SCAN_NAME = "AI-Scanned"
 LABEL_INFO_NAME = "AI-Info"
+LABEL_REVIEW_NAME = "ShieldSense-Review"
 
 def get_gmail_service():
     """Authenticates and returns the Gmail API service client."""
@@ -100,14 +102,29 @@ def parse_email_body(payload):
     return body
 
 def clean_email_headers(message_detail):
-    """Extracts Subject, From, Date, and Message-ID from headers."""
+    """Extracts the email headers needed for triage and safe replies."""
     headers = message_detail.get('payload', {}).get('headers', [])
-    email_data = {'Subject': '', 'From': '', 'Date': '', 'Message-ID': ''}
+    email_data = {'Subject': '', 'From': '', 'Reply-To': '', 'Date': '', 'Message-ID': ''}
+    header_map = {k.lower(): k for k in email_data}
     for header in headers:
-        name = header.get('name')
-        if name in email_data:
-            email_data[name] = header.get('value')
+        name = (header.get('name') or '').lower()
+        if name in header_map:
+            email_data[header_map[name]] = header.get('value', '')
     return email_data
+
+def extract_attachment_metadata(payload):
+    """Returns filename/MIME metadata only; attachments are never opened or downloaded."""
+    attachments = []
+    for part in payload.get('parts', []):
+        filename = part.get('filename', '')
+        if filename:
+            attachments.append({
+                'filename': filename,
+                'mime_type': part.get('mimeType', ''),
+                'size': part.get('body', {}).get('size', 0)
+            })
+        attachments.extend(extract_attachment_metadata(part))
+    return attachments
 
 def get_upcoming_events(service):
     """Fetches calendar events for the next 3 days to check availability."""
@@ -258,6 +275,36 @@ def send_telegram_alert(sender, subject, summary, draft, thread_id):
         print(f"Telegram Notification Error: {response.text}")
     else:
         print("Telegram push alert sent successfully.")
+
+def send_security_alert(sender, subject, security, thread_id):
+    """Sends evidence-bound ShieldSense alerts. No email action occurs until a button is confirmed."""
+    evidence = security.get('findings', [])[:3]
+    evidence_text = "\n".join(
+        f"• {item['explanation']}" for item in evidence
+    ) or "• No high-risk indicators were found."
+    verdict = security.get('verdict', 'suspicious').upper().replace('_', ' ')
+    message = (
+        f"🛡️ *ShieldSense Alert — {verdict} ({security.get('score', 0)}/100)*\n\n"
+        f"*From:* {sender}\n*Subject:* {subject}\n\n"
+        f"{security.get('summary', '')}\n\n"
+        f"*Kyun suspicious hai:*\n{evidence_text}\n\n"
+        "*Abhi kya karo:* Link/attachment mat kholo. Review karke decide karo."
+    )
+    keyboard = {
+        "inline_keyboard": [[
+            {"text": "🔒 Move to Safe Review", "callback_data": f"secq:{thread_id}"},
+            {"text": "✅ I Will Review", "callback_data": f"secok:{thread_id}"}
+        ]]
+    }
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    response = requests.post(url, json={
+        "chat_id": TELEGRAM_CHAT_ID,
+        "text": message,
+        "parse_mode": "Markdown",
+        "reply_markup": json.dumps(keyboard)
+    })
+    if response.status_code != 200:
+        print(f"ShieldSense Telegram alert error: {response.text}")
 
 def send_telegram_text(text):
     """Helper to send a text message to Telegram."""
@@ -441,16 +488,25 @@ def main(max_emails=10):
         msg_detail = gmail.users().messages().get(userId='me', id=msg_id).execute()
         headers = clean_email_headers(msg_detail)
         body = parse_email_body(msg_detail.get('payload', {}))
+        attachments = extract_attachment_metadata(msg_detail.get('payload', {}))
         
         sender = headers['From']
         subject = headers['Subject']
+
+        # Security triage is deterministic and non-invasive. It runs before any AI drafting.
+        security = scan_email(sender, subject, body, headers.get('Reply-To', ''), attachments)
+        if security['verdict'] in ('suspicious', 'dangerous'):
+            send_security_alert(sender, subject, security, thread_id)
+        if security['verdict'] == 'dangerous':
+            print(f"ShieldSense flagged as dangerous ({security['score']}/100). Awaiting user review.")
+            continue
 
         # Truncate body to first 3000 characters to stay within Groq TPM limits
         body_truncated = body[:3000] if len(body) > 3000 else body
 
         print(f"Scanning email: {subject} from {sender}")
         
-        # AI Classification
+        # Existing opportunity classification runs only after the safety gate.
         analysis = classify_email(sender, subject, body_truncated, calendar_context)
         
         category = analysis.get("category", "INFO")

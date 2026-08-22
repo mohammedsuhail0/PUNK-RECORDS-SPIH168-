@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShieldSense | Usage Analysis Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=JetBrains+Mono:wght@450&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .material-symbols-outlined[data-weight="fill"] { font-variation-settings: 'FILL' 1; }
+</style>
+</head>
+<body class="bg-[#f8f9ff] text-[#0b1c30] font-sans antialiased overflow-hidden flex h-screen w-full">
+
+<!-- SideNavBar -->
+<nav class="h-full w-[240px] left-0 flex flex-col p-4 bg-[#eff4ff] border-r border-slate-200 hidden lg:flex shrink-0">
+    <div class="mb-6 px-2 py-2">
+        <a href="/" class="flex items-center gap-2 mb-1 text-slate-900 font-bold text-lg">
+            <span class="material-symbols-outlined text-slate-900" style="font-variation-settings: 'FILL' 1;">shield</span>
+            Analyst Hub
+        </a>
+        <div class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Security Operations</div>
+    </div>
+
+    <a href="/hub" class="w-full mb-6 py-2.5 px-4 bg-slate-900 text-white rounded-lg font-semibold text-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-sm">
+        <span class="material-symbols-outlined text-[18px]">add</span>
+        New Analysis
+    </a>
+
+    <div class="flex-1 space-y-1">
+        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-200 transition-all text-sm font-medium" href="/hub">
+            <span class="material-symbols-outlined text-[20px]">dashboard</span>
+            Dashboard / Hub
+        </a>
+        <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-slate-200 text-slate-900 font-bold text-sm" href="/dashboard">
+            <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">analytics</span>
+            Scan Stats
+        </a>
+        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-200 transition-all text-sm font-medium" href="https://t.me/{{ bot_username }}" target="_blank">
+            <span class="material-symbols-outlined text-[20px]">smart_toy</span>
+            Telegram Bot
+        </a>
+    </div>
+
+    <div class="mt-auto pt-4 border-t border-slate-200 space-y-1 text-xs text-slate-500">
+        <div class="flex items-center justify-between font-semibold">
+            <span>24/7 Agent Node</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-screen overflow-y-auto bg-[#f8f9ff] relative">
+    <!-- Header -->
+    <header class="sticky top-0 z-10 bg-white/90 backdrop-blur-md border-b border-slate-200 px-6 py-4 flex items-center justify-between shrink-0">
+        <div class="font-bold text-xl text-slate-900 flex items-center gap-2">
+            <a href="/" class="lg:hidden flex items-center gap-1 text-slate-900">
+                <span class="material-symbols-outlined">shield</span>
+            </a>
+            Usage Analysis & Threat Stats
+        </div>
+        <div class="flex items-center gap-4">
+            <a href="https://t.me/{{ bot_username }}" target="_blank" class="bg-slate-900 text-white font-semibold text-xs px-4 py-2 rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2">
+                <span class="material-symbols-outlined text-[16px]">api</span>
+                Connect Telegram Bot
+            </a>
+        </div>
+    </header>
+
+    <!-- Dashboard Canvas -->
+    <div class="p-6 space-y-6 max-w-[1400px] mx-auto w-full">
+        <!-- Key Metrics Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Widget 1: Total Signals -->
+            <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Total Signals Scanned</p>
+                        <h3 id="statTotalScanned" class="text-4xl font-black text-slate-900">0</h3>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
+                        <span class="material-symbols-outlined text-slate-900 text-[20px]">query_stats</span>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center gap-1 text-xs text-emerald-600 font-semibold">
+                    <span class="material-symbols-outlined text-[14px]">trending_up</span> Live Real-Time Count
+                </div>
+            </div>
+
+            <!-- Widget 2: Threat Detection -->
+            <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Threat Detection Rate</p>
+                        <h3 id="statThreatRate" class="text-4xl font-black text-rose-600">0.0%</h3>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center border border-rose-200">
+                        <span class="material-symbols-outlined text-rose-600 text-[20px]">bug_report</span>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center gap-1 text-xs text-slate-500">
+                    <span id="statDangerousCount" class="font-bold text-rose-600">0</span> dangerous anomalies detected
+                </div>
+            </div>
+
+            <!-- Widget 3: Active Users & Clean Ratio -->
+            <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm flex flex-col justify-between">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Clean vs Threat Ratio</p>
+                        <h3 id="statCleanCount" class="text-4xl font-black text-emerald-600">0 Clean</h3>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
+                        <span class="material-symbols-outlined text-slate-900 text-[20px]">group</span>
+                    </div>
+                </div>
+                <div class="mt-4 text-xs text-slate-500">
+                    Active Agent Node: <span class="font-bold text-slate-900">Online</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity Table (PS 02 Must-Have #5) -->
+        <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+            <div class="p-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[20px]">history</span>
+                    Recent Scan Activity Audit Log
+                </h2>
+                <button onclick="loadDashboardData()" class="text-xs font-bold text-slate-900 hover:underline flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">sync</span> Refresh
+                </button>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-sm">
+                    <thead>
+                        <tr class="border-b border-slate-200 bg-slate-100 text-xs font-bold text-slate-600 uppercase">
+                            <th class="px-4 py-3">Timestamp</th>
+                            <th class="px-4 py-3">Target / Content</th>
+                            <th class="px-4 py-3">Risk Score</th>
+                            <th class="px-4 py-3">Verdict</th>
+                            <th class="px-4 py-3">Summary</th>
+                            <th class="px-4 py-3">Action Outcome</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dashTable" class="divide-y divide-slate-200 font-mono text-xs text-slate-800">
+                        <tr>
+                            <td colspan="6" class="px-4 py-6 text-center text-slate-500 font-sans">Loading recent scan records...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    async function loadDashboardData() {
+        try {
+            // Load stats
+            const statsRes = await fetch('/api/stats');
+            const stats = await statsRes.json();
+            document.getElementById('statTotalScanned').innerText = stats.total_signals_scanned;
+            document.getElementById('statThreatRate').innerText = stats.threat_detection_rate_pct + '%';
+            document.getElementById('statDangerousCount').innerText = stats.dangerous_count;
+            document.getElementById('statCleanCount').innerText = stats.clean_count + ' Clean';
+
+            // Load audit log
+            const histRes = await fetch('/api/history');
+            const items = await histRes.json();
+            const tbody = document.getElementById('dashTable');
+            tbody.innerHTML = '';
+
+            if (!items || items.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="px-4 py-6 text-center text-slate-500 font-sans">No security scans logged yet. Use the Analyst Hub or Telegram bot to run scans.</td></tr>';
+                return;
+            }
+
+            items.forEach(item => {
+                const tr = document.createElement('tr');
+                const badgeClass = item.verdict === 'dangerous' 
+                    ? 'bg-rose-100 text-rose-700 font-bold px-2 py-0.5 rounded-full border border-rose-200' 
+                    : item.verdict === 'suspicious' 
+                    ? 'bg-amber-100 text-amber-700 font-bold px-2 py-0.5 rounded-full border border-amber-200' 
+                    : 'bg-emerald-100 text-emerald-700 font-bold px-2 py-0.5 rounded-full border border-emerald-200';
+                
+                tr.innerHTML = `
+                    <td class="px-4 py-3 text-slate-500">${item.timestamp}</td>
+                    <td class="px-4 py-3 font-sans font-semibold text-slate-900 truncate max-w-xs">${item.target}</td>
+                    <td class="px-4 py-3 font-bold">${item.score}/100</td>
+                    <td class="px-4 py-3"><span class="${badgeClass}">${item.verdict.toUpperCase()}</span></td>
+                    <td class="px-4 py-3 font-sans text-slate-600 truncate max-w-md">${item.findings_summary}</td>
+                    <td class="px-4 py-3 font-sans text-slate-500">${item.action_taken}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        } catch (err) {
+            console.error('Dashboard load error:', err);
+        }
+    }
+
+    window.onload = loadDashboardData;
+</script>
+</body>
+</html>

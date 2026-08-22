@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>ShieldSense | The Autonomous AI Security Agent</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=JetBrains+Mono:wght@450&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .material-symbols-outlined[data-weight="fill"] { font-variation-settings: 'FILL' 1; }
+    </style>
+</head>
+<body class="bg-[#f8f9ff] text-[#0b1c30] font-sans min-h-screen flex flex-col justify-between antialiased">
+
+    <!-- Top Navigation Header -->
+    <header class="bg-white w-full sticky top-0 z-50 border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 text-xl font-bold text-slate-900">
+                <span class="material-symbols-outlined text-slate-900" data-weight="fill">shield</span>
+                ShieldSense AI Agent
+            </a>
+            <nav class="hidden md:flex items-center gap-8 font-medium text-sm text-slate-600">
+                <a href="/hub" class="hover:text-slate-900 transition-colors">Analyst Hub</a>
+                <a href="/dashboard" class="hover:text-slate-900 transition-colors">Scan Stats</a>
+                <a href="https://t.me/punk_rec_bot" target="_blank" class="hover:text-slate-900 transition-colors">Bot (@punk_rec_bot)</a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <button onclick="openAuthModal()" class="px-4 py-2 bg-slate-900 text-white rounded-lg font-semibold text-sm hover:bg-slate-800 transition-colors flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">login</span>
+                    <span>Sign In / Register</span>
+                </button>
+                <a href="/hub" class="px-4 py-2 border border-slate-300 text-slate-900 rounded-lg font-semibold text-sm hover:bg-slate-100 transition-colors">
+                    Open Analyst Hub
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Hero Landing Section -->
+    <main class="flex-grow flex flex-col items-center w-full">
+        <section class="w-full max-w-7xl mx-auto px-6 pt-16 pb-12 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-200/70 border border-slate-300 text-slate-800 text-xs font-semibold mb-6">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                24/7 AUTOMATED INBOX GUARDIAN & SECURITY AGENT
+            </div>
+
+            <h1 class="text-4xl md:text-6xl font-black text-slate-900 tracking-tight leading-tight max-w-4xl mx-auto">
+                The Autonomous AI Security Agent for <span class="text-slate-900 border-b-4 border-emerald-400">Modern Teams</span>
+            </h1>
+
+            <p class="text-slate-600 text-lg md:text-xl mt-6 max-w-2xl mx-auto leading-relaxed">
+                ShieldSense continuously monitors digital signals, checks email bodies & URLs against zero-trust heuristics, and alerts your team directly on Telegram (`@punk_rec_bot`) with automated safe review guardrails.
+            </p>
+
+            <!-- Prominent Direct CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 items-center justify-center mt-10">
+                <button onclick="openAuthModal()" class="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-white font-bold text-base px-8 py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-3">
+                    <span class="material-symbols-outlined text-[24px]">login</span>
+                    Sign In to Get Started
+                </button>
+                <a href="/hub" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-base px-8 py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-3">
+                    <span class="material-symbols-outlined text-[24px]">radar</span>
+                    Open Analyst Hub Scanner
+                </a>
+                <a href="/dashboard" class="w-full sm:w-auto bg-white border border-slate-300 hover:bg-slate-100 text-slate-900 font-bold text-base px-6 py-4 rounded-xl transition-all flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-[24px]">analytics</span>
+                    View Live Stats
+                </a>
+            </div>
+        </section>
+
+        <!-- Feature Capabilities Grid: What Can Our Agent Do? -->
+        <section class="w-full bg-white py-16 border-y border-slate-200">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-3">What Can Our AI Security Agent Do?</h2>
+                    <p class="text-slate-600 text-base max-w-2xl mx-auto">Complete 24/7 inbox defense, real-time threat evaluation, and instant Telegram alert notifications.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Feature 1 -->
+                    <div class="bg-[#f8f9ff] rounded-2xl border border-slate-200 p-8 hover:shadow-md transition-shadow">
+                        <div class="w-14 h-14 rounded-xl bg-slate-900 text-white flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-[32px]">mark_email_unread</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">24/7 Gmail Inbox Monitoring</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Automatically scans unread incoming emails, headers, senders, and attachments without downloading malicious files.
+                        </p>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="bg-[#f8f9ff] rounded-2xl border border-slate-200 p-8 hover:shadow-md transition-shadow">
+                        <div class="w-14 h-14 rounded-xl bg-slate-900 text-white flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-[32px]">radar</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Zero-Trust Risk Scoring</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Calculates a deterministic 0–100 risk score based on punycode URLs, IP hostnames, credential pressure, and LLM reasoning.
+                        </p>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="bg-[#f8f9ff] rounded-2xl border border-slate-200 p-8 hover:shadow-md transition-shadow">
+                        <div class="w-14 h-14 rounded-xl bg-slate-900 text-white flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-[32px]">notifications_active</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Instant Telegram Alerts</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Delivers clear alerts to `@punk_rec_bot` with interactive action buttons (`[ Move to Safe Review ]`, `[ Approve Reply ]`).
+                        </p>
+                    </div>
+
+                    <!-- Feature 4 -->
+                    <div class="bg-[#f8f9ff] rounded-2xl border border-slate-200 p-8 hover:shadow-md transition-shadow">
+                        <div class="w-14 h-14 rounded-xl bg-slate-900 text-white flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-[32px]">shield_person</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Quarantine Guardrails</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            High-risk emails are safely archived to `ShieldSense-Review` labels. Emails are never deleted automatically.
+                        </p>
+                    </div>
+
+                    <!-- Feature 5 -->
+                    <div class="bg-[#f8f9ff] rounded-2xl border border-slate-200 p-8 hover:shadow-md transition-shadow">
+                        <div class="w-14 h-14 rounded-xl bg-slate-900 text-white flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-[32px]">history_edu</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Audit Logs & History</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Maintains a file-backed scan log of all evaluated links, emails, scores, and analyst actions for complete compliance.
+                        </p>
+                    </div>
+
+                    <!-- Feature 6 -->
+                    <div class="bg-[#f8f9ff] rounded-2xl border border-slate-200 p-8 hover:shadow-md transition-shadow">
+                        <div class="w-14 h-14 rounded-xl bg-slate-900 text-white flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-[32px]">chat</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Conversational AI Chat</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Ask security questions directly to `@punk_rec_bot` or paste raw email snippets for instant security evaluation.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="w-full py-16">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-3">How It Works in 3 Steps</h2>
+                    <p class="text-slate-600 text-base">Simple, seamless setup for continuous protection.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+                        <div class="w-12 h-12 rounded-full bg-slate-900 text-white font-bold text-xl flex items-center justify-center mx-auto mb-4">1</div>
+                        <h4 class="text-lg font-bold text-slate-900 mb-2">Sign In & Register</h4>
+                        <p class="text-slate-600 text-sm">Create your analyst account and authorize your security parameters.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+                        <div class="w-12 h-12 rounded-full bg-slate-900 text-white font-bold text-xl flex items-center justify-center mx-auto mb-4">2</div>
+                        <h4 class="text-lg font-bold text-slate-900 mb-2">Connect Bot (@punk_rec_bot)</h4>
+                        <p class="text-slate-600 text-sm">Launch `@punk_rec_bot` on Telegram or let the agent monitor your Gmail inbox.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+                        <div class="w-12 h-12 rounded-full bg-emerald-600 text-white font-bold text-xl flex items-center justify-center mx-auto mb-4">3</div>
+                        <h4 class="text-lg font-bold text-slate-900 mb-2">Review & Take Action</h4>
+                        <p class="text-slate-600 text-sm">Receive instant alerts with plain-language reasons and one-click quarantine buttons.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Sign In / Sign Up Modal -->
+    <div id="authModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl border border-slate-200 w-full max-w-md p-8 shadow-2xl relative">
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-900">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 rounded-full bg-slate-900 text-white flex items-center justify-center mx-auto mb-3">
+                    <span class="material-symbols-outlined text-[28px]">security</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900">Sign In to ShieldSense</h3>
+                <p class="text-xs text-slate-500 mt-1">Access the Security Operations Analyst Hub & Telegram Bot</p>
+            </div>
+
+            <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Work Email</label>
+                    <input id="authEmail" type="email" placeholder="analyst@company.com" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:border-slate-900">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">Password</label>
+                    <input id="authPassword" type="password" placeholder="••••••••" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:border-slate-900">
+                </div>
+                <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-lg text-sm transition-colors flex items-center justify-center gap-2">
+                    <span>Sign In & Continue</span>
+                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                </button>
+            </form>
+
+            <div class="mt-6 pt-4 border-t border-slate-200 text-center text-xs text-slate-500">
+                Direct Telegram Bot: <a href="https://t.me/punk_rec_bot" target="_blank" class="text-emerald-600 font-bold hover:underline">@punk_rec_bot</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full bg-white border-t border-slate-200 py-6 px-6 text-center text-xs text-slate-500">
+        © 2026 ShieldSense AI Security Agent Platform. All rights reserved.
+    </footer>
+
+    <script>
+        function openAuthModal() {
+            document.getElementById('authModal').classList.remove('hidden');
+        }
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.add('hidden');
+        }
+        async function handleAuthSubmit(event) {
+            event.preventDefault();
+            const workEmail = document.getElementById('authEmail').value;
+            try {
+                await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ workEmail })
+                });
+            } catch (err) {}
+            // Redirect user to Telegram bot & Analyst hub
+            window.open('https://t.me/punk_rec_bot', '_blank');
+            window.location.href = '/hub';
+        }
+    </script>
+</body>
+</html>
