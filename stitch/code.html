@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Sentinel Workspace</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-secondary": "#ffffff",
+                        "surface": "#f8f9ff",
+                        "on-surface-variant": "#3d4a42",
+                        "on-secondary-fixed": "#131b2e",
+                        "primary-fixed-dim": "#68dba9",
+                        "surface-dim": "#cbdbf5",
+                        "on-secondary-fixed-variant": "#3f465c",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#0b1c30",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "secondary-fixed": "#dae2fd",
+                        "surface-bright": "#f8f9ff",
+                        "primary-container": "#00855d",
+                        "on-background": "#0b1c30",
+                        "on-secondary-container": "#5c647a",
+                        "surface-container-highest": "#d3e4fe",
+                        "tertiary": "#4648d4",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#eff4ff",
+                        "on-tertiary-fixed-variant": "#2f2ebe",
+                        "background": "#f8f9ff",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#e1e0ff",
+                        "on-primary-fixed-variant": "#005137",
+                        "outline": "#6d7a72",
+                        "primary-fixed": "#85f8c4",
+                        "inverse-primary": "#68dba9",
+                        "surface-container-high": "#dce9ff",
+                        "on-primary-container": "#f5fff7",
+                        "surface-tint": "#006c4a",
+                        "outline-variant": "#bccac0",
+                        "primary": "#006948",
+                        "inverse-surface": "#213145",
+                        "secondary-fixed-dim": "#bec6e0",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-container": "#fffbff",
+                        "surface-variant": "#d3e4fe",
+                        "tertiary-container": "#6063ee",
+                        "on-tertiary-fixed": "#07006c",
+                        "on-primary-fixed": "#002114",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "secondary": "#565e74",
+                        "secondary-container": "#dae2fd",
+                        "surface-container": "#e5eeff"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.125rem",
+                        lg: "0.25rem",
+                        xl: "0.5rem",
+                        full: "0.75rem"
+                    },
+                    spacing: {
+                        xl: "2rem",
+                        md: "1rem",
+                        "container-max": "1440px",
+                        sm: "0.5rem",
+                        base: "4px",
+                        lg: "1.5rem",
+                        gutter: "24px",
+                        xs: "0.25rem"
+                    },
+                    fontFamily: {
+                        "technical-data": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "technical-code": ["JetBrains Mono"],
+                        "headline-md": ["Inter"]
+                    },
+                    fontSize: {
+                        "technical-data": ["12px", { lineHeight: "16px", fontWeight: "500" }],
+                        "headline-lg-mobile": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600" }],
+                        "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500" }],
+                        "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "600" }],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "technical-code": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "headline-md": ["20px", { lineHeight: "28px", fontWeight: "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .pulse-green {
+            animation: pulse-green-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-green-ring {
+            0% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.7); }
+            70% { box-shadow: 0 0 0 6px rgba(5, 150, 105, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0); }
+        }
+        .scrolling-content {
+            padding-top: 5rem; /* space for top bar */
+            padding-bottom: 9rem; /* space for bottom input and nav */
+        }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased h-screen overflow-hidden flex flex-col">
+<!-- TopAppBar from JSON -->
+<header class="flex justify-between items-center px-4 h-16 w-full z-50 fixed top-0 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[24px]">security</span>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">ShieldSense AI</h1>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="w-2 h-2 rounded-full bg-[#059669] pulse-green"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Sentinel Core - Always Vigilant</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex bg-surface-container-low border border-outline-variant rounded-full px-4 py-1.5 items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">search</span>
+<span class="text-technical-data font-technical-data text-on-surface-variant">Press / for commands</span>
+</div>
+<button class="p-2 text-on-surface-variant hover:text-primary rounded-full transition-colors">
+<span class="material-symbols-outlined text-[24px]">sensors</span>
+</button>
+</div>
+</header><div class="fixed top-20 left-1/2 -translate-x-1/2 z-40">
+<div class="bg-primary-container text-on-primary-container px-4 py-1.5 rounded-full shadow-lg flex items-center gap-2 border border-primary/20">
+<span class="w-2 h-2 rounded-full bg-on-primary-container pulse-green"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Sentinel Active: Watching for threats across all apps</span>
+</div>
+</div>
+<!-- Main Workspace Area -->
+<main class="flex-1 overflow-y-auto scrolling-content px-4 w-full max-w-3xl mx-auto space-y-6">
+<!-- Search Bar (Mobile Only) -->
+<div class="md:hidden flex bg-surface-container-low border border-outline-variant rounded-full px-4 py-2 items-center gap-2 w-full mt-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">search</span>
+<input class="bg-transparent border-none outline-none focus:ring-0 text-technical-data font-technical-data text-on-surface w-full p-0" placeholder="Press / for commands" type="text"/>
+</div>
+<!-- Telemetry Summary -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-4 shadow-sm">
+<div class="flex justify-between items-center mb-3">
+<h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase">Threat Immunity</h3>
+<span class="font-technical-data text-technical-data text-[#059669]">94/100</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden mb-4">
+<div class="h-full bg-[#059669] w-[94%] rounded-full"></div>
+</div>
+<h4 class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-2">Recent Intercepts</h4>
+<div class="flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
+<div class="flex-shrink-0 flex items-center gap-1.5 bg-surface-container-low px-2 py-1 rounded border border-outline-variant">
+<span class="material-symbols-outlined text-error text-[14px]">warning</span>
+<span class="font-technical-data text-technical-data">Fake_FedEx.apk</span>
+</div>
+<div class="flex-shrink-0 flex items-center gap-1.5 bg-surface-container-low px-2 py-1 rounded border border-outline-variant">
+<span class="material-symbols-outlined text-[#d97706] text-[14px]">phishing</span>
+<span class="font-technical-data text-technical-data">FASTag_Spoof</span>
+</div>
+</div>
+</div>
+<!-- Forensic Stream / Threat Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg shadow-sm overflow-hidden border-t-4 border-t-tertiary">
+<div class="p-4 border-b border-outline-variant bg-surface-container-low flex justify-between items-start">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[20px]">chat_bubble</span>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">System-Wide Alert</h2>
+<p class="text-sm text-on-surface-variant">Intercepted in WhatsApp</p>
+</div>
+</div>
+<div class="bg-tertiary/10 text-tertiary px-2 py-1 rounded font-technical-data text-technical-data border border-tertiary/20">
+            BLOCKED
+        </div>
+</div>
+<div class="p-4">
+<div class="font-technical-data text-technical-data text-on-surface">
+<span class="text-error font-bold">Suspicious link detected:</span> bit.ly/claim-reward-992<br/>
+<span class="text-on-surface-variant">Action: Link neutralized and sender flagged.</span>
+</div>
+</div>
+</div><div class="bg-surface-container-lowest border border-outline-variant rounded-lg shadow-sm overflow-hidden border-t-4 border-t-error">
+<div class="p-4 border-b border-outline-variant bg-error-container/20 flex justify-between items-start">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-error text-[20px]">security_update_warning</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Neutralized: Police Digital Arrest</h2>
+</div>
+<p class="text-sm text-on-surface-variant">Live Intercept • Ongoing Audio Call</p>
+</div>
+<div class="bg-error/10 text-error px-2 py-1 rounded font-technical-data text-technical-data border border-error/20">STATUS: SECURED</div>
+</div>
+<div class="p-4 space-y-4">
+<!-- Detail Card 1 -->
+<div class="border border-outline-variant rounded p-3 bg-surface-container-low">
+<h4 class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-2">Scammer Psychology</h4>
+<div class="font-technical-data text-technical-data text-on-surface">
+<span class="text-[#d97706]">AUTHORITY_PANIC</span> detected.<br/>
+                        Attempting to isolate target from family/bank.
+                    </div>
+</div>
+<!-- Detail Card 2 -->
+<div class="border border-outline-variant rounded p-3 bg-surface-container-low">
+<h4 class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-2">Immediate Ask</h4>
+<div class="font-technical-data text-technical-data text-on-surface">
+                        Requesting <span class="text-error font-bold">RTGS Transfer</span> to "Secure RBI Account".<br/>
+                        Screen share request (AnyDesk) blocked.
+                    </div>
+</div>
+<!-- Detail Card 3 -->
+<div class="border border-outline-variant rounded p-3 bg-surface-container-low">
+<h4 class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-2">Mule Account Trail</h4>
+<div class="font-technical-data text-technical-data text-on-surface">
+                        Route: <span class="text-tertiary">ACC_9924 -&gt; SHELL_BANK_04</span>
+</div>
+</div>
+</div>
+<div class="p-4 bg-surface-container-low border-t border-outline-variant flex flex-col gap-2">
+<button class="w-full bg-[#059669] text-on-secondary font-label-sm text-label-sm uppercase tracking-wider py-3 rounded flex items-center justify-center gap-2 hover:bg-[#047857] transition-colors">
+<span class="material-symbols-outlined text-[18px]">phone_disabled</span>
+                    Auto-Hangup &amp; Block
+                </button>
+<div class="flex gap-2">
+<button class="flex-1 bg-surface-container-lowest border border-outline-variant text-on-surface font-label-sm text-label-sm py-2 rounded hover:bg-surface-container-highest transition-colors">
+                        Sinkhole Domain
+                    </button>
+<button class="flex-1 bg-surface-container-lowest border border-outline-variant text-on-surface font-label-sm text-label-sm py-2 rounded hover:bg-surface-container-highest transition-colors">
+                        Draft 1930 Report
+                    </button>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg shadow-sm p-4">
+<div class="flex justify-between items-center mb-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">mic_external_on</span>
+<h3 class="font-headline-md text-headline-md">Live Call Guardian</h3>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-label-sm font-label-sm text-primary uppercase">Listening</span>
+<span class="w-3 h-3 rounded-full bg-primary pulse-green"></span>
+</div>
+</div>
+<p class="text-sm text-on-surface-variant mb-4">Real-time sentiment analysis active. Sentinel will alert you if social engineering patterns are detected.</p>
+<button class="w-full border border-primary text-primary font-label-sm text-label-sm uppercase py-2 rounded hover:bg-primary/5 transition-colors">
+        Analyze Conversation Sentiment
+    </button>
+</div><div class="h-8"></div> <!-- spacer -->
+</main>
+<!-- Input Dock -->
+<div class="fixed bottom-16 left-0 w-full bg-surface border-t border-outline-variant z-40 p-3 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+<div class="max-w-3xl mx-auto">
+<div class="flex gap-2 mb-2 overflow-x-auto hide-scrollbar">
+<button class="bg-surface-container border border-outline-variant px-3 py-1 rounded-full font-technical-data text-technical-data text-on-surface-variant whitespace-nowrap hover:bg-surface-container-high">/scan</button>
+<button class="bg-surface-container border border-outline-variant px-3 py-1 rounded-full font-technical-data text-technical-data text-on-surface-variant whitespace-nowrap hover:bg-surface-container-high">/check</button>
+<button class="bg-surface-container border border-outline-variant px-3 py-1 rounded-full font-technical-data text-technical-data text-on-surface-variant whitespace-nowrap hover:bg-surface-container-high">/report</button>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant rounded-lg p-1.5 focus-within:border-[#059669] focus-within:ring-2 focus-within:ring-[#059669]/10 transition-all">
+<button class="p-2 text-on-surface-variant hover:text-primary rounded-md">
+<span class="material-symbols-outlined">add_photo_alternate</span>
+</button>
+<input class="flex-1 bg-transparent border-none focus:ring-0 font-body-md text-on-surface placeholder:text-on-surface-variant/50" placeholder="Message Sentinel..." type="text"/>
+<button class="p-2 bg-[#059669] text-on-secondary rounded-md shadow-sm">
+<span class="material-symbols-outlined text-[20px]">mic</span>
+</button>
+</div>
+</div>
+</div>
+<!-- BottomNavBar from JSON -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-16 px-2 bg-surface border-t border-outline-variant z-50 md:hidden"><button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-3 py-1 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shield</span>
+<span class="font-label-sm text-label-sm mt-1">Sentinel</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform px-3 py-1">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-label-sm text-label-sm mt-1">Stream</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform px-3 py-1">
+<span class="material-symbols-outlined">notifications_active</span>
+<span class="font-label-sm text-label-sm mt-1">Alerts</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform px-3 py-1">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-label-sm text-label-sm mt-1">Analyze</span>
+</button></nav>
+</body></html>

@@ -1,0 +1,3 @@
+Copy and paste this message into your new chat:
+
+"I am continuing development on ShieldSense AI. All project files are in `C:\Users\Lenovo\Downloads\ShieldSense`. Please read `NEW_CHAT_CONTEXT.md` and `CODEBASE_MAP.md` in that directory to immediately load the complete architecture, test state (34/34 passing), live production deployments, and recent changes. Ready to proceed!"
